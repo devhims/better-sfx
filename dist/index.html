@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sound library preview</title>
+<style>
+  :root { --bg: #fafaf9; --card: #fff; --ink: #1c1917; --muted: #78716c; --line: #e7e5e4; --accent: #ea580c; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #0c0a09; --card: #1c1917; --ink: #f5f5f4; --muted: #a8a29e; --line: #292524; --accent: #fb923c; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 14px/1.4 ui-sans-serif, system-ui, sans-serif; background: var(--bg); color: var(--ink); }
+  header { position: sticky; top: 0; background: var(--bg); padding: 20px 24px 12px; border-bottom: 1px solid var(--line); z-index: 1; }
+  h1 { margin: 0 0 12px; font-size: 18px; font-weight: 600; }
+  h1 span { color: var(--muted); font-weight: 400; }
+  input { width: 100%; max-width: 420px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--ink); font: inherit; }
+  nav { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  nav button { border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 999px; padding: 4px 11px; font: inherit; font-size: 12px; cursor: pointer; }
+  nav button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  main { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; padding: 20px 24px 60px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px; cursor: pointer; text-align: left; color: inherit; font: inherit; }
+  .card:hover, .card.playing { border-color: var(--accent); }
+  .wave { display: flex; align-items: center; gap: 2px; height: 44px; margin-bottom: 10px; }
+  .wave i { flex: 1; background: var(--muted); border-radius: 1px; min-height: 2px; opacity: .55; }
+  .card.playing .wave i { background: var(--accent); opacity: 1; }
+  .name { font-weight: 600; }
+  .meta { color: var(--muted); font-size: 12px; display: flex; justify-content: space-between; margin-top: 2px; }
+  .badge { font-size: 10px; text-transform: uppercase; letter-spacing: .04em; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Sound library <span id="count"></span></h1>
+  <input id="q" type="search" placeholder="Search: glassy, soft, error, paper..." autofocus>
+  <nav id="cats"></nav>
+</header>
+<main id="grid"></main>
+<script src="catalog.js"></script>
+<script>
+  const grid = document.getElementById('grid');
+  const q = document.getElementById('q');
+  const cats = ['all', ...new Set(CATALOG.map((s) => s.category))];
+  let cat = 'all';
+  let current = null;
+
+  document.getElementById('cats').innerHTML = cats.map((c) => `<button data-c="${c}" aria-pressed="${c === cat}">${c}</button>`).join('');
+  document.getElementById('cats').onclick = (e) => {
+    if (!e.target.dataset.c) return;
+    cat = e.target.dataset.c;
+    document.querySelectorAll('nav button').forEach((b) => b.setAttribute('aria-pressed', b.dataset.c === cat));
+    draw();
+  };
+  q.oninput = draw;
+
+  function draw() {
+    const words = q.value.toLowerCase().split(/\s+/).filter(Boolean);
+    const list = CATALOG.filter((s) => (cat === 'all' || s.category === cat) &&
+      words.every((w) => [s.name, s.category, s.description, ...s.tags].join(' ').toLowerCase().includes(w)));
+    document.getElementById('count').textContent = `${list.length} of ${CATALOG.length}`;
+    grid.innerHTML = list.map((s) => `
+      <button class="card" data-id="${s.id}" title="${s.description}">
+        <div class="wave">${s.peaks.map((p) => `<i style="height:${Math.max(4, p * 100)}%"></i>`).join('')}</div>
+        <div class="name">${s.name}</div>
+        <div class="meta"><span>${s.category} · ${s.duration.toFixed(2)} s</span><span class="badge">${s.source === 'synth' ? 'code' : 'seed'}</span></div>
+      </button>`).join('');
+  }
+
+  grid.onclick = (e) => {
+    const card = e.target.closest('.card');
+    if (!card) return;
+    const s = CATALOG.find((x) => x.id === card.dataset.id);
+    if (current) { current.audio.pause(); current.card.classList.remove('playing'); }
+    const audio = new Audio(s.files.m4a);
+    card.classList.add('playing');
+    audio.onended = () => card.classList.remove('playing');
+    audio.play();
+    current = { audio, card };
+  };
+  draw();
+</script>
+</body>
+</html>

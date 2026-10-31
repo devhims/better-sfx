@@ -16,9 +16,15 @@ function envelope(y, hop = Math.floor(SR * 0.005)) {
 
 // mode 'all': keep everything between the first and last sound above the floor.
 // mode 'single': keep only the loudest event, from its onset until it decays.
-export function trim(y, { mode = 'all', floorDb = 40, preMs = 3 } = {}) {
+// mode 'gesture': like 'all', but stops at the first 250 ms gap, so a stray
+// second take in a generated file is dropped.
+// maxS caps the length; the caller should use a longer fade when capped.
+export function trim(y, { mode = 'all', floorDb = 40, preMs = 3, maxS = Infinity } = {}) {
   const { e, hop } = envelope(y);
   const peak = Math.max(...e);
+  // Generated files carry a noise floor; end a sound 6 dB above it.
+  const floor = [...e].filter((v) => v > -100).sort((p, q) => p - q)[Math.floor(e.length * 0.2)] ?? -120;
+  const tail = Math.max(peak - 45, floor + 6);
   const thr = peak - floorDb;
   let a, b;
   if (mode === 'single') {
@@ -27,16 +33,22 @@ export function trim(y, { mode = 'all', floorDb = 40, preMs = 3 } = {}) {
     // Walk back to the onset: the last frame quieter than peak - 30 dB.
     while (a > 0 && e[a - 1] > peak - 30) a--;
     b = top;
-    // Walk forward until 40 ms in a row sit under the floor.
+    // Walk forward until 30 ms in a row sit under the tail level.
     let quiet = 0;
-    while (b < e.length - 1 && quiet < 8) { b++; quiet = e[b] < thr ? quiet + 1 : 0; }
+    while (b < e.length - 1 && quiet < 6) { b++; quiet = e[b] < tail ? quiet + 1 : 0; }
+    b -= quiet;
+  } else if (mode === 'gesture') {
+    a = e.findIndex((v) => v > Math.max(thr, tail));
+    b = a;
+    let quiet = 0;
+    while (b < e.length - 1 && quiet < 90) { b++; quiet = e[b] < tail ? quiet + 1 : 0; }
     b -= quiet;
   } else {
     a = e.findIndex((v) => v > thr);
     b = e.length - 1 - [...e].reverse().findIndex((v) => v > thr);
   }
   const s = Math.max(0, a * hop - Math.floor((SR * preMs) / 1000));
-  const end = Math.min(y.length, (b + 1) * hop);
+  const end = Math.min(y.length, (b + 1) * hop, s + Math.floor(SR * maxS));
   return y.slice(s, end);
 }
 

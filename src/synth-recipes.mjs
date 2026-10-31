@@ -17,10 +17,6 @@ export const synthRecipes = [
     k.tone({ f: 230, to: 90, glide: 0.03, d: 0.05, g: 0.55 });
     k.noise({ d: 0.02, g: 0.3, filter: { type: 'lowpass', f: 1400, q: 0.7 } });
   }),
-  s('click-mouse', 'Mouse click', 'clicks', ['click', 'mouse', 'press', 'release', 'double'], 'A press and release, like a small mouse button.', (k) => {
-    k.noise({ d: 0.008, g: 0.6, filter: { type: 'bandpass', f: 3600, q: 2 } });
-    k.noise({ t: 0.075, d: 0.006, g: 0.3, filter: { type: 'bandpass', f: 4200, q: 2 } });
-  }),
   s('button-press', 'Button press', 'clicks', ['button', 'press', 'release', 'tactile', 'physical'], 'A tactile button that goes down, then springs back up.', (k) => {
     k.noise({ d: 0.015, g: 0.45, filter: { type: 'bandpass', f: 1800, q: 1.5 } });
     k.tone({ f: 170, to: 80, glide: 0.03, d: 0.04, g: 0.35 });
@@ -32,10 +28,6 @@ export const synthRecipes = [
   }),
   s('tap-glass', 'Glass tap', 'clicks', ['tap', 'glass', 'glassy', 'bright', 'ting', 'delicate'], 'A light fingernail tap on glass.', (k) => {
     k.strike({ f: 2300, kind: 'glass', d: 0.18, g: 0.22 });
-  }),
-  s('tap-plastic', 'Plastic tap', 'clicks', ['tap', 'plastic', 'hollow', 'toy'], 'A hollow tap on hard plastic.', (k) => {
-    k.noise({ d: 0.03, g: 0.4, filter: { type: 'bandpass', f: 1400, q: 5 } });
-    k.tone({ f: 900, to: 620, glide: 0.03, d: 0.03, g: 0.18, type: 'triangle' });
   }),
   s('tick-tiny', 'Tiny tick', 'clicks', ['tick', 'tiny', 'micro', 'minimal', 'subtle'], 'The smallest possible tick, for selection and focus.', (k) => {
     k.tone({ f: 4000, d: 0.008, g: 0.22 });
@@ -117,15 +109,6 @@ export const synthRecipes = [
   s('notify-triad', 'Triad', 'notifications', ['notification', 'marimba', 'triad', 'arpeggio', 'cheerful'], 'Three quick marimba notes up a major chord.', (k, n) => {
     ['C5', 'E5', 'G5'].forEach((x, i) => k.strike({ f: n(x), t: i * 0.08, kind: 'marimba', d: 0.5, g: 0.28 }));
   }),
-  s('notify-knock', 'Knock knock', 'notifications', ['notification', 'knock', 'door', 'wood', 'attention'], 'Two knocks on a wooden door.', (k) => {
-    for (const t of [0, 0.15]) {
-      k.tone({ f: 190, to: 120, glide: 0.04, t, d: 0.07, g: 0.6 });
-      k.noise({ t, d: 0.03, g: 0.4, filter: { type: 'lowpass', f: 1600 } });
-    }
-  }),
-  s('notify-blip-double', 'Double blip', 'notifications', ['notification', 'blip', 'digital', 'retro', 'beep'], 'Two short digital blips.', (k) => {
-    for (const t of [0, 0.1]) k.tone({ f: 1320, t, d: 0.045, g: 0.12, type: 'square', filter: { type: 'lowpass', f: 4000 } });
-  }),
   s('notify-ping', 'Mention ping', 'notifications', ['notification', 'ping', 'mention', 'metallic', 'sharp'], 'A bright metallic ping that cuts through.', (k) => {
     k.space({ decay: 1.0, mix: 0.2 });
     k.fm({ f: 1760, ratio: 1.41, index: 1.5, d: 0.5, g: 0.16, send: 0.3 });
@@ -202,19 +185,10 @@ export const synthRecipes = [
   s('denied-wobble', 'Denied', 'errors', ['denied', 'wobble', 'no', 'invalid', 'cartoon'], 'A wobbly low note that shakes its head.', (k) => {
     k.tone({ f: 300, to: 220, glide: 0.25, hold: 0.18, d: 0.1, g: 0.25, type: 'triangle', vib: { rate: 16, depth: 30 } });
   }),
-  s('error-glass', 'Glass clash', 'errors', ['error', 'glass', 'dissonant', 'clash', 'tense'], 'Two clashing glass notes.', (k, n) => {
-    k.space({ decay: 1.0, mix: 0.2 });
-    k.strike({ f: n('C6'), kind: 'glass', d: 0.6, g: 0.18, send: 0.3 });
-    k.strike({ f: n('C#6'), kind: 'glass', t: 0.02, d: 0.6, g: 0.18, send: 0.3 });
-  }),
   s('invalid-input', 'Invalid input', 'errors', ['invalid', 'input', 'form', 'shake', 'error', 'soft'], 'A soft two-tap shake for a bad form field.', (k) => {
     k.tone({ f: 420, d: 0.05, g: 0.22, type: 'triangle', filter: { type: 'lowpass', f: 2000 } });
     k.tone({ f: 320, t: 0.07, d: 0.08, g: 0.22, type: 'triangle', filter: { type: 'lowpass', f: 2000 } });
   }),
-  s('critical-alarm', 'Critical alarm', 'errors', ['alarm', 'critical', 'siren', 'emergency', 'sweep'], 'Two rising siren sweeps.', (k) => {
-    for (const t of [0, 0.4]) k.tone({ f: 600, to: 1200, glide: 0.32, t, a: 0.01, hold: 0.3, d: 0.05, g: 0.1, type: 'square', filter: { type: 'lowpass', f: 3000 } });
-  }),
-
   // Transitions
   s('swoosh-fast', 'Fast swoosh', 'transitions', ['swoosh', 'whoosh', 'fast', 'transition', 'air'], 'A quick rush of air.', (k) => {
     k.noise({ a: 0.05, d: 0.12, g: 0.4, filter: { type: 'bandpass', f: 800, to: 5000, glide: 0.15, q: 2 } });
@@ -245,10 +219,6 @@ export const synthRecipes = [
     k.tone({ f: 200, to: 1600, glide: 0.28, a: 0.03, hold: 0.15, d: 0.1, g: 0.12 });
     k.noise({ a: 0.15, d: 0.15, g: 0.12, filter: { type: 'bandpass', f: 1000, to: 6000, glide: 0.28 } });
   }),
-  s('zoom-out', 'Zoom out', 'transitions', ['zoom', 'out', 'falling', 'shrink', 'back'], 'A falling sweep for zooming out.', (k) => {
-    k.tone({ f: 1600, to: 200, glide: 0.28, a: 0.03, hold: 0.15, d: 0.1, g: 0.12 });
-    k.noise({ a: 0.15, d: 0.15, g: 0.12, filter: { type: 'bandpass', f: 6000, to: 1000, glide: 0.28 } });
-  }),
   s('riser', 'Riser', 'transitions', ['riser', 'build', 'tension', 'sweep', 'cinematic'], 'A half-second build that opens up.', (k) => {
     k.tone({ f: 200, to: 800, glide: 0.6, a: 0.5, d: 0.12, g: 0.1, type: 'sawtooth', filter: { type: 'lowpass', f: 800, to: 6000, glide: 0.6 } });
     k.noise({ a: 0.5, d: 0.12, g: 0.15, filter: { type: 'highpass', f: 1000, to: 6000, glide: 0.6 } });
@@ -263,18 +233,8 @@ export const synthRecipes = [
     k.tone({ f: 300, to: 900, glide: 0.015, d: 0.045, g: 0.5 });
     k.noise({ d: 0.01, g: 0.2, filter: { type: 'bandpass', f: 2000, q: 1 } });
   }),
-  s('pop-high', 'High pop', 'pops', ['pop', 'high', 'small', 'bubble', 'light'], 'A smaller, higher pop.', (k) => {
-    k.tone({ f: 800, to: 2000, glide: 0.012, d: 0.035, g: 0.4 });
-  }),
   s('bubble', 'Bubble', 'pops', ['bubble', 'water', 'blip', 'rising', 'liquid'], 'A single bubble rising.', (k) => {
     k.tone({ f: 500, to: 1250, glide: 0.06, d: 0.07, g: 0.3 });
-  }),
-  s('bubbles', 'Bubbles', 'pops', ['bubbles', 'water', 'playful', 'multiple', 'liquid'], 'Three bubbles in quick succession.', (k) => {
-    [[0, 480], [0.07, 640], [0.15, 560]].forEach(([t, f]) => k.tone({ f, to: f * 2.4, glide: 0.05, t, d: 0.06, g: 0.25 }));
-  }),
-  s('pop-cork', 'Cork pop', 'pops', ['cork', 'pop', 'celebrate', 'champagne', 'hollow'], 'A hollow cork-style pop.', (k) => {
-    k.noise({ d: 0.03, g: 0.7, filter: { type: 'bandpass', f: 1200, q: 3 } });
-    k.tone({ f: 620, to: 300, glide: 0.04, d: 0.05, g: 0.3 });
   }),
   s('droplet', 'Droplet', 'pops', ['drop', 'water', 'droplet', 'liquid', 'plink'], 'A water droplet with a little space around it.', (k) => {
     k.space({ decay: 0.8, mix: 0.25 });
@@ -293,9 +253,6 @@ export const synthRecipes = [
   s('message-receive', 'Receive', 'messages', ['receive', 'message', 'incoming', 'marimba', 'friendly'], 'Two marimba notes for an incoming message.', (k, n) => {
     k.strike({ f: n('G5'), kind: 'marimba', d: 0.3, g: 0.26 });
     k.strike({ f: n('D6'), t: 0.09, kind: 'marimba', d: 0.5, g: 0.26 });
-  }),
-  s('typing-indicator', 'Typing dots', 'messages', ['typing', 'dots', 'indicator', 'chat', 'soft'], 'Three faint blips, like a typing indicator.', (k) => {
-    for (let i = 0; i < 3; i++) k.tone({ f: 900 + i * 60, t: i * 0.12, d: 0.04, g: 0.08 });
   }),
   s('message-pop', 'Message pop', 'messages', ['message', 'pop', 'chat', 'bubble', 'incoming'], 'A chat-bubble pop with a small chime.', (k, n) => {
     k.tone({ f: 350, to: 1000, glide: 0.015, d: 0.04, g: 0.4 });
@@ -317,14 +274,6 @@ export const synthRecipes = [
     k.space({ decay: 1.0, mix: 0.2 });
     for (const t of [0, 0.12, 0.5, 0.62]) k.strike({ f: n('A6'), t, kind: 'bell', d: 0.4, g: 0.14, send: 0.3 });
   }),
-  s('scan-beep', 'Scan beep', 'progress', ['scan', 'beep', 'barcode', 'checkout', 'register'], 'A clean scanner beep.', (k) => {
-    k.tone({ f: 2400, a: 0.002, hold: 0.09, d: 0.02, g: 0.14 });
-  }),
-  s('refresh', 'Refresh', 'progress', ['refresh', 'reload', 'pull', 'sync', 'rising'], 'A two-stage upward whirl for pull to refresh.', (k) => {
-    k.tone({ f: 400, to: 800, glide: 0.14, d: 0.14, g: 0.15, type: 'triangle' });
-    k.tone({ f: 800, to: 1600, glide: 0.14, t: 0.12, d: 0.16, g: 0.13, type: 'triangle' });
-  }),
-
   // Power and system
   s('power-on', 'Power on', 'system', ['power', 'on', 'boot', 'start', 'rising', 'sweep'], 'Three voices sweeping up an octave.', (k) => {
     k.space({ decay: 1.5, mix: 0.3 });
@@ -336,10 +285,6 @@ export const synthRecipes = [
   s('startup-chord', 'Startup chord', 'system', ['startup', 'chord', 'boot', 'big', 'warm', 'welcome'], 'A wide, warm major chord that blooms.', (k, n) => {
     k.space({ decay: 2.5, mix: 0.35 });
     ['F3', 'C4', 'F4', 'A4', 'C5', 'F5'].forEach((x, i) => k.tone({ f: n(x), detune: (i % 2 ? 1 : -1) * 4, a: 0.04, hold: 0.6, d: 1.6, g: 0.06, type: 'sawtooth', send: 0.4, filter: { type: 'lowpass', f: 900, to: 4200, glide: 0.5, q: 0.5 } }));
-  }),
-  s('shutdown-chord', 'Shutdown chord', 'system', ['shutdown', 'chord', 'goodbye', 'dark', 'falling'], 'A soft minor chord that closes down.', (k, n) => {
-    k.space({ decay: 2.0, mix: 0.3 });
-    ['D3', 'A3', 'D4', 'F4', 'A4'].forEach((x) => k.tone({ f: n(x), a: 0.05, hold: 0.3, d: 1.2, g: 0.06, type: 'sawtooth', send: 0.3, filter: { type: 'lowpass', f: 3500, to: 300, glide: 1.2, q: 0.5 } }));
   }),
   s('connect', 'Connect', 'system', ['connect', 'device', 'plug in', 'pair', 'rising'], 'Two rising tones for a device connecting.', (k, n) => {
     k.fm({ f: n('C5'), ratio: 2, index: 1.2, d: 0.2, g: 0.18 });
