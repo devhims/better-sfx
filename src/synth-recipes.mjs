@@ -299,3 +299,22 @@ export const synthRecipes = [
     for (let i = 0; i < 14; i++) k.strike({ f: 2500 + k.rand() * 4000, t: k.rand() * 0.6, kind: 'glass', d: 0.25, g: 0.05, send: 0.6 });
   }),
 ];
+
+
+// Web Audio versions of real-world sounds. The build lists these with the
+// Seed Audio foley, so they sit in the same categories.
+export const foleySynth = [
+  // Each rap: a 4 ms knuckle click, a short wooden "tok" around 800 Hz, and
+  // four low door-panel tones (95 to 405 Hz) that fade in about 0.1 s.
+  s('door-knock-c', 'Door knock C', 'objects', ['knock', 'door', 'wood', 'visitor', 'attention', 'code'], 'Three knuckle raps on a door, made in Web Audio.', (k) => {
+    k.space({ decay: 0.35, mix: 0.12, tone: 3000 });
+    for (const [t0, g] of [[0.01, 1], [0.18, 0.92], [0.355, 0.8]]) {
+      const t = t0 + (k.rand() - 0.5) * 0.008;
+      k.noise({ t, d: 0.004, g: 0.35 * g, filter: { type: 'bandpass', f: 3000, q: 0.8 } });
+      k.noise({ t, d: 0.03, g: 0.5 * g, filter: { type: 'bandpass', f: 800, q: 3 } });
+      for (const [f, gg, d] of [[95, 0.55, 0.14], [168, 0.45, 0.11], [262, 0.3, 0.08], [405, 0.18, 0.05]]) {
+        k.tone({ f: f * 1.04, to: f, glide: 0.02, t, a: 0.001, d, g: gg * g });
+      }
+    }
+  }),
+];

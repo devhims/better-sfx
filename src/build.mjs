@@ -4,7 +4,7 @@ import { OfflineAudioContext } from 'node-web-audio-api';
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { createKit, n } from './kit.mjs';
-import { synthRecipes } from './synth-recipes.mjs';
+import { synthRecipes, foleySynth } from './synth-recipes.mjs';
 import { setRecipes } from './set-recipes.mjs';
 import { seedPrompts } from './seed-prompts.mjs';
 import { SR, trim, trimEvent, closeGaps, level, wav16 } from './finish.mjs';
@@ -70,6 +70,7 @@ const all = [
   ...synthRecipes.map((r) => ['synth', r]),
   ...setRecipes.map((r) => ['synth', r]),
   ...seedPrompts.map((p) => ['seed', p]),
+  ...foleySynth.map((r) => ['synth', r]),
 ];
 for (const [kind, item] of all) {
   const y = kind === 'synth' ? await renderSynth(item) : finishSeed(item);

@@ -21,7 +21,6 @@ export const seedPrompts = [
   f('paper-crumple', 'Paper crumple', 'paper', ['paper', 'crumple', 'discard', 'trash', 'delete'], 'A sheet of paper crumpled into a ball.', 'all', 'A sheet of paper being crumpled into a ball, short'),
   f('page-turn', 'Page turn', 'paper', ['page', 'turn', 'book', 'paper', 'flip', 'next'], 'A single book page turning.', 'all', 'A single book page being turned'),
   f('paper-tear', 'Paper tear', 'paper', ['paper', 'tear', 'rip', 'remove', 'cut'], 'A quick tear of a paper strip.', 'all', 'A short quick tear of a strip of paper'),
-  f('paper-slide', 'Paper slide', 'paper', ['paper', 'slide', 'desk', 'swipe', 'move'], 'A sheet of paper sliding across a desk.', 'all', 'One sheet of printer paper pushed quickly across a smooth desk, a short soft papery swish lasting half a second'),
   f('trash-bin', 'Into the bin', 'paper', ['trash', 'bin', 'delete', 'discard', 'empty', 'paper'], 'A paper ball dropped into a metal bin.', 'all', 'A crumpled paper ball dropped into an empty metal trash bin'),
   f('envelope-open', 'Envelope open', 'paper', ['envelope', 'open', 'mail', 'letter', 'inbox', 'tear'], 'A paper envelope being torn open.', 'all', 'A paper envelope being torn open, short'),
   f('card-flip', 'Card flip', 'paper', ['card', 'flip', 'playing card', 'reveal', 'deal'], 'A playing card flipped onto a table.', 'single', 'One playing card flicked face-up and slapped flat onto a wooden table, a single crisp papery snap'),
@@ -31,7 +30,11 @@ export const seedPrompts = [
   f('camera-shutter', 'Camera shutter', 'objects', ['camera', 'shutter', 'photo', 'screenshot', 'capture'], 'A single camera shutter.', 'single', 'A single short camera shutter click'),
   f('film-wind', 'Film advance', 'objects', ['camera', 'film', 'wind', 'advance', 'ratchet', 'retro'], 'A film camera advance lever winding.', 'all', 'A film camera advance lever being wound once'),
   f('light-switch', 'Light switch', 'objects', ['switch', 'light', 'toggle', 'wall', 'click'], 'A wall light switch flipped.', 'single', 'A single wall light switch flipped on'),
-  f('door-knock', 'Door knock', 'objects', ['knock', 'door', 'wood', 'visitor', 'attention'], 'Two knocks on a wooden door.', 'all', 'Knock knock: two firm knuckle knocks on a closed wooden front door, a hollow resonant wooden thud, recorded from inside the room'),
+  // Door knock A and B use their prompts as written, without STYLE. Door knock C is Web Audio, in synth-recipes.mjs.
+  { ...f('door-knock-a', 'Door knock A', 'objects', ['knock', 'door', 'wood', 'visitor', 'attention'], 'Three quick knuckle raps on a wooden door.', 'all', ''),
+    prompt: 'Someone knocking on a wooden door with their knuckles, knock knock knock, three quick raps, the classic sound of a visitor at the door, no other sounds' },
+  { ...f('door-knock-b', 'Door knock B', 'objects', ['knock', 'door', 'wood', 'hollow', 'visitor'], 'Three raps on a hollow interior door, with more boom.', 'all', ''),
+    prompt: 'Sound effect of knuckles rapping three times on a hollow wooden interior door, quick sharp knocks with a short boomy wooden body resonance, dry, close, nothing else' },
   f('glass-tap', 'Wine glass tap', 'objects', ['glass', 'wine glass', 'tap', 'ring', 'ting', 'toast'], 'A spoon tapping a wine glass.', 'single', 'A metal spoon tapping a crystal wine glass once, ringing'),
   f('mug-tap', 'Mug tap', 'objects', ['ceramic', 'mug', 'cup', 'tap', 'clink', 'coffee'], 'A spoon tapping a ceramic mug.', 'single', 'A metal spoon tapping a ceramic coffee mug once'),
   f('coin-drop', 'Coin drop', 'objects', ['coin', 'drop', 'money', 'bounce', 'metal'], 'A coin dropped on a table, bouncing to rest.', 'all', 'A single coin dropped on a wooden table, bouncing and settling'),
@@ -66,11 +69,10 @@ for (const p of seedPrompts) if (maxS[p.id]) p.maxS = maxS[p.id];
 
 // Gaps that belong to the sound, in ms: the pause between two knocks, a coin
 // bouncing, keys shaking. Longer silences still split off extra takes.
-const rhythmMs = { 'door-knock': 400, 'coin-drop': 300, 'keys-jingle': 250 };
+const rhythmMs = { 'door-knock-a': 400, 'door-knock-b': 400, 'coin-drop': 300, 'keys-jingle': 250 };
 for (const [id, ms] of Object.entries(rhythmMs)) seedPrompts.find((p) => p.id === id).rhythmMs = ms;
 // Level offsets in dB, for sounds that are too loud next to the rest.
 seedPrompts.find((p) => p.id === 'trash-bin').levelDb = -6;
-seedPrompts.find((p) => p.id === 'paper-slide').levelDb = -6;
 seedPrompts.find((p) => p.id === 'drawer-shut').preRollS = 0.3;
 // Struck sounds that should ring out instead of stopping short.
 for (const id of ['glass-tap', 'mug-tap', 'cash-register', 'coin-drop']) seedPrompts.find((p) => p.id === id).ring = true;
