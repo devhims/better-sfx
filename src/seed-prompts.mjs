@@ -70,6 +70,7 @@ const rhythmMs = { 'door-knock': 400, 'coin-drop': 300, 'keys-jingle': 250 };
 for (const [id, ms] of Object.entries(rhythmMs)) seedPrompts.find((p) => p.id === id).rhythmMs = ms;
 // Level offsets in dB, for sounds that are too loud next to the rest.
 seedPrompts.find((p) => p.id === 'trash-bin').levelDb = -6;
+seedPrompts.find((p) => p.id === 'paper-slide').levelDb = -6;
 seedPrompts.find((p) => p.id === 'drawer-shut').preRollS = 0.3;
 // Struck sounds that should ring out instead of stopping short.
 for (const id of ['glass-tap', 'mug-tap', 'cash-register', 'coin-drop']) seedPrompts.find((p) => p.id === id).ring = true;
