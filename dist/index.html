@@ -12,7 +12,8 @@
   header { position: sticky; top: 0; background: var(--bg); padding: 20px 24px 12px; border-bottom: 1px solid var(--line); z-index: 1; }
   h1 { margin: 0 0 12px; font-size: 18px; font-weight: 600; }
   h1 span { color: var(--muted); font-weight: 400; }
-  h1 .by { font-size: 13px; margin-right: 8px; }
+  h1 .by { font-size: 13px; font-weight: 400; margin-right: 8px; color: var(--muted); text-decoration: none; text-underline-offset: 3px; }
+  h1 .by:hover, h1 .by:focus-visible { color: var(--ink); text-decoration: underline; }
   input { width: 100%; max-width: 420px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--ink); font: inherit; }
   nav { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
   nav button { border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 999px; padding: 4px 11px; font: inherit; font-size: 12px; cursor: pointer; }
@@ -30,7 +31,7 @@
 </head>
 <body>
 <header>
-  <h1>Better SFX <span class="by">by video2ctx</span> <span id="count"></span></h1>
+  <h1>Better SFX <a class="by" href="https://www.video2ctx.dev" target="_blank" rel="noopener">by video2ctx</a> <span id="count"></span></h1>
   <input id="q" type="search" placeholder="Search: glassy, soft, error, paper..." autofocus>
   <nav id="cats"></nav>
 </header>
