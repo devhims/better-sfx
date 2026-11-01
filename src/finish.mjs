@@ -86,3 +86,99 @@ export function wav16(y) {
   y.forEach((v, i) => buf.writeInt16LE(Math.round(Math.max(-1, Math.min(1, v)) * 32767), 44 + i * 2));
   return buf;
 }
+
+
+// Event-based trim for generated recordings.
+// 1. Frames quieter than peak - 30 dB count as silence.
+// 2. Silence of splitMs or longer splits the file into events.
+// 3. Events less than joinMs apart form one cluster, and the cluster with
+//    the most energy is kept, so faint lead-ins and stray extra takes are
+//    dropped. A larger joinMs keeps gaps that belong to the sound, such as
+//    the pause between two knocks.
+// 4. The tail may run on below the silence line while the sound is still
+//    decaying, for at most tailMs, so rings are not cut dead.
+export function trimEvent(y, { splitMs = 150, joinMs, tailMs = 120, preMs = 3 } = {}) {
+  const { e, hop } = envelope(y);
+  const frameMs = (hop / SR) * 1000;
+  const peak = Math.max(...e);
+  const floor = [...e].filter((v) => v > -100).sort((p, q) => p - q)[Math.floor(e.length * 0.2)] ?? -120;
+  const loud = e.map((v) => v > peak - 30);
+
+  // Group loud frames into events.
+  const events = [];
+  const split = Math.ceil(splitMs / frameMs);
+  let cur = null, quiet = 0;
+  e.forEach((v, i) => {
+    if (loud[i]) {
+      if (!cur || quiet >= split) { cur = { a: i, b: i, energy: 0 }; events.push(cur); }
+      cur.b = i;
+      quiet = 0;
+    } else if (cur) quiet++;
+    if (cur) cur.energy += 10 ** (v / 10);
+  });
+
+  // Join events closer than joinMs into one cluster, then keep the cluster
+  // with the most energy.
+  const join = Math.ceil((joinMs ?? splitMs) / frameMs);
+  const clusters = [];
+  for (const ev of events) {
+    const last = clusters.at(-1);
+    if (last && ev.a - last.b - 1 <= join) { last.b = ev.b; last.energy += ev.energy; }
+    else clusters.push({ ...ev });
+  }
+  const { a: a0, b: b0 } = clusters.reduce((m, c) => (c.energy > m.energy ? c : m));
+  let a = a0, b = b0;
+
+  // Let the decay run on while it stays above peak - 50 dB and the noise floor.
+  const ringFloor = Math.max(peak - 50, floor + 6);
+  const maxTail = Math.ceil(tailMs / frameMs);
+  let t = 0;
+  while (t < maxTail && b + 1 < e.length && e[b + 1] > ringFloor && !loud[b + 1]) { b++; t++; }
+
+  const s = Math.max(0, a * hop - Math.floor((SR * preMs) / 1000));
+  return y.slice(s, Math.min(y.length, (b + 1) * hop));
+}
+
+
+// Shortens every silence inside a sound to at most keepMs, crossfading the
+// two sides over 10 ms so the cut does not click. Silence means quieter
+// than peak - 30 dB, as in trimEvent.
+export function closeGaps(y, { keepMs = 40, minMs = 60 } = {}) {
+  const { e, hop } = envelope(y);
+  const peak = Math.max(...e);
+  const loud = e.map((v) => v > peak - 30);
+  const first = loud.indexOf(true);
+  const last = loud.lastIndexOf(true);
+  const cuts = []; // [start, end) sample ranges to remove
+  let run = 0;
+  for (let i = first; i <= last; i++) {
+    if (!loud[i]) { run++; continue; }
+    if (run * hop >= (SR * minMs) / 1000) {
+      const gapStart = (i - run) * hop;
+      const gapEnd = i * hop;
+      const keep = Math.floor((SR * keepMs) / 1000);
+      // Keep half the allowed silence on each side of the cut.
+      cuts.push([gapStart + keep / 2, gapEnd - keep / 2].map(Math.floor));
+    }
+    run = 0;
+  }
+  if (!cuts.length) return y;
+  const xf = Math.floor(SR * 0.01);
+  const parts = [];
+  let pos = 0;
+  for (const [a, b] of cuts) { parts.push(y.slice(pos, a + xf)); pos = b; }
+  parts.push(y.slice(pos));
+  // Join the parts, overlapping xf samples at each seam with equal-power fades.
+  let out = parts[0];
+  for (const p of parts.slice(1)) {
+    const joined = new Float32Array(out.length + p.length - xf);
+    joined.set(out.subarray(0, out.length - xf));
+    for (let i = 0; i < xf; i++) {
+      const g = i / xf;
+      joined[out.length - xf + i] = out[out.length - xf + i] * Math.cos((g * Math.PI) / 2) + p[i] * Math.sin((g * Math.PI) / 2);
+    }
+    joined.set(p.subarray(xf), out.length);
+    out = joined;
+  }
+  return out;
+}

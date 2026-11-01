@@ -7,7 +7,7 @@ import { createKit, n } from './kit.mjs';
 import { synthRecipes } from './synth-recipes.mjs';
 import { setRecipes } from './set-recipes.mjs';
 import { seedPrompts } from './seed-prompts.mjs';
-import { SR, trim, level, wav16 } from './finish.mjs';
+import { SR, trim, trimEvent, closeGaps, level, wav16 } from './finish.mjs';
 
 const DIST = 'dist';
 mkdirSync(`${DIST}/sounds`, { recursive: true });
@@ -24,9 +24,19 @@ function finishSeed(p) {
   const raw = execFileSync('ffmpeg', ['-v', 'error', '-i', `out/seed-raw/${p.id}.wav`, '-ac', '1', '-ar', String(SR), '-f', 'f32le', '-'], { maxBuffer: 1 << 28 });
   const y = new Float32Array(raw.buffer, raw.byteOffset, raw.length / 4).slice();
   const maxS = p.maxS ?? (p.mode === 'single' ? 0.6 : 2);
-  const t = trim(y, { mode: p.mode === 'all' ? 'gesture' : p.mode, maxS });
-  const capped = t.length >= Math.floor(SR * maxS) - 1;
-  return level(t, { fadeOutMs: capped ? 80 : p.mode === 'single' ? 15 : 25 });
+  // Single hits keep one event. Gestures keep every part less than 600 ms
+  // apart, so a two-stroke eraser rub stays whole, but a second take after a
+  // long pause is dropped. Rhythmic sounds use their own spacing.
+  let t = trimEvent(y, {
+    splitMs: p.mode === 'single' ? 60 : 150,
+    joinMs: p.rhythmMs ?? (p.mode === 'single' ? 60 : 600),
+    tailMs: p.ring ? 300 : 120,
+  });
+  // Rhythmic sounds keep their gaps; everything else gets them shortened.
+  if (!p.rhythmMs) t = closeGaps(t);
+  const capped = t.length > Math.floor(SR * maxS);
+  if (capped) t = t.slice(0, Math.floor(SR * maxS));
+  return level(t, { fadeOutMs: capped ? 80 : 30 });
 }
 
 // 48 bars of peak level, 0 to 1, for drawing waveforms without decoding audio.
@@ -54,7 +64,7 @@ for (const [kind, item] of all) {
   const wav = `${DIST}/sounds/${item.id}.wav`;
   writeFileSync(wav, wav16(y));
   execFileSync('ffmpeg', ['-v', 'error', '-y', '-i', wav, '-c:a', 'aac_at', '-b:a', '128k', `${DIST}/sounds/${item.id}.m4a`]);
-  const { play, mode, maxS, levelDb, generated, ...meta } = item;
+  const { play, mode, maxS, levelDb, generated, rhythmMs, ring, ...meta } = item;
   catalog.push({
     ...meta,
     duration: Math.round((y.length / SR) * 1000) / 1000,

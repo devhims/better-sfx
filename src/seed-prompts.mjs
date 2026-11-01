@@ -63,3 +63,10 @@ const maxS = {
   'marker-squeak': 1.35, 'eraser-rub': 1.0, 'sticky-note-peel': 0.6, 'tape-pull': 1.1,
 };
 for (const p of seedPrompts) if (maxS[p.id]) p.maxS = maxS[p.id];
+
+// Gaps that belong to the sound, in ms: the pause between two knocks, a coin
+// bouncing, keys shaking. Longer silences still split off extra takes.
+const rhythmMs = { 'door-knock': 400, 'coin-drop': 300, 'keys-jingle': 250 };
+for (const [id, ms] of Object.entries(rhythmMs)) seedPrompts.find((p) => p.id === id).rhythmMs = ms;
+// Struck sounds that should ring out instead of stopping short.
+for (const id of ['glass-tap', 'mug-tap', 'cash-register', 'coin-drop']) seedPrompts.find((p) => p.id === id).ring = true;
