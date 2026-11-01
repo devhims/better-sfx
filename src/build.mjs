@@ -34,9 +34,21 @@ function finishSeed(p) {
   });
   // Rhythmic sounds keep their gaps; everything else gets them shortened.
   if (!p.rhythmMs) t = closeGaps(t);
+  // preRollS: start at most this long before the loudest moment, so a long
+  // quiet build-up (a drawer sliding) does not read as silence.
+  if (p.preRollS) {
+    let top = 0;
+    for (let i = 1; i < t.length; i++) if (Math.abs(t[i]) > Math.abs(t[top])) top = i;
+    const start = Math.max(0, top - Math.floor(SR * p.preRollS));
+    if (start > 0) {
+      t = t.slice(start);
+      const fi = Math.floor(SR * 0.02);
+      for (let i = 0; i < fi; i++) t[i] *= i / fi;
+    }
+  }
   const capped = t.length > Math.floor(SR * maxS);
   if (capped) t = t.slice(0, Math.floor(SR * maxS));
-  return level(t, { fadeOutMs: capped ? 80 : 30 });
+  return level(t, { fadeOutMs: capped ? 80 : 30, rmsDb: -18 + (p.levelDb ?? 0) });
 }
 
 // 48 bars of peak level, 0 to 1, for drawing waveforms without decoding audio.
@@ -64,7 +76,7 @@ for (const [kind, item] of all) {
   const wav = `${DIST}/sounds/${item.id}.wav`;
   writeFileSync(wav, wav16(y));
   execFileSync('ffmpeg', ['-v', 'error', '-y', '-i', wav, '-c:a', 'aac_at', '-b:a', '128k', `${DIST}/sounds/${item.id}.m4a`]);
-  const { play, mode, maxS, levelDb, generated, rhythmMs, ring, ...meta } = item;
+  const { play, mode, maxS, levelDb, generated, rhythmMs, ring, preRollS, ...meta } = item;
   catalog.push({
     ...meta,
     duration: Math.round((y.length / SR) * 1000) / 1000,
