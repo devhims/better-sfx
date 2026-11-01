@@ -5,6 +5,7 @@ import { execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { createKit, n } from './kit.mjs';
 import { synthRecipes } from './synth-recipes.mjs';
+import { setRecipes } from './set-recipes.mjs';
 import { seedPrompts } from './seed-prompts.mjs';
 import { SR, trim, level, wav16 } from './finish.mjs';
 
@@ -16,7 +17,7 @@ async function renderSynth(r) {
   const seed = [...r.id].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 2147483647, 7);
   r.play(createKit(ctx, ctx.destination, seed), n);
   const out = await ctx.startRendering();
-  return level(trim(out.getChannelData(0).slice(), { floorDb: 60, preMs: 1 }), { fadeOutMs: 5 });
+  return level(trim(out.getChannelData(0).slice(), { floorDb: 60, preMs: 1 }), { fadeOutMs: 5, rmsDb: -18 + (r.levelDb ?? 0) });
 }
 
 function finishSeed(p) {
@@ -43,19 +44,25 @@ function peaks(y, bars = 48) {
 }
 
 const catalog = [];
-const all = [...synthRecipes.map((r) => ['synth', r]), ...seedPrompts.map((p) => ['seed', p])];
+const all = [
+  ...synthRecipes.map((r) => ['synth', r]),
+  ...setRecipes.map((r) => ['synth', r]),
+  ...seedPrompts.map((p) => ['seed', p]),
+];
 for (const [kind, item] of all) {
   const y = kind === 'synth' ? await renderSynth(item) : finishSeed(item);
   const wav = `${DIST}/sounds/${item.id}.wav`;
   writeFileSync(wav, wav16(y));
   execFileSync('ffmpeg', ['-v', 'error', '-y', '-i', wav, '-c:a', 'aac_at', '-b:a', '128k', `${DIST}/sounds/${item.id}.m4a`]);
-  const { play, mode, maxS, ...meta } = item;
+  const { play, mode, maxS, levelDb, generated, ...meta } = item;
   catalog.push({
     ...meta,
     duration: Math.round((y.length / SR) * 1000) / 1000,
     peaks: peaks(y),
     files: { wav: `sounds/${item.id}.wav`, m4a: `sounds/${item.id}.m4a` },
-    ...(kind === 'synth' ? { code: play.toString() } : {}),
+    // Set sounds are built from shared style code, so play.toString() alone
+    // would not run. They get no snippet until the site bundles the styles.
+    ...(kind === 'synth' && !generated ? { code: play.toString() } : {}),
   });
   console.log(`${item.id.padEnd(20)} ${kind.padEnd(6)} ${(y.length / SR).toFixed(2)}s`);
 }

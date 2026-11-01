@@ -42,9 +42,24 @@ export const seedPrompts = [
   f('bubble-wrap', 'Bubble wrap', 'objects', ['bubble wrap', 'pop', 'snap', 'satisfying', 'plastic'], 'One bubble-wrap bubble popping.', 'single', 'A single bubble wrap bubble popped between fingers'),
   f('cork-pop', 'Cork pop', 'objects', ['cork', 'pop', 'champagne', 'celebrate', 'bottle'], 'A cork pulled from a bottle.', 'single', 'A single cork popping out of a wine bottle'),
   f('water-drop', 'Water drop', 'objects', ['water', 'drop', 'drip', 'liquid', 'plink'], 'A single water drop into a basin.', 'single', 'A single water drop falling into a small basin of water'),
+
+  // App actions: real-world sounds that match a verb in an app
+  f('scissors-snip', 'Scissors snip', 'app actions', ['cut', 'scissors', 'snip', 'trim', 'crop'], 'One snip of scissors, for cut.', 'single', 'A single snip of metal scissors cutting paper'),
+  f('book-close', 'Book close', 'app actions', ['archive', 'book', 'close', 'done', 'thump'], 'A hardcover book shutting, for archive.', 'single', 'A hardcover book being closed firmly'),
+  f('drawer-shut', 'Drawer shut', 'app actions', ['archive', 'drawer', 'file away', 'close', 'wood'], 'A wooden drawer sliding shut, for file away.', 'all', 'A small wooden desk drawer sliding shut'),
+  f('thumbtack-push', 'Thumbtack', 'app actions', ['pin', 'thumbtack', 'corkboard', 'push', 'save'], 'A thumbtack pressed into cork, for pin.', 'single', 'A single thumbtack pushed into a cork board'),
+  f('marker-squeak', 'Marker', 'app actions', ['highlight', 'marker', 'squeak', 'draw', 'mark'], 'A marker drawing one short stroke, for highlight.', 'all', 'A felt marker drawing one short quick stroke on paper with a slight squeak'),
+  f('eraser-rub', 'Eraser', 'app actions', ['erase', 'clear', 'eraser', 'rub', 'undo'], 'A pencil eraser rubbing, for clear.', 'all', 'A rubber pencil eraser rubbed back and forth on paper, short'),
+  f('pencil-scribble', 'Pencil scribble', 'app actions', ['draw', 'pencil', 'scribble', 'sketch', 'write'], 'A quick pencil scribble, for draw.', 'all', 'A quick short pencil scribble on paper'),
+  f('sticky-note-peel', 'Sticky note', 'app actions', ['note', 'sticky note', 'peel', 'new', 'post-it'], 'A sticky note peeled off a pad, for new note.', 'all', 'A sticky note being peeled off a pad'),
+  f('tape-pull', 'Tape pull', 'app actions', ['attach', 'tape', 'stick', 'pull', 'clip'], 'A strip of tape pulled off a roll, for attach.', 'all', 'A short strip of clear adhesive tape pulled quickly off a roll'),
+  f('folder-drop', 'Folder drop', 'app actions', ['file', 'folder', 'drop', 'save', 'organize'], 'A paper folder dropped on a stack, for file.', 'single', 'A manila paper folder dropped flat onto a stack of papers on a desk'),
 ];
 
 // Length caps in seconds, set by reading each take's level over time.
 // Single hits default to 0.6 s and gestures to 2 s.
-const maxS = { 'glass-tap': 1.2, 'light-switch': 0.35, spacebar: 0.45 };
+const maxS = {
+  'glass-tap': 1.2, 'light-switch': 0.35, spacebar: 0.45,
+  'marker-squeak': 1.35, 'eraser-rub': 1.0, 'sticky-note-peel': 0.6, 'tape-pull': 1.1,
+};
 for (const p of seedPrompts) if (maxS[p.id]) p.maxS = maxS[p.id];
