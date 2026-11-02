@@ -22,7 +22,8 @@
     "dev": "node src/site.mjs && node src/serve.mjs",
     "check": "tsc -p .",
     "audit": "node src/audit-gaps.mjs",
-    "generate": "node src/generate-seed.mjs"
+    "generate": "node src/generate-seed.mjs",
+    "icons": "bash scripts/rasterize-icons.sh"
   },
   "dependencies": {
     "node-web-audio-api": "^2.2.0"
