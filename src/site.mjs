@@ -12,6 +12,9 @@ const PARENT = 'https://www.video2ctx.dev';
 // GitHub repo the agent skill installs from. It must exist before launch.
 const SKILL_REPO = 'devhims/better-sfx';
 const INSTALL = `npx skills add ${SKILL_REPO}`;
+const REPO_URL = `https://github.com/${SKILL_REPO}`;
+// GitHub mark: Primer Octicons mark-github-16, MIT license.
+const GH_ICON = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.766 11.328c-2.063-.25-3.516-1.734-3.516-3.656 0-.781.281-1.625.75-2.188-.203-.515-.172-1.609.063-2.062.625-.078 1.468.25 1.968.703.594-.187 1.219-.281 1.985-.281.765 0 1.39.094 1.953.265.484-.437 1.344-.765 1.969-.687.218.422.25 1.515.046 2.047.5.593.766 1.39.766 2.203 0 1.922-1.453 3.375-3.547 3.64.531.344.89 1.094.89 1.954v1.625c0 .468.391.734.86.547C13.781 14.359 16 11.53 16 8.03 16 3.61 12.406 0 7.984 0 3.563 0 0 3.61 0 8.031a7.88 7.88 0 0 0 5.172 7.422c.422.156.828-.125.828-.547v-1.25c-.219.094-.5.156-.75.156-1.031 0-1.64-.562-2.078-1.609-.172-.422-.36-.672-.719-.719-.187-.015-.25-.093-.25-.187 0-.188.313-.328.625-.328.453 0 .844.281 1.25.86.313.452.64.655 1.031.655s.641-.14 1-.5c.266-.265.47-.5.657-.656"/></svg>';
 const LICENSE_URL = `${BASE}/license/`;
 const DIST = 'dist';
 const today = new Date().toISOString().slice(0, 10);
@@ -62,6 +65,7 @@ const badge = (s) => (s.source === 'synth' ? 'code' : 'recording');
 /** @param {CatalogEntry} s */
 const secs = (s) => `${s.duration.toFixed(2)} s`;
 const ORG = { '@type': 'Organization', name: 'video2ctx', url: PARENT };
+const SAME_AS = [`https://github.com/${SKILL_REPO}`];
 const counts = { total, codeCount, recCount };
 
 // Download icon: Phosphor "DownloadSimple" (regular), MIT license.
@@ -116,7 +120,7 @@ ${jsonld.map(ld).join('\n')}
 }
 
 /** @param {string} root relative path to the site root @param {string} [tag] */
-const brand = (root, tag = 'p') => `<${tag} class="brand"><a class="home" href="${root}">Better SFX</a> <a class="by" href="${PARENT}" target="_blank" rel="noopener">by video2ctx</a></${tag}>`;
+const brand = (root, tag = 'p') => `<div class="topbar"><${tag} class="brand"><a class="home" href="${root}">Better SFX</a> <a class="by" href="${PARENT}" target="_blank" rel="noopener">by video2ctx</a></${tag}><a class="gh" href="${REPO_URL}" target="_blank" rel="noopener">${GH_ICON}<span>GitHub</span></a></div>`;
 
 /** @param {CatalogEntry} s @param {string} root */
 function card(s, root) {
@@ -250,8 +254,8 @@ function byIdOrFirst(id, category) {
 
 /** @param {string} root */
 function footer(root) {
-  const links = [...USES.map((u) => [`${u.slug}/`, u.title]), ['license/', 'License'], ['llms.txt', 'llms.txt']];
-  return `<footer><nav>${links.map(([h, t]) => `<a href="${root}${h}">${esc(t)}</a>`).join('')}</nav>
+  const links = [...USES.map((u) => [`${root}${u.slug}/`, u.title]), [`${root}license/`, 'License'], [`${root}llms.txt`, 'llms.txt'], [REPO_URL, 'GitHub']];
+  return `<footer><nav>${links.map(([h, t]) => `<a href="${h}">${esc(t)}</a>`).join('')}</nav>
 <p>Better SFX is free and made by <a href="${PARENT}">video2ctx</a>.</p></footer>`;
 }
 
@@ -260,7 +264,7 @@ function home() {
   const pills = ['all', ...categories].map((c) => `<button data-c="${esc(c)}" aria-pressed="${c === 'all'}">${esc(c)}</button>`).join('');
   const description = `${total} free sound effects for apps, videos and AI agents: clicks, whooshes, notifications, foley and 5 UI sound sets. Download WAV or M4A.`;
   const jsonld = [
-    { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Better SFX', alternateName: ['BetterSFX', 'Better SFX by video2ctx'], url: `${BASE}/`, description, publisher: ORG, isAccessibleForFree: true, license: LICENSE_URL,
+    { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Better SFX', alternateName: ['BetterSFX', 'Better SFX by video2ctx'], url: `${BASE}/`, description, publisher: ORG, sameAs: SAME_AS, isAccessibleForFree: true, license: LICENSE_URL,
       potentialAction: { '@type': 'SearchAction', target: `${BASE}/?q={search_term_string}`, 'query-input': 'required name=search_term_string' } },
     { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Better SFX sound effects', url: `${BASE}/`,
       mainEntity: { '@type': 'ItemList', numberOfItems: total, itemListElement: catalog.map((s, i) => ({ '@type': 'ListItem', position: i + 1, url: `${BASE}/sound/${s.id}/`, name: s.name })) } },
@@ -310,7 +314,7 @@ ${catalog.map((s) => card(s, '')).join('\n')}
       <h2 id="hm-agent" class="sp-h2">Use it from an AI agent</h2>
       <p>Install the Better SFX skill in Claude Code, Codex or any agent that supports skills. Your agent can then search the library, download the right sounds into your project and wire them up.</p>
       ${snippet('Install the skill', INSTALL)}
-      <p class="hm-note">Agents without the skill can read <a href="catalog.json">catalog.json</a> or <a href="llms.txt">llms.txt</a>. Every sound has a stable file URL.</p>
+      <p class="hm-note">Agents without the skill can read <a href="catalog.json">catalog.json</a> or <a href="llms.txt">llms.txt</a>. Every sound has a stable file URL. The skill, the sound recipes and the site are all <a href="${REPO_URL}">on GitHub</a>.</p>
     </div>
     <div class="hm-panel hm-license" aria-labelledby="hm-free">
       <h2 id="hm-free" class="sp-h2">Free for any project</h2>
@@ -539,7 +543,11 @@ const CSS = `:root { --bg: #fafaf9; --card: #fff; --ink: #1c1917; --muted: #7871
 body { margin: 0; font: 14px/1.5 ui-sans-serif, system-ui, sans-serif; background: var(--bg); color: var(--ink); }
 a { color: inherit; }
 header { position: sticky; top: 0; background: var(--bg); padding: 18px 24px 12px; border-bottom: 1px solid var(--line); z-index: 1; }
+.topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
 .brand { margin: 0; font-size: 18px; font-weight: 600; }
+.gh { display: inline-flex; align-items: center; gap: 7px; height: 34px; padding: 0 12px; border-radius: 999px; color: var(--ink); font-size: 14px; font-weight: 500; text-decoration: none; transition: background-color 200ms; }
+.gh svg { width: 17px; height: 17px; fill: currentColor; }
+.gh:hover, .gh:focus-visible { background: var(--card); }
 .brand .home { text-decoration: none; }
 .brand .by { font-size: 13px; font-weight: 400; margin-left: 4px; color: var(--muted); text-decoration: none; text-underline-offset: 3px; }
 .brand .by:hover, .brand .by:focus-visible { color: var(--ink); text-decoration: underline; }
@@ -882,6 +890,8 @@ Glass, wood, soft, retro 8-bit and mechanical sets each cover the same ten actio
 ${categories.map((c) => `- [${catTitle(c)}](${BASE}/category/${slug(c)}/): ${catalog.filter((s) => s.category === c).length} sounds`).join('\n')}
 
 ## Optional
+
+- [Source code on GitHub](https://github.com/${SKILL_REPO}): the build, the sound recipes, the recordings and the agent skill
 
 - [video2ctx](${PARENT}): the company that makes Better SFX
 `);

@@ -53,4 +53,6 @@ Glass, wood, soft, retro 8-bit and mechanical sets each cover the same ten actio
 
 ## Optional
 
+- [Source code on GitHub](https://github.com/devhims/better-sfx): the build, the sound recipes, the recordings and the agent skill
+
 - [video2ctx](https://www.video2ctx.dev): the company that makes Better SFX
