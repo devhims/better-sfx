@@ -8,13 +8,16 @@ const HOP = Math.floor(SR * 0.005);
 const QUIET_DB = 30; // quieter than peak - 30 dB counts as silence
 const MIN_GAP_MS = 60;
 
+/** @type {import('../types/sfx.js').CatalogEntry[]} */
 const catalog = JSON.parse(readFileSync('dist/catalog.json', 'utf8'));
 const ids = process.argv.slice(2);
 const list = catalog.filter((s) => (ids.length ? ids.includes(s.id) : s.source === 'seed-audio'));
 
+/** @param {string} path */
 export function audit(path) {
   const raw = execFileSync('ffmpeg', ['-v', 'error', '-i', path, '-ac', '1', '-f', 'f32le', '-'], { maxBuffer: 1 << 28 });
   const y = new Float32Array(raw.buffer, raw.byteOffset, raw.length / 4);
+  /** @type {number[]} */
   const e = [];
   for (let i = 0; i < y.length; i += HOP) {
     let p = 0;
@@ -25,6 +28,7 @@ export function audit(path) {
   const loud = e.map((v) => v > peak - QUIET_DB);
   const first = loud.indexOf(true);
   const last = loud.lastIndexOf(true);
+  /** @type {{ at: number, ms: number }[]} */
   const gaps = [];
   let run = 0;
   for (let i = first; i <= last; i++) {
@@ -37,6 +41,7 @@ export function audit(path) {
   return { dur: y.length / SR, lead: first * 5, tail: (e.length - 1 - last) * 5, gaps, quietShare: loud.filter((v) => !v).length / e.length };
 }
 
+/** @param {unknown} s @param {number} w */
 const pad = (s, w) => String(s).padEnd(w);
 console.log(pad('id', 18), pad('dur', 6), pad('lead', 6), pad('tail', 6), pad('quiet', 6), 'gaps inside (start s / length ms)');
 for (const s of list) {

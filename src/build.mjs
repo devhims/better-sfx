@@ -9,9 +9,14 @@ import { setRecipes } from './set-recipes.mjs';
 import { seedPrompts } from './seed-prompts.mjs';
 import { SR, trim, trimEvent, closeGaps, level, wav16 } from './finish.mjs';
 
+/** @typedef {import('../types/sfx.js').SynthRecipe} SynthRecipe */
+/** @typedef {import('../types/sfx.js').SeedPrompt} SeedPrompt */
+/** @typedef {import('../types/sfx.js').CatalogEntry} CatalogEntry */
+
 const DIST = 'dist';
 mkdirSync(`${DIST}/sounds`, { recursive: true });
 
+/** @param {SynthRecipe} r @returns {Promise<Float32Array>} */
 async function renderSynth(r) {
   const ctx = new OfflineAudioContext(1, SR * 4, SR);
   const seed = [...r.id].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 2147483647, 7);
@@ -20,6 +25,7 @@ async function renderSynth(r) {
   return level(trim(out.getChannelData(0).slice(), { floorDb: 60, preMs: 1 }), { fadeOutMs: 5, rmsDb: -18 + (r.levelDb ?? 0) });
 }
 
+/** @param {SeedPrompt} p @returns {Float32Array} */
 function finishSeed(p) {
   const raw = execFileSync('ffmpeg', ['-v', 'error', '-i', `out/seed-raw/${p.id}.wav`, '-ac', '1', '-ar', String(SR), '-f', 'f32le', '-'], { maxBuffer: 1 << 28 });
   const y = new Float32Array(raw.buffer, raw.byteOffset, raw.length / 4).slice();
@@ -52,9 +58,11 @@ function finishSeed(p) {
 }
 
 // 48 bars of peak level, 0 to 1, for drawing waveforms without decoding audio.
+/** @param {Float32Array} y @param {number} [bars] @returns {number[]} */
 function peaks(y, bars = 48) {
   const step = y.length / bars;
   let max = 0;
+  /** @type {number[]} */
   const out = [];
   for (let b = 0; b < bars; b++) {
     let p = 0;
@@ -65,29 +73,40 @@ function peaks(y, bars = 48) {
   return out.map((p) => Math.round((p / max) * 100) / 100);
 }
 
+/** @type {CatalogEntry[]} */
 const catalog = [];
+/** @type {Array<{ kind: 'synth', item: SynthRecipe } | { kind: 'seed', item: SeedPrompt }>} */
 const all = [
-  ...synthRecipes.map((r) => ['synth', r]),
-  ...setRecipes.map((r) => ['synth', r]),
-  ...seedPrompts.map((p) => ['seed', p]),
-  ...foleySynth.map((r) => ['synth', r]),
+  ...synthRecipes.map((item) => ({ kind: /** @type {const} */ ('synth'), item })),
+  ...setRecipes.map((item) => ({ kind: /** @type {const} */ ('synth'), item })),
+  ...seedPrompts.map((item) => ({ kind: /** @type {const} */ ('seed'), item })),
+  ...foleySynth.map((item) => ({ kind: /** @type {const} */ ('synth'), item })),
 ];
-for (const [kind, item] of all) {
-  const y = kind === 'synth' ? await renderSynth(item) : finishSeed(item);
+for (const job of all) {
+  const { item } = job;
+  const y = job.kind === 'synth' ? await renderSynth(job.item) : finishSeed(job.item);
   const wav = `${DIST}/sounds/${item.id}.wav`;
   writeFileSync(wav, wav16(y));
   execFileSync('ffmpeg', ['-v', 'error', '-y', '-i', wav, '-c:a', 'aac_at', '-b:a', '128k', `${DIST}/sounds/${item.id}.m4a`]);
-  const { play, mode, maxS, levelDb, generated, rhythmMs, ring, preRollS, ...meta } = item;
+  // Every published field is named here, so the type check can hold
+  // catalog.json to the CatalogEntry format in the skill's catalog.d.ts.
   catalog.push({
-    ...meta,
+    id: item.id,
+    name: item.name,
+    category: item.category,
+    ...(job.kind === 'synth' && job.item.set ? { set: job.item.set, action: job.item.action } : {}),
+    tags: item.tags,
+    description: item.description,
+    source: item.source,
+    ...(job.kind === 'seed' ? { prompt: job.item.prompt } : {}),
     duration: Math.round((y.length / SR) * 1000) / 1000,
     peaks: peaks(y),
     files: { wav: `sounds/${item.id}.wav`, m4a: `sounds/${item.id}.m4a` },
     // Set sounds are built from shared style code, so play.toString() alone
     // would not run. They get no snippet until the site bundles the styles.
-    ...(kind === 'synth' && !generated ? { code: play.toString() } : {}),
+    ...(job.kind === 'synth' && !job.item.generated ? { code: job.item.play.toString() } : {}),
   });
-  console.log(`${item.id.padEnd(20)} ${kind.padEnd(6)} ${(y.length / SR).toFixed(2)}s`);
+  console.log(`${item.id.padEnd(20)} ${job.kind.padEnd(6)} ${(y.length / SR).toFixed(2)}s`);
 }
 
 writeFileSync(`${DIST}/catalog.json`, JSON.stringify(catalog, null, 1));

@@ -2,10 +2,18 @@
 // mode 'single' keeps only the loudest event; 'all' keeps the whole gesture.
 
 const STYLE = 'isolated foley sound effect, close mic, dry studio recording, no background noise, no music, no voice, no speech';
+/** @typedef {import('../types/sfx.js').SeedPrompt} SeedPrompt */
+
+/**
+ * @param {string} id @param {string} name @param {string} category @param {string[]} tags
+ * @param {string} description @param {'single' | 'all'} mode @param {string} what
+ * @returns {SeedPrompt}
+ */
 const f = (id, name, category, tags, description, mode, what) => ({
   id, name, category, tags, description, source: 'seed-audio', mode, prompt: `${what}, ${STYLE}`,
 });
 
+/** @type {SeedPrompt[]} */
 export const seedPrompts = [
   // Keyboard and desk
   f('key-mechanical', 'Mechanical key', 'keyboard', ['key', 'keyboard', 'mechanical', 'thock', 'press', 'typing'], 'One press on a mechanical keyboard.', 'single', 'A single crisp mechanical keyboard key press'),
@@ -59,8 +67,16 @@ export const seedPrompts = [
   f('folder-drop', 'Folder drop', 'app actions', ['file', 'folder', 'drop', 'save', 'organize'], 'A paper folder dropped on a stack, for file.', 'single', 'A manila paper folder dropped flat onto a stack of papers on a desk'),
 ];
 
+/** @param {string} id @returns {SeedPrompt} the prompt, or an error naming the missing id */
+function byId(id) {
+  const p = seedPrompts.find((x) => x.id === id);
+  if (!p) throw new Error(`seed-prompts: no sound with id ${id}`);
+  return p;
+}
+
 // Length caps in seconds, set by reading each take's level over time.
 // Single hits default to 0.6 s and gestures to 2 s.
+/** @type {Record<string, number>} */
 const maxS = {
   'glass-tap': 1.2, 'light-switch': 0.35, spacebar: 0.45,
   'marker-squeak': 1.35, 'eraser-rub': 1.0, 'sticky-note-peel': 0.6, 'tape-pull': 1.1,
@@ -70,9 +86,9 @@ for (const p of seedPrompts) if (maxS[p.id]) p.maxS = maxS[p.id];
 // Gaps that belong to the sound, in ms: the pause between two knocks, a coin
 // bouncing, keys shaking. Longer silences still split off extra takes.
 const rhythmMs = { 'door-knock-a': 400, 'door-knock-b': 400, 'coin-drop': 300, 'keys-jingle': 250 };
-for (const [id, ms] of Object.entries(rhythmMs)) seedPrompts.find((p) => p.id === id).rhythmMs = ms;
+for (const [id, ms] of Object.entries(rhythmMs)) byId(id).rhythmMs = ms;
 // Level offsets in dB, for sounds that are too loud next to the rest.
-seedPrompts.find((p) => p.id === 'trash-bin').levelDb = -6;
-seedPrompts.find((p) => p.id === 'drawer-shut').preRollS = 0.3;
+byId('trash-bin').levelDb = -6;
+byId('drawer-shut').preRollS = 0.3;
 // Struck sounds that should ring out instead of stopping short.
-for (const id of ['glass-tap', 'mug-tap', 'cash-register', 'coin-drop']) seedPrompts.find((p) => p.id === id).ring = true;
+for (const id of ['glass-tap', 'mug-tap', 'cash-register', 'coin-drop']) byId(id).ring = true;

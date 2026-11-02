@@ -11,11 +11,15 @@
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 
+/** @typedef {import('./catalog.js').CatalogEntry} CatalogEntry */
+
 const DEFAULT_CATALOG = 'https://sfx.video2ctx.dev/catalog.json';
 const SITE = 'https://sfx.video2ctx.dev';
 const LICENSE = 'Free and royalty-free for personal and commercial use. No credit required. Do not resell or redistribute the sounds on their own. https://sfx.video2ctx.dev/license/';
 
+/** @param {...unknown} a */
 const log = (...a) => console.error('[better-sfx]', ...a);
+/** @param {string} message @param {object} [extra] @returns {never} */
 function fail(message, extra = {}) {
   console.log(JSON.stringify({ ok: false, error: message, ...extra }, null, 2));
   process.exit(1);
@@ -24,11 +28,14 @@ function fail(message, extra = {}) {
 // ---------- arguments ----------
 const argv = process.argv.slice(2);
 const command = argv.shift();
+/** @type {Record<string, string>} */
 const flags = {};
+let force = false;
+/** @type {string[]} */
 const words = [];
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i];
-  if (a === '--force') flags.force = true;
+  if (a === '--force') force = true;
   else if (a.startsWith('--')) flags[a.slice(2)] = argv[++i];
   else words.push(a);
 }
@@ -37,6 +44,7 @@ for (let i = 0; i < argv.length; i++) {
 const source = flags.catalog || process.env.BETTER_SFX_CATALOG || DEFAULT_CATALOG;
 const remote = /^https?:\/\//.test(source);
 
+/** @returns {Promise<CatalogEntry[]>} */
 async function loadCatalog() {
   try {
     if (!remote) return JSON.parse(readFileSync(source, 'utf8'));
@@ -49,8 +57,10 @@ async function loadCatalog() {
 }
 
 // File paths in the catalog are relative to the catalog itself.
+/** @param {string} rel */
 const fileRef = (rel) => (remote ? new URL(rel, source).href : resolve(dirname(source), rel));
 
+/** @param {CatalogEntry} s */
 function view(s) {
   return {
     id: s.id,
@@ -70,6 +80,7 @@ function view(s) {
 // ---------- search ----------
 // Each query word scores against the name, tags, category and description.
 // Results that match every word rank above results that match some.
+/** @param {CatalogEntry} s @param {string[]} terms @returns {number} */
 function score(s, terms) {
   const name = s.name.toLowerCase();
   const tags = s.tags.map((t) => t.toLowerCase());
@@ -92,6 +103,7 @@ function score(s, terms) {
   return hits === terms.length ? total + 10 : total;
 }
 
+/** @param {CatalogEntry[]} catalog */
 function filtered(catalog) {
   return catalog.filter((s) =>
     (!flags.category || s.category === flags.category) &&
@@ -101,6 +113,7 @@ function filtered(catalog) {
 }
 
 // ---------- download ----------
+/** @param {string} from URL or local path @param {string} to */
 async function fetchTo(from, to) {
   if (!remote) return copyFileSync(from, to);
   const res = await fetch(from);
@@ -116,16 +129,18 @@ if (command === 'search') {
   const limit = Number(flags.limit || 8);
   let list = filtered(catalog);
   if (terms.length) {
-    list = list.map((s) => [s, score(s, terms)]).filter(([, n]) => n > 0).sort((a, b) => b[1] - a[1]).map(([s]) => s);
+    list = list.map((s) => ({ s, n: score(s, terms) })).filter((r) => r.n > 0).sort((a, b) => b.n - a.n).map((r) => r.s);
   }
   const results = list.slice(0, limit).map(view);
   log(`${results.length} of ${list.length} matching sounds`);
   console.log(JSON.stringify({ ok: true, query: terms.join(' '), count: list.length, results }, null, 2));
 } else if (command === 'sets') {
+  /** @type {Record<string, { action?: string, id: string, duration: number }[]>} */
   const sets = {};
-  for (const s of catalog.filter((x) => x.set)) (sets[s.set] ??= []).push({ action: s.action, id: s.id, duration: s.duration });
+  for (const s of catalog) if (s.set) (sets[s.set] ??= []).push({ action: s.action, id: s.id, duration: s.duration });
   console.log(JSON.stringify({ ok: true, note: 'Each set covers the same actions in one voice. Use one set for a whole app.', sets }, null, 2));
 } else if (command === 'categories') {
+  /** @type {Record<string, number>} */
   const cats = {};
   for (const s of catalog) cats[s.category] = (cats[s.category] || 0) + 1;
   console.log(JSON.stringify({ ok: true, total: catalog.length, categories: cats }, null, 2));
@@ -136,14 +151,16 @@ if (command === 'search') {
   if (!exts.every((e) => e === 'm4a' || e === 'wav')) fail('--format must be m4a, wav or both');
   const dir = resolve(flags.dir || 'sounds');
   mkdirSync(dir, { recursive: true });
+  /** @type {{ id: string, name: string, path: string, page: string }[]} */
   const files = [];
+  /** @type {string[]} */
   const skipped = [];
   for (const id of words) {
     const s = catalog.find((x) => x.id === id);
     if (!s) fail(`Unknown sound id "${id}". Run search to find ids.`);
     for (const ext of exts) {
       const to = join(dir, `${id}.${ext}`);
-      if (existsSync(to) && !flags.force) { skipped.push(to); continue; }
+      if (existsSync(to) && !force) { skipped.push(to); continue; }
       log(`downloading ${id}.${ext}`);
       try { await fetchTo(fileRef(s.files[ext]), to); } catch (e) { fail(`Download failed for ${id}.${ext}: ${e.message}`, { network: remote }); }
       files.push({ id, name: s.name, path: to, page: `${SITE}/sound/${id}/` });

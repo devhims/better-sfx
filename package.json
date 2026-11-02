@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node src/build.mjs",
+    "site": "node src/site.mjs",
+    "check": "tsc -p .",
+    "audit": "node src/audit-gaps.mjs",
+    "generate": "node src/generate-seed.mjs"
   },
   "keywords": [],
   "author": "",
@@ -13,5 +17,9 @@
   "type": "commonjs",
   "dependencies": {
     "node-web-audio-api": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "typescript": "^7.0.2"
   }
 }

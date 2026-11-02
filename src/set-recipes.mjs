@@ -2,8 +2,14 @@
 // A style defines how a note, a tap and a rush of air sound. An action is a
 // pattern of those three, so every sound in a set shares one voice.
 
+/** @typedef {import('../types/sfx.js').SetStyle} SetStyle */
+/** @typedef {import('../types/sfx.js').SetAction} SetAction */
+/** @typedef {import('../types/sfx.js').SynthRecipe} SynthRecipe */
+
+/** @param {number} f @param {number} x semitones @returns {number} */
 const semi = (f, x) => f * 2 ** (x / 12);
 
+/** @type {Record<string, SetStyle>} */
 const STYLES = {
   glass: {
     label: 'Glass', root: 'C6', tags: ['glass', 'glassy', 'bright', 'airy', 'crystal'],
@@ -56,6 +62,7 @@ const STYLES = {
 
 // level: dB relative to the library's normal loudness, so a set keeps its
 // own balance (hover quieter than a notification).
+/** @type {Record<string, SetAction>} */
 const ACTIONS = {
   click: { name: 'click', tags: ['click', 'button', 'press'], desc: 'A button press.', level: -3,
     play: (s, k) => s.tap(k, 0, 1, 1) },
@@ -79,6 +86,7 @@ const ACTIONS = {
     play: (s, k, r) => { s.tap(k, 0, 0.9, 0.7); s.note(k, semi(r, -12), 0.04, 0.2, 0.3); s.note(k, semi(r, -17), 0.11, 0.3, 0.3); } },
 };
 
+/** @type {SynthRecipe[]} */
 export const setRecipes = [];
 for (const [styleId, style] of Object.entries(STYLES)) {
   for (const [actionId, action] of Object.entries(ACTIONS)) {

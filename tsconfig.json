@@ -1,0 +1,19 @@
+{
+  // Type checking only. TypeScript reads the .mjs files and reports errors;
+  // it never writes output, and the files stay plain JavaScript.
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "strict": true,
+    "target": "es2023",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "lib": ["es2023", "dom"],
+    "types": ["node"],
+    "skipLibCheck": true,
+    // catch (e) stays 'any', as in plain JavaScript.
+    "useUnknownInCatchVariables": false
+  },
+  "include": ["src/**/*.mjs", "skills/**/*.mjs", "skills/**/*.d.ts", "types/**/*.d.ts"]
+}

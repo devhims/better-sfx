@@ -1,10 +1,13 @@
 // Shared post-processing: trim, loudness match, fades, 16-bit mono WAV.
 export const SR = 48000;
 
+/** @param {number} x @returns {number} */
 const db = (x) => 20 * Math.log10(x + 1e-12);
 
 // 5 ms peak envelope in dB.
+/** @param {Float32Array} y @param {number} [hop] @returns {{ e: number[], hop: number }} */
 function envelope(y, hop = Math.floor(SR * 0.005)) {
+  /** @type {number[]} */
   const e = [];
   for (let i = 0; i < y.length; i += hop) {
     let p = 0;
@@ -19,6 +22,11 @@ function envelope(y, hop = Math.floor(SR * 0.005)) {
 // mode 'gesture': like 'all', but stops at the first 250 ms gap, so a stray
 // second take in a generated file is dropped.
 // maxS caps the length; the caller should use a longer fade when capped.
+/**
+ * @param {Float32Array} y
+ * @param {{ mode?: 'all' | 'single' | 'gesture', floorDb?: number, preMs?: number, maxS?: number }} [opts]
+ * @returns {Float32Array}
+ */
 export function trim(y, { mode = 'all', floorDb = 40, preMs = 3, maxS = Infinity } = {}) {
   const { e, hop } = envelope(y);
   const peak = Math.max(...e);
@@ -53,6 +61,11 @@ export function trim(y, { mode = 'all', floorDb = 40, preMs = 3, maxS = Infinity
 }
 
 // Loudest 50 ms RMS window to -18 dBFS, peak capped at -1 dBFS, then fades.
+/**
+ * @param {Float32Array} y
+ * @param {{ rmsDb?: number, peakDb?: number, fadeInMs?: number, fadeOutMs?: number }} [opts]
+ * @returns {Float32Array}
+ */
 export function level(y, { rmsDb = -18, peakDb = -1, fadeInMs = 1, fadeOutMs = 8 } = {}) {
   const w = Math.floor(SR * 0.05);
   let best = 0;
@@ -77,6 +90,7 @@ export function level(y, { rmsDb = -18, peakDb = -1, fadeInMs = 1, fadeOutMs = 8
   return out;
 }
 
+/** @param {Float32Array} y mono samples at SR @returns {Buffer} 16-bit PCM WAV */
 export function wav16(y) {
   const buf = Buffer.alloc(44 + y.length * 2);
   buf.write('RIFF', 0); buf.writeUInt32LE(36 + y.length * 2, 4); buf.write('WAVE', 8);
@@ -97,6 +111,11 @@ export function wav16(y) {
 //    the pause between two knocks.
 // 4. The tail may run on below the silence line while the sound is still
 //    decaying, for at most tailMs, so rings are not cut dead.
+/**
+ * @param {Float32Array} y
+ * @param {{ splitMs?: number, joinMs?: number, tailMs?: number, preMs?: number }} [opts]
+ * @returns {Float32Array}
+ */
 export function trimEvent(y, { splitMs = 150, joinMs, tailMs = 120, preMs = 3 } = {}) {
   const { e, hop } = envelope(y);
   const frameMs = (hop / SR) * 1000;
@@ -105,9 +124,13 @@ export function trimEvent(y, { splitMs = 150, joinMs, tailMs = 120, preMs = 3 } 
   const loud = e.map((v) => v > peak - 30);
 
   // Group loud frames into events.
+  /** @typedef {{ a: number, b: number, energy: number }} Span frames a to b */
+  /** @type {Span[]} */
   const events = [];
   const split = Math.ceil(splitMs / frameMs);
-  let cur = null, quiet = 0;
+  /** @type {Span | null} */
+  let cur = null;
+  let quiet = 0;
   e.forEach((v, i) => {
     if (loud[i]) {
       if (!cur || quiet >= split) { cur = { a: i, b: i, energy: 0 }; events.push(cur); }
@@ -120,6 +143,7 @@ export function trimEvent(y, { splitMs = 150, joinMs, tailMs = 120, preMs = 3 } 
   // Join events closer than joinMs into one cluster, then keep the cluster
   // with the most energy.
   const join = Math.ceil((joinMs ?? splitMs) / frameMs);
+  /** @type {Span[]} */
   const clusters = [];
   for (const ev of events) {
     const last = clusters.at(-1);
@@ -143,13 +167,19 @@ export function trimEvent(y, { splitMs = 150, joinMs, tailMs = 120, preMs = 3 } 
 // Shortens every silence inside a sound to at most keepMs, crossfading the
 // two sides over 10 ms so the cut does not click. Silence means quieter
 // than peak - 30 dB, as in trimEvent.
+/**
+ * @param {Float32Array} y
+ * @param {{ keepMs?: number, minMs?: number }} [opts]
+ * @returns {Float32Array}
+ */
 export function closeGaps(y, { keepMs = 40, minMs = 60 } = {}) {
   const { e, hop } = envelope(y);
   const peak = Math.max(...e);
   const loud = e.map((v) => v > peak - 30);
   const first = loud.indexOf(true);
   const last = loud.lastIndexOf(true);
-  const cuts = []; // [start, end) sample ranges to remove
+  /** @type {number[][]} [start, end) sample ranges to remove */
+  const cuts = [];
   let run = 0;
   for (let i = first; i <= last; i++) {
     if (!loud[i]) { run++; continue; }
@@ -164,6 +194,7 @@ export function closeGaps(y, { keepMs = 40, minMs = 60 } = {}) {
   }
   if (!cuts.length) return y;
   const xf = Math.floor(SR * 0.01);
+  /** @type {Float32Array[]} */
   const parts = [];
   let pos = 0;
   for (const [a, b] of cuts) { parts.push(y.slice(pos, a + xf)); pos = b; }

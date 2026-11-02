@@ -4,6 +4,9 @@ export const LICENSE_VERSION = '1.0';
 export const LICENSE_DATE = '2026-11-02';
 export const LICENSE_SUMMARY = 'Free and royalty-free for personal and commercial use. No credit required. Do not resell or redistribute the sounds on their own.';
 
+/** @typedef {{ total: number, codeCount: number, recCount: number }} Counts */
+
+/** @param {Counts} counts @returns {Array<[string, string[]]>} heading and its points */
 export function licenseSections({ total, codeCount, recCount }) {
   return [
     ['Pricing', [
@@ -29,6 +32,7 @@ export function licenseSections({ total, codeCount, recCount }) {
   ];
 }
 
+/** @param {Counts} counts @returns {string} */
 export function licenseText(counts) {
   return `Better SFX License ${LICENSE_VERSION} (${LICENSE_DATE})
 

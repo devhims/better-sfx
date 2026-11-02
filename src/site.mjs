@@ -16,11 +16,24 @@ const LICENSE_URL = `${BASE}/license/`;
 const DIST = 'dist';
 const today = new Date().toISOString().slice(0, 10);
 
+/** @typedef {import('../types/sfx.js').CatalogEntry} CatalogEntry */
+/**
+ * @typedef {object} UseCase a landing page such as /video/
+ * @property {string} slug
+ * @property {string} title
+ * @property {string} description
+ * @property {string} intro
+ * @property {string[]} tips
+ * @property {Array<[string, string[]]>} groups heading and the sound ids under it
+ */
+
+/** @type {CatalogEntry[]} */
 const catalog = JSON.parse(readFileSync(`${DIST}/catalog.json`, 'utf8'));
 const total = catalog.length;
 const codeCount = catalog.filter((s) => s.source === 'synth').length;
 const recCount = total - codeCount;
 
+/** @type {Record<string, string>} */
 const CATEGORY_TITLES = {
   clicks: 'Click sounds', toggles: 'Toggle and switch sounds', notifications: 'Notification sounds',
   success: 'Success sounds', errors: 'Error and warning sounds', transitions: 'Transition and whoosh sounds',
@@ -30,13 +43,22 @@ const CATEGORY_TITLES = {
   keyboard: 'Keyboard and desk sounds', paper: 'Paper sounds', objects: 'Object foley sounds', 'app actions': 'App action sounds',
 };
 const categories = [...new Set(catalog.map((s) => s.category))];
+/** @param {string} c */
 const slug = (c) => c.replace(/\s+/g, '-');
+/** @param {string} c */
 const catTitle = (c) => CATEGORY_TITLES[c] ?? c[0].toUpperCase() + c.slice(1);
 
-const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+/** @type {Record<string, string>} */
+const ENTITIES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+/** @param {unknown} s @returns {string} the value as HTML-safe text */
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ENTITIES[c]);
+/** @param {object} obj */
 const ld = (obj) => `<script type="application/ld+json">${JSON.stringify(obj).replace(/</g, '\\u003c')}</script>`;
+/** @param {CatalogEntry} s */
 const made = (s) => (s.source === 'synth' ? 'Made in code with Web Audio' : 'AI-generated recording (Seed Audio)');
+/** @param {CatalogEntry} s */
 const badge = (s) => (s.source === 'synth' ? 'code' : 'recording');
+/** @param {CatalogEntry} s */
 const secs = (s) => `${s.duration.toFixed(2)} s`;
 const ORG = { '@type': 'Organization', name: 'video2ctx', url: PARENT };
 const counts = { total, codeCount, recCount };
@@ -44,9 +66,11 @@ const counts = { total, codeCount, recCount };
 // Download icon: Phosphor "DownloadSimple" (regular), MIT license.
 const DL_ICON = '<svg viewBox="0 0 256 256" aria-hidden="true"><path d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,124.69V32a8,8,0,0,0-16,0v92.69L93.66,98.34a8,8,0,0,0-11.32,11.32Z"/></svg>';
 // Downloaded files carry the library name, so people remember where they came from.
+/** @param {CatalogEntry} s @param {'wav' | 'm4a'} ext */
 const fileName = (s, ext) => `better-sfx-${s.id}.${ext}`;
 
 // Waveform as one SVG path, much lighter than one element per bar.
+/** @param {number[]} peaks */
 function wave(peaks) {
   const d = peaks.map((p, i) => {
     const h = Math.max(2, p * 40);
@@ -55,6 +79,7 @@ function wave(peaks) {
   return `<svg class="wave" viewBox="0 0 96 44" preserveAspectRatio="none" aria-hidden="true"><path d="${d}"/></svg>`;
 }
 
+/** @param {{ title: string, description: string, path: string, root: string, jsonld?: object[] }} page */
 function head({ title, description, path, root, jsonld = [] }) {
   const url = `${BASE}${path}`;
   return `<!doctype html>
@@ -79,8 +104,10 @@ ${jsonld.map(ld).join('\n')}
 </head>`;
 }
 
+/** @param {string} root relative path to the site root @param {string} [tag] */
 const brand = (root, tag = 'p') => `<${tag} class="brand"><a class="home" href="${root}">Better SFX</a> <a class="by" href="${PARENT}" target="_blank" rel="noopener">by video2ctx</a></${tag}>`;
 
+/** @param {CatalogEntry} s @param {string} root */
 function card(s, root) {
   const text = [s.name, s.category, s.description, ...s.tags].join(' ').toLowerCase();
   return `<article class="card" data-cat="${esc(s.category)}" data-text="${esc(text)}">
@@ -146,7 +173,9 @@ const FAQ = [
 ];
 
 // Use-case landing pages. Each group lists sound ids; missing ids are skipped.
+/** @param {...string} cats @returns {string[]} sound ids */
 const byCat = (...cats) => catalog.filter((s) => cats.includes(s.category)).map((s) => s.id);
+/** @type {UseCase[]} */
 const USES = [
   {
     slug: 'video', title: 'Free sound effects for video',
@@ -197,6 +226,7 @@ const USES = [
   },
 ];
 
+/** @param {string} root */
 function footer(root) {
   const links = [...USES.map((u) => [`${u.slug}/`, u.title]), ['license/', 'License'], ['llms.txt', 'llms.txt']];
   return `<footer><nav>${links.map(([h, t]) => `<a href="${root}${h}">${esc(t)}</a>`).join('')}</nav>
@@ -218,7 +248,7 @@ function home() {
 <body>
 <header>
   ${brand('', 'h1')}
-  <p class="lede">${total} free, royalty-free sound effects for apps, videos and AI agents. Click a waveform to hear it, and the arrow to download it.</p>
+  <p class="lede">${total} free sound effects for apps, videos and AI agents. Click a waveform to hear it, and the arrow button to download it.</p>
   <div class="tools"><input id="q" type="search" placeholder="Search: glassy, soft, error, paper..." aria-label="Search sounds"><span id="count">${total} of ${total}</span></div>
   <nav id="cats" aria-label="Categories">${pills}</nav>
 </header>
@@ -248,6 +278,7 @@ ${FILTER}
 }
 
 // ---------- one page per sound ----------
+/** @param {CatalogEntry} s */
 function soundPage(s) {
   const root = '../../';
   const url = `${BASE}/sound/${s.id}/`;
@@ -299,11 +330,13 @@ ${PLAYER}
 }
 
 // ---------- one page per category ----------
+/** @param {string} c */
 function categoryPage(c) {
   const root = '../../';
   const list = catalog.filter((s) => s.category === c);
   const title = `Free ${catTitle(c).toLowerCase()} | Better SFX`;
   // Name as many example sounds as fit in about 160 characters.
+  /** @param {number} k how many sounds to name */
   const describe = (k) => `${list.length} free ${catTitle(c).toLowerCase()} for apps, videos and AI agents, including ${list.slice(0, k).map((s) => s.name.toLowerCase()).join(', ')}. Download WAV or M4A.`;
   let k = 4;
   while (k > 1 && describe(k).length > 160) k--;
@@ -389,10 +422,14 @@ footer p { margin: 0; }
 `;
 
 // ---------- use-case pages ----------
+/** @param {UseCase} u */
 function usePage(u) {
   const root = '../';
-  const ids = new Set(catalog.map((s) => s.id));
-  const groups = u.groups.map(([h, list]) => [h, list.filter((id) => ids.has(id)).map((id) => catalog.find((s) => s.id === id))]).filter(([, l]) => l.length);
+  const byId = new Map(catalog.map((s) => [s.id, s]));
+  /** @type {Array<[string, CatalogEntry[]]>} */
+  const groups = u.groups
+    .map(([h, list]) => /** @type {[string, CatalogEntry[]]} */ ([h, list.flatMap((id) => byId.get(id) ?? [])]))
+    .filter(([, l]) => l.length);
   const all = groups.flatMap(([, l]) => l);
   const jsonld = [{ '@context': 'https://schema.org', '@type': 'CollectionPage', name: u.title, url: `${BASE}/${u.slug}/`, description: u.description,
     isAccessibleForFree: true, license: LICENSE_URL, isPartOf: { '@type': 'WebSite', name: 'Better SFX', url: `${BASE}/` },

@@ -12,6 +12,7 @@ mkdirSync(RAW, { recursive: true });
 const ids = process.argv.slice(2);
 const todo = seedPrompts.filter((p) => (ids.length ? ids.includes(p.id) : !existsSync(`${RAW}/${p.id}.wav`)));
 
+/** @param {import('../types/sfx.js').SeedPrompt} p */
 async function one(p) {
   const { stdout } = await run('higgsfield', ['generate', 'create', 'seed_audio', '--prompt', p.prompt, '--sample_rate', '48000', '--format', 'wav', '--wait', '--json'], { maxBuffer: 1 << 24 });
   const job = JSON.parse(stdout)[0];
@@ -28,6 +29,7 @@ const workers = Number(process.env.CONCURRENCY || 1);
 await Promise.all(Array.from({ length: workers }, async () => {
   while (queue.length) {
     const p = queue.shift();
+    if (!p) break;
     try { await one(p); } catch (e) { console.log(`fail\t${p.id}\t${(e.stderr || e.message).trim().split('\n').slice(-1)[0]}`); }
   }
 }));

@@ -1,6 +1,14 @@
 // Synthesized sounds. Each play(k, n) schedules Web Audio nodes from time 0.
 // k is the kit from kit.mjs, n converts note names to Hz.
 
+/** @typedef {import('../types/sfx.js').SynthRecipe} SynthRecipe */
+/** @typedef {import('../types/sfx.js').Play} Play */
+
+/**
+ * @param {string} id @param {string} name @param {string} category @param {string[]} tags
+ * @param {string} description @param {Play} play
+ * @returns {SynthRecipe}
+ */
 const s = (id, name, category, tags, description, play) => ({ id, name, category, tags, description, source: 'synth', play });
 
 export const synthRecipes = [
