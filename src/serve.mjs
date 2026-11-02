@@ -2,7 +2,7 @@
 // Usage: node src/serve.mjs [port]   (npm run dev regenerates the site first)
 import { createServer } from 'node:http';
 import { createReadStream, statSync } from 'node:fs';
-import { extname, join, normalize, resolve } from 'node:path';
+import { extname, join, normalize, resolve, sep } from 'node:path';
 
 const ROOT = resolve('dist');
 const PORT = Number(process.argv[2] || process.env.PORT || 4321);
@@ -16,10 +16,12 @@ const TYPES = {
 };
 
 createServer((req, res) => {
-  const path = decodeURIComponent(new URL(req.url ?? '/', `http://${HOST}`).pathname);
+  let path;
+  try { path = decodeURIComponent(new URL(req.url ?? '/', `http://${HOST}`).pathname); }
+  catch { res.writeHead(400).end('Bad request'); return; }
   // Resolve inside dist/ only, so ../ cannot reach other files.
   let file = normalize(join(ROOT, path));
-  if (!file.startsWith(ROOT)) { res.writeHead(403).end('Forbidden'); return; }
+  if (file !== ROOT && !file.startsWith(ROOT + sep)) { res.writeHead(403).end('Forbidden'); return; }
   try {
     if (statSync(file).isDirectory()) {
       // Match static hosts: /sound/x redirects to /sound/x/ so relative links work.

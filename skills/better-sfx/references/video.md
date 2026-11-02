@@ -1,6 +1,6 @@
 # Adding Better SFX to a video edit
 
-Use WAV files (`get <id...> --format wav`). Every file starts within 5 ms of its sound, so the timestamp you place it at is where it is heard.
+Use WAV files (`get <id...> --format wav`). Files are trimmed close to their onset. Preview the chosen sound against its cue: swells and whooshes build toward their loudest moment.
 
 ## Placement
 

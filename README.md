@@ -32,7 +32,7 @@ Better SFX is a library of 161 short sound effects for apps, websites, videos an
 
 ## Why Better SFX
 
-- **Ready to drop in.** Every file starts within 5 ms of its sound, with faint lead-ins, silent gaps and stray second takes removed.
+- **Ready to drop in.** Files are trimmed close to their onset, with faint lead-ins, long silent gaps and stray second takes removed where appropriate. Swells and rhythmic sounds keep their natural timing.
 - **Matched in loudness.** A click and a notification play at a consistent level, so nothing jumps out of a mix.
 - **Sets that belong together.** Five matching sets cover the same ten app actions in one voice each, so a whole app can sound consistent.
 - **Made for agents.** An agent skill, a JSON catalog and an `llms.txt` file let an agent search the library and add sounds without a person picking files.
@@ -117,6 +117,7 @@ npm install
 npm run build    # renders every sound, writes dist/ and the website
 npm run dev      # regenerates the site and serves it at http://127.0.0.1:4321
 npm run check    # type check
+npm test         # skill and preview-server regression tests
 npm run audit    # lead-in, tail and silent gaps for each recording
 ```
 

@@ -28,6 +28,15 @@ function fail(message, extra = {}) {
 // ---------- arguments ----------
 const argv = process.argv.slice(2);
 const command = argv.shift();
+const usage = readFileSync(new URL(import.meta.url), 'utf8').split('\n').slice(1, 11).join('\n').replace(/^\/\/ ?/gm, '');
+if (!command || command === '--help' || command === 'help' || argv.includes('--help')) {
+  console.log(JSON.stringify({ ok: true, usage }, null, 2));
+  process.exit(0);
+}
+if (!['search', 'sets', 'categories', 'get'].includes(command)) fail(`Unknown command "${command}".`, { usage });
+const allowed = new Set(['catalog', ...(command === 'search'
+  ? ['category', 'set', 'source', 'max-duration', 'limit']
+  : command === 'get' ? ['dir', 'format'] : [])]);
 /** @type {Record<string, string>} */
 const flags = {};
 let force = false;
@@ -35,10 +44,20 @@ let force = false;
 const words = [];
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i];
-  if (a === '--force') force = true;
-  else if (a.startsWith('--')) flags[a.slice(2)] = argv[++i];
+  if (a === '--force' && command === 'get') force = true;
+  else if (a.startsWith('--')) {
+    if (!allowed.has(a.slice(2))) fail(`Unknown option ${a} for ${command}.`);
+    const value = argv[++i];
+    if (!value || value.startsWith('--')) fail(`Missing value for ${a}.`);
+    flags[a.slice(2)] = value;
+  }
   else words.push(a);
 }
+if (flags.source && !['code', 'recording'].includes(flags.source)) fail('--source must be code or recording');
+if (flags.limit && (!Number.isInteger(Number(flags.limit)) || Number(flags.limit) < 1)) fail('--limit must be a positive integer');
+if (flags['max-duration'] && (!Number.isFinite(Number(flags['max-duration'])) || Number(flags['max-duration']) <= 0)) fail('--max-duration must be a positive number');
+if (flags.format && !['m4a', 'wav', 'both'].includes(flags.format)) fail('--format must be m4a, wav or both');
+if (command === 'get' && !words.length) fail('Name at least one sound id, for example: get glass-click glass-success');
 
 // ---------- catalog ----------
 const source = flags.catalog || process.env.BETTER_SFX_CATALOG || DEFAULT_CATALOG;
@@ -46,14 +65,33 @@ const remote = /^https?:\/\//.test(source);
 
 /** @returns {Promise<CatalogEntry[]>} */
 async function loadCatalog() {
+  let data;
   try {
-    if (!remote) return JSON.parse(readFileSync(source, 'utf8'));
-    const res = await fetch(source);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return await res.json();
+    if (!remote) data = JSON.parse(readFileSync(source, 'utf8'));
+    else {
+      const res = await fetch(source, { signal: AbortSignal.timeout(30_000) });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      data = await res.json();
+    }
   } catch (e) {
     fail(`Could not load the Better SFX catalog from ${source}: ${e.message}`, { network: remote, retry: 'Check network access, or pass --catalog <path-or-url>.' });
   }
+  if (!Array.isArray(data)) fail('Invalid catalog: expected an array of sounds.');
+  const ids = new Set();
+  for (const s of data) {
+    if (!s || typeof s.id !== 'string' || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(s.id) || ids.has(s.id)
+      || !['name', 'category', 'description'].every(k => typeof s[k] === 'string')
+      || !Array.isArray(s.tags) || !s.tags.every((/** @type {unknown} */ t) => typeof t === 'string')
+      || !Number.isFinite(s.duration) || s.duration <= 0
+      || !['synth', 'seed-audio'].includes(s.source)
+      || (s.set !== undefined && (typeof s.set !== 'string' || typeof s.action !== 'string'))
+      || !['wav', 'm4a'].every(ext => typeof s.files?.[ext] === 'string'
+        && /^[a-zA-Z0-9_/-]+\.(wav|m4a)$/.test(s.files[ext]) && !s.files[ext].startsWith('/'))) {
+      fail('Invalid catalog: malformed, duplicate, or unsafe sound entry.');
+    }
+    ids.add(s.id);
+  }
+  return data;
 }
 
 // File paths in the catalog are relative to the catalog itself.
@@ -116,7 +154,7 @@ function filtered(catalog) {
 /** @param {string} from URL or local path @param {string} to */
 async function fetchTo(from, to) {
   if (!remote) return copyFileSync(from, to);
-  const res = await fetch(from);
+  const res = await fetch(from, { signal: AbortSignal.timeout(30_000) });
   if (!res.ok) throw new Error(`HTTP ${res.status} for ${from}`);
   writeFileSync(to, Buffer.from(await res.arrayBuffer()));
 }
@@ -145,19 +183,23 @@ if (command === 'search') {
   for (const s of catalog) cats[s.category] = (cats[s.category] || 0) + 1;
   console.log(JSON.stringify({ ok: true, total: catalog.length, categories: cats }, null, 2));
 } else if (command === 'get') {
-  if (!words.length) fail('Name at least one sound id, for example: get glass-click glass-success');
-  const format = flags.format || 'm4a';
+  const format = /** @type {'m4a' | 'wav' | 'both'} */ (flags.format || 'm4a');
+  /** @type {('m4a' | 'wav')[]} */
   const exts = format === 'both' ? ['m4a', 'wav'] : [format];
-  if (!exts.every((e) => e === 'm4a' || e === 'wav')) fail('--format must be m4a, wav or both');
+  const selected = words.map(id => {
+    const s = catalog.find(x => x.id === id);
+    if (!s) fail(`Unknown sound id "${id}". Run search to find ids.`);
+    return s;
+  });
   const dir = resolve(flags.dir || 'sounds');
-  mkdirSync(dir, { recursive: true });
+  try { mkdirSync(dir, { recursive: true }); }
+  catch (e) { fail(`Could not create download directory ${dir}: ${e.message}`); }
   /** @type {{ id: string, name: string, path: string, page: string }[]} */
   const files = [];
   /** @type {string[]} */
   const skipped = [];
-  for (const id of words) {
-    const s = catalog.find((x) => x.id === id);
-    if (!s) fail(`Unknown sound id "${id}". Run search to find ids.`);
+  for (const s of selected) {
+    const { id } = s;
     for (const ext of exts) {
       const to = join(dir, `${id}.${ext}`);
       if (existsSync(to) && !force) { skipped.push(to); continue; }
@@ -168,7 +210,4 @@ if (command === 'search') {
   }
   if (skipped.length) log(`kept ${skipped.length} existing file(s); pass --force to replace them`);
   console.log(JSON.stringify({ ok: true, dir, files, skipped, license: LICENSE }, null, 2));
-} else {
-  console.error(readFileSync(new URL(import.meta.url), 'utf8').split('\n').slice(1, 11).join('\n').replace(/^\/\/ ?/gm, ''));
-  process.exit(command ? 1 : 0);
 }

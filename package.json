@@ -21,6 +21,7 @@
     "site": "node src/site.mjs",
     "dev": "node src/site.mjs && node src/serve.mjs",
     "check": "tsc -p .",
+    "test": "node --test tests/*.test.mjs",
     "audit": "node src/audit-gaps.mjs",
     "generate": "node src/generate-seed.mjs",
     "icons": "bash scripts/rasterize-icons.sh"
