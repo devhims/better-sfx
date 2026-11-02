@@ -867,3 +867,4 @@ ${catalog.filter((s) => s.category === c).map((s) => `- ${s.id}: ${s.name}, ${se
 `);
 
 console.log(`site: ${urls.length} pages, sitemap, robots.txt, llms.txt, llms-full.txt`);
+await import('./banner.mjs');
