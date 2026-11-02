@@ -45,4 +45,13 @@ audio { display: block; margin: 14px 0; }
 .facts dd { margin: 0; }
 .cats { display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 0; list-style: none; }
 pre { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; overflow-x: auto; font-size: 12px; }
+.meta { align-items: center; }
+.dl { display: inline-grid; place-items: center; width: 24px; height: 24px; margin: -4px -6px -4px 0; border-radius: 6px; color: var(--muted); }
+.dl svg { width: 14px; height: 14px; fill: currentColor; }
+.dl:hover, .dl:focus-visible { color: var(--accent); background: var(--bg); }
+.dl:active { transform: translateY(1px); }
+.tips { max-width: 680px; padding-left: 18px; }
+.tips li { margin: 4px 0; }
 footer { padding: 20px 24px 40px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--line); }
+footer nav { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-bottom: 8px; }
+footer p { margin: 0; }

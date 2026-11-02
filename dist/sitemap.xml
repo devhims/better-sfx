@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://sfx.video2ctx.dev/</loc><lastmod>2026-11-02</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/video/</loc><lastmod>2026-11-02</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/apps/</loc><lastmod>2026-11-02</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/ai-agents/</loc><lastmod>2026-11-02</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/license/</loc><lastmod>2026-11-02</lastmod></url>
   <url><loc>https://sfx.video2ctx.dev/category/clicks/</loc><lastmod>2026-11-02</lastmod></url>
   <url><loc>https://sfx.video2ctx.dev/category/toggles/</loc><lastmod>2026-11-02</lastmod></url>
   <url><loc>https://sfx.video2ctx.dev/category/notifications/</loc><lastmod>2026-11-02</lastmod></url>
