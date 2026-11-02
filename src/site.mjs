@@ -101,6 +101,7 @@ function head({ title, description, path, root, jsonld = [] }) {
 <meta name="twitter:description" content="${esc(description)}">
 <link rel="alternate" type="application/json" title="Better SFX catalog" href="${BASE}/catalog.json">
 <link rel="stylesheet" href="${root}style.css">
+<script defer src="/_vercel/insights/script.js"></script>
 ${jsonld.map(ld).join('\n')}
 </head>`;
 }

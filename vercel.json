@@ -1,0 +1,20 @@
+{
+  "framework": null,
+  "installCommand": "echo 'No install needed: dist/ is prebuilt'",
+  "buildCommand": "echo 'No build needed: dist/ is prebuilt and committed'",
+  "outputDirectory": "dist",
+  "trailingSlash": true,
+  "headers": [
+    {
+      "source": "/sounds/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    },
+    {
+      "source": "/(catalog.json|llms.txt|llms-full.txt)",
+      "headers": [{ "key": "Access-Control-Allow-Origin", "value": "*" }]
+    }
+  ]
+}
