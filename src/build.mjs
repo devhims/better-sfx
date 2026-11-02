@@ -94,3 +94,4 @@ writeFileSync(`${DIST}/catalog.json`, JSON.stringify(catalog, null, 1));
 // Same data as a script, so dist/index.html works when opened straight from disk.
 writeFileSync(`${DIST}/catalog.js`, `const CATALOG = ${JSON.stringify(catalog)};\n`);
 console.log(`\n${catalog.length} sounds`);
+await import('./site.mjs');

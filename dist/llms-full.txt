@@ -1,0 +1,221 @@
+# Better SFX: full sound list
+
+161 sounds. Each line: id, name, length, description, tags, WAV URL.
+
+## Click sounds
+
+- click-soft: Soft click, 0.03 s. A quiet, rounded click for everyday buttons. Tags: click, soft, subtle, button, ui. https://sfx.video2ctx.dev/sounds/click-soft.wav
+- click-crisp: Crisp click, 0.01 s. A short, bright click with a hard edge. Tags: click, crisp, sharp, bright, button. https://sfx.video2ctx.dev/sounds/click-crisp.wav
+- click-deep: Deep click, 0.04 s. A low, weighty click with a soft thump underneath. Tags: click, deep, low, thock, heavy. https://sfx.video2ctx.dev/sounds/click-deep.wav
+- button-press: Button press, 0.10 s. A tactile button that goes down, then springs back up. Tags: button, press, release, tactile, physical. https://sfx.video2ctx.dev/sounds/button-press.wav
+- tap-wood: Wood tap, 0.07 s. A dry tap on a small wooden block. Tags: tap, wood, woody, knock, organic, warm. https://sfx.video2ctx.dev/sounds/tap-wood.wav
+- tap-glass: Glass tap, 0.15 s. A light fingernail tap on glass. Tags: tap, glass, glassy, bright, ting, delicate. https://sfx.video2ctx.dev/sounds/tap-glass.wav
+- tick-tiny: Tiny tick, 0.01 s. The smallest possible tick, for selection and focus. Tags: tick, tiny, micro, minimal, subtle. https://sfx.video2ctx.dev/sounds/tick-tiny.wav
+- hover-blip: Hover blip, 0.04 s. A faint blip for hover and focus states. Tags: hover, blip, focus, soft, menu. https://sfx.video2ctx.dev/sounds/hover-blip.wav
+
+## Toggle and switch sounds
+
+- toggle-on: Toggle on, 0.14 s. Two rising notes for switching something on. Tags: toggle, on, enable, rising, switch. https://sfx.video2ctx.dev/sounds/toggle-on.wav
+- toggle-off: Toggle off, 0.14 s. Two falling notes for switching something off. Tags: toggle, off, disable, falling, switch. https://sfx.video2ctx.dev/sounds/toggle-off.wav
+- switch-flick: Switch flick, 0.05 s. A light snap, like a small rocker switch. Tags: switch, flick, snap, light, quick. https://sfx.video2ctx.dev/sounds/switch-flick.wav
+- switch-heavy: Heavy switch, 0.07 s. A solid industrial switch thrown into place. Tags: switch, heavy, industrial, thunk, lever. https://sfx.video2ctx.dev/sounds/switch-heavy.wav
+- check: Check, 0.06 s. A quick upward chirp for checking a box. Tags: checkbox, check, select, tick, rising. https://sfx.video2ctx.dev/sounds/check.wav
+- uncheck: Uncheck, 0.06 s. A quick downward chirp for clearing a box. Tags: checkbox, uncheck, deselect, falling. https://sfx.video2ctx.dev/sounds/uncheck.wav
+- slider-detents: Slider detents, 0.25 s. A run of small ticks, like dragging a stepped slider. Tags: slider, detent, ticks, scroll, ratchet, picker. https://sfx.video2ctx.dev/sounds/slider-detents.wav
+- lock: Lock, 0.12 s. A two-part latch closing. Tags: lock, secure, close, latch, privacy. https://sfx.video2ctx.dev/sounds/lock.wav
+- unlock: Unlock, 0.14 s. A latch springing open. Tags: unlock, open, latch, release, access. https://sfx.video2ctx.dev/sounds/unlock.wav
+
+## Notification sounds
+
+- notify-ding: Ding, 1.04 s. A single clear bell note. Tags: notification, ding, bell, single, classic. https://sfx.video2ctx.dev/sounds/notify-ding.wav
+- notify-chime-up: Chime up, 0.94 s. Two rising vibraphone notes. Tags: notification, chime, rising, two-note, friendly. https://sfx.video2ctx.dev/sounds/notify-chime-up.wav
+- notify-chime-down: Chime down, 0.94 s. Two falling vibraphone notes. Tags: notification, chime, falling, two-note, calm. https://sfx.video2ctx.dev/sounds/notify-chime-down.wav
+- notify-glass: Glass notice, 1.27 s. Two glassy notes a fifth apart. Tags: notification, glass, glassy, airy, clean. https://sfx.video2ctx.dev/sounds/notify-glass.wav
+- notify-pluck: Pluck, 0.33 s. A warm plucked note with its octave. Tags: notification, pluck, string, warm, soft. https://sfx.video2ctx.dev/sounds/notify-pluck.wav
+- notify-soft-bell: Soft bell, 1.33 s. A mellow electric-piano bell. Tags: notification, bell, fm, soft, mellow, electric piano. https://sfx.video2ctx.dev/sounds/notify-soft-bell.wav
+- notify-triad: Triad, 0.58 s. Three quick marimba notes up a major chord. Tags: notification, marimba, triad, arpeggio, cheerful. https://sfx.video2ctx.dev/sounds/notify-triad.wav
+- notify-ping: Mention ping, 0.61 s. A bright metallic ping that cuts through. Tags: notification, ping, mention, metallic, sharp. https://sfx.video2ctx.dev/sounds/notify-ping.wav
+- reminder-tingle: Tingle, 1.14 s. A quick high glass run upward. Tags: reminder, tingle, sparkle, high, magic. https://sfx.video2ctx.dev/sounds/reminder-tingle.wav
+- alert-gentle: Gentle alert, 0.72 s. Two soft sine notes with slight vibrato. Tags: alert, gentle, calm, soft, reminder. https://sfx.video2ctx.dev/sounds/alert-gentle.wav
+- alert-urgent: Urgent alert, 0.42 s. Three firm square-wave beeps. Tags: alert, urgent, beep, alarm, attention. https://sfx.video2ctx.dev/sounds/alert-urgent.wav
+
+## Success sounds
+
+- success-chime: Success chime, 0.88 s. Four marimba notes up to the octave. Tags: success, complete, done, marimba, arpeggio, positive. https://sfx.video2ctx.dev/sounds/success-chime.wav
+- success-sparkle: Sparkle, 1.44 s. A glass run with a shimmering tail. Tags: success, sparkle, shimmer, magic, glass, delight. https://sfx.video2ctx.dev/sounds/success-sparkle.wav
+- success-pop-up: Pop up, 0.52 s. A rising pop that lands on a bright note. Tags: success, pop, rising, playful, bubbly. https://sfx.video2ctx.dev/sounds/success-pop-up.wav
+- task-complete: Task complete, 0.69 s. Two marimba notes that resolve upward. Tags: success, complete, done, two-note, resolve. https://sfx.video2ctx.dev/sounds/task-complete.wav
+- confirm: Confirm, 0.13 s. A short two-step chirp that says yes. Tags: confirm, ok, accept, tick, quick. https://sfx.video2ctx.dev/sounds/confirm.wav
+- payment-success: Payment done, 0.93 s. A bright chime over a soft low note. Tags: payment, success, purchase, checkout, bright. https://sfx.video2ctx.dev/sounds/payment-success.wav
+- level-up: Level up, 0.57 s. A fast square-wave run up two octaves. Tags: level up, game, retro, arpeggio, reward, 8-bit. https://sfx.video2ctx.dev/sounds/level-up.wav
+- achievement: Achievement, 1.25 s. A short brassy chord with a bell on top. Tags: achievement, fanfare, brass, reward, big. https://sfx.video2ctx.dev/sounds/achievement.wav
+- coin: Coin, 0.40 s. A classic two-note pickup sound. Tags: coin, game, retro, collect, 8-bit, reward. https://sfx.video2ctx.dev/sounds/coin.wav
+
+## Error and warning sounds
+
+- error-buzz: Error buzz, 0.23 s. A low buzzer for something that failed. Tags: error, buzz, wrong, harsh, denied. https://sfx.video2ctx.dev/sounds/error-buzz.wav
+- error-double: Error, 0.37 s. Two falling notes that sound like no. Tags: error, two-note, falling, fail, invalid. https://sfx.video2ctx.dev/sounds/error-double.wav
+- error-thud: Thud, 0.16 s. A dull thud for a blocked action. Tags: error, thud, blocked, heavy, dull, bump. https://sfx.video2ctx.dev/sounds/error-thud.wav
+- warning-beep: Warning, 0.34 s. Two plain 1 kHz beeps. Tags: warning, beep, caution, double, attention. https://sfx.video2ctx.dev/sounds/warning-beep.wav
+- denied-wobble: Denied, 0.27 s. A wobbly low note that shakes its head. Tags: denied, wobble, no, invalid, cartoon. https://sfx.video2ctx.dev/sounds/denied-wobble.wav
+- invalid-input: Invalid input, 0.14 s. A soft two-tap shake for a bad form field. Tags: invalid, input, form, shake, error, soft. https://sfx.video2ctx.dev/sounds/invalid-input.wav
+
+## Transition and whoosh sounds
+
+- swoosh-fast: Fast swoosh, 0.16 s. A quick rush of air. Tags: swoosh, whoosh, fast, transition, air. https://sfx.video2ctx.dev/sounds/swoosh-fast.wav
+- swoosh-slow: Slow swoosh, 0.49 s. A slow, soft sweep of air. Tags: swoosh, whoosh, slow, transition, air, soft. https://sfx.video2ctx.dev/sounds/swoosh-slow.wav
+- swipe: Swipe, 0.12 s. A downward swipe for dismissing a card. Tags: swipe, dismiss, gesture, falling, card. https://sfx.video2ctx.dev/sounds/swipe.wav
+- whoosh-deep: Deep whoosh, 0.46 s. A big, low pass-by. Tags: whoosh, deep, low, cinematic, transition, big. https://sfx.video2ctx.dev/sounds/whoosh-deep.wav
+- modal-open: Open, 0.14 s. A soft rising tone for something appearing. Tags: open, modal, sheet, rising, appear. https://sfx.video2ctx.dev/sounds/modal-open.wav
+- modal-close: Close, 0.14 s. A soft falling tone for something leaving. Tags: close, modal, sheet, falling, disappear. https://sfx.video2ctx.dev/sounds/modal-close.wav
+- drawer-slide: Drawer slide, 0.23 s. A short slide that clicks into place. Tags: drawer, slide, panel, sidebar, open. https://sfx.video2ctx.dev/sounds/drawer-slide.wav
+- zoom-in: Zoom in, 0.28 s. A rising sweep for zooming in. Tags: zoom, in, rising, expand, focus. https://sfx.video2ctx.dev/sounds/zoom-in.wav
+- riser: Riser, 0.61 s. A half-second build that opens up. Tags: riser, build, tension, sweep, cinematic. https://sfx.video2ctx.dev/sounds/riser.wav
+- tab-switch: Tab switch, 0.09 s. A quick sideways step between tabs. Tags: tab, switch, segment, navigate, quick. https://sfx.video2ctx.dev/sounds/tab-switch.wav
+
+## Pop and bubble sounds
+
+- pop: Pop, 0.04 s. A round, satisfying pop. Tags: pop, bubble, appear, playful, round. https://sfx.video2ctx.dev/sounds/pop.wav
+- bubble: Bubble, 0.07 s. A single bubble rising. Tags: bubble, water, blip, rising, liquid. https://sfx.video2ctx.dev/sounds/bubble.wav
+- droplet: Droplet, 0.40 s. A water droplet with a little space around it. Tags: drop, water, droplet, liquid, plink. https://sfx.video2ctx.dev/sounds/droplet.wav
+- like: Like, 0.30 s. A bouncy pop for liking something. Tags: like, heart, favorite, pop, social. https://sfx.video2ctx.dev/sounds/like.wav
+
+## Message sounds
+
+- message-send: Send, 0.12 s. A short upward whoosh for a sent message. Tags: send, message, sent, whoosh, outgoing. https://sfx.video2ctx.dev/sounds/message-send.wav
+- message-receive: Receive, 0.52 s. Two marimba notes for an incoming message. Tags: receive, message, incoming, marimba, friendly. https://sfx.video2ctx.dev/sounds/message-receive.wav
+- message-pop: Message pop, 0.36 s. A chat-bubble pop with a small chime. Tags: message, pop, chat, bubble, incoming. https://sfx.video2ctx.dev/sounds/message-pop.wav
+
+## Progress and timer sounds
+
+- progress-tick: Progress tick, 0.03 s. A small wooden tick for each step. Tags: tick, progress, step, wood, clock. https://sfx.video2ctx.dev/sounds/progress-tick.wav
+- processing: Processing, 0.35 s. A burst of computer-like blips. Tags: processing, computing, digital, blips, loading. https://sfx.video2ctx.dev/sounds/processing.wav
+- countdown: Countdown, 1.43 s. Three beeps and a higher go. Tags: countdown, timer, start, race, beep. https://sfx.video2ctx.dev/sounds/countdown.wav
+- timer-done: Timer done, 1.16 s. Two pairs of bright bell strikes. Tags: timer, done, alarm, bell, ring. https://sfx.video2ctx.dev/sounds/timer-done.wav
+
+## System and power sounds
+
+- power-on: Power on, 1.28 s. Three voices sweeping up an octave. Tags: power, on, boot, start, rising, sweep. https://sfx.video2ctx.dev/sounds/power-on.wav
+- power-off: Power off, 0.58 s. A tone dropping away into nothing. Tags: power, off, shutdown, falling, sweep. https://sfx.video2ctx.dev/sounds/power-off.wav
+- startup-chord: Startup chord, 2.54 s. A wide, warm major chord that blooms. Tags: startup, chord, boot, big, warm, welcome. https://sfx.video2ctx.dev/sounds/startup-chord.wav
+- connect: Connect, 0.45 s. Two rising tones for a device connecting. Tags: connect, device, plug in, pair, rising. https://sfx.video2ctx.dev/sounds/connect.wav
+- disconnect: Disconnect, 0.45 s. Two falling tones for a device leaving. Tags: disconnect, device, unplug, unpair, falling. https://sfx.video2ctx.dev/sounds/disconnect.wav
+- magic-sparkle: Magic dust, 1.46 s. A scatter of tiny twinkles, good for AI actions. Tags: magic, sparkle, fairy, twinkle, ai, generate. https://sfx.video2ctx.dev/sounds/magic-sparkle.wav
+
+## Glass UI sound set
+
+- glass-click: Glass click, 0.06 s. A button press. Part of the glass set. Tags: glass, glassy, bright, airy, crystal, click, button, press, set. https://sfx.video2ctx.dev/sounds/glass-click.wav
+- glass-hover: Glass hover, 0.07 s. A faint hover or focus cue. Part of the glass set. Tags: glass, glassy, bright, airy, crystal, hover, focus, faint, set. https://sfx.video2ctx.dev/sounds/glass-hover.wav
+- glass-toggle: Glass toggle, 0.48 s. Two rising notes for a switch. Part of the glass set. Tags: glass, glassy, bright, airy, crystal, toggle, switch, on, set. https://sfx.video2ctx.dev/sounds/glass-toggle.wav
+- glass-notify: Glass notify, 0.86 s. A two-note notification. Part of the glass set. Tags: glass, glassy, bright, airy, crystal, notification, alert, chime, set. https://sfx.video2ctx.dev/sounds/glass-notify.wav
+- glass-success: Glass success, 0.83 s. A major arpeggio up to the octave. Part of the glass set. Tags: glass, glassy, bright, airy, crystal, success, done, complete, set. https://sfx.video2ctx.dev/sounds/glass-success.wav
+- glass-error: Glass error, 0.59 s. Two notes falling a tritone. Part of the glass set. Tags: glass, glassy, bright, airy, crystal, error, fail, wrong, set. https://sfx.video2ctx.dev/sounds/glass-error.wav
+- glass-open: Glass open, 0.57 s. A rising pair with a lift of air. Part of the glass set. Tags: glass, glassy, bright, airy, crystal, open, modal, appear, set. https://sfx.video2ctx.dev/sounds/glass-open.wav
+- glass-close: Glass close, 0.60 s. A falling pair with air going down. Part of the glass set. Tags: glass, glassy, bright, airy, crystal, close, dismiss, disappear, set. https://sfx.video2ctx.dev/sounds/glass-close.wav
+- glass-send: Glass send, 0.36 s. A quick rush up that ends in a tap. Part of the glass set. Tags: glass, glassy, bright, airy, crystal, send, sent, message, outgoing, set. https://sfx.video2ctx.dev/sounds/glass-send.wav
+- glass-delete: Glass delete, 0.55 s. A tap that drops into two low notes. Part of the glass set. Tags: glass, glassy, bright, airy, crystal, delete, remove, trash, set. https://sfx.video2ctx.dev/sounds/glass-delete.wav
+
+## Wood UI sound set
+
+- wood-click: Wood click, 0.04 s. A button press. Part of the wood set. Tags: wood, woody, marimba, warm, organic, dry, click, button, press, set. https://sfx.video2ctx.dev/sounds/wood-click.wav
+- wood-hover: Wood hover, 0.04 s. A faint hover or focus cue. Part of the wood set. Tags: wood, woody, marimba, warm, organic, dry, hover, focus, faint, set. https://sfx.video2ctx.dev/sounds/wood-hover.wav
+- wood-toggle: Wood toggle, 0.23 s. Two rising notes for a switch. Part of the wood set. Tags: wood, woody, marimba, warm, organic, dry, toggle, switch, on, set. https://sfx.video2ctx.dev/sounds/wood-toggle.wav
+- wood-notify: Wood notify, 0.87 s. A two-note notification. Part of the wood set. Tags: wood, woody, marimba, warm, organic, dry, notification, alert, chime, set. https://sfx.video2ctx.dev/sounds/wood-notify.wav
+- wood-success: Wood success, 0.88 s. A major arpeggio up to the octave. Part of the wood set. Tags: wood, woody, marimba, warm, organic, dry, success, done, complete, set. https://sfx.video2ctx.dev/sounds/wood-success.wav
+- wood-error: Wood error, 0.47 s. Two notes falling a tritone. Part of the wood set. Tags: wood, woody, marimba, warm, organic, dry, error, fail, wrong, set. https://sfx.video2ctx.dev/sounds/wood-error.wav
+- wood-open: Wood open, 0.36 s. A rising pair with a lift of air. Part of the wood set. Tags: wood, woody, marimba, warm, organic, dry, open, modal, appear, set. https://sfx.video2ctx.dev/sounds/wood-open.wav
+- wood-close: Wood close, 0.36 s. A falling pair with air going down. Part of the wood set. Tags: wood, woody, marimba, warm, organic, dry, close, dismiss, disappear, set. https://sfx.video2ctx.dev/sounds/wood-close.wav
+- wood-send: Wood send, 0.14 s. A quick rush up that ends in a tap. Part of the wood set. Tags: wood, woody, marimba, warm, organic, dry, send, sent, message, outgoing, set. https://sfx.video2ctx.dev/sounds/wood-send.wav
+- wood-delete: Wood delete, 0.34 s. A tap that drops into two low notes. Part of the wood set. Tags: wood, woody, marimba, warm, organic, dry, delete, remove, trash, set. https://sfx.video2ctx.dev/sounds/wood-delete.wav
+
+## Soft UI sound set
+
+- soft-click: Soft click, 0.04 s. A button press. Part of the soft set. Tags: soft, minimal, gentle, calm, sine, subtle, click, button, press, set. https://sfx.video2ctx.dev/sounds/soft-click.wav
+- soft-hover: Soft hover, 0.04 s. A faint hover or focus cue. Part of the soft set. Tags: soft, minimal, gentle, calm, sine, subtle, hover, focus, faint, set. https://sfx.video2ctx.dev/sounds/soft-hover.wav
+- soft-toggle: Soft toggle, 0.57 s. Two rising notes for a switch. Part of the soft set. Tags: soft, minimal, gentle, calm, sine, subtle, toggle, switch, on, set. https://sfx.video2ctx.dev/sounds/soft-toggle.wav
+- soft-notify: Soft notify, 0.93 s. A two-note notification. Part of the soft set. Tags: soft, minimal, gentle, calm, sine, subtle, notification, alert, chime, set. https://sfx.video2ctx.dev/sounds/soft-notify.wav
+- soft-success: Soft success, 0.90 s. A major arpeggio up to the octave. Part of the soft set. Tags: soft, minimal, gentle, calm, sine, subtle, success, done, complete, set. https://sfx.video2ctx.dev/sounds/soft-success.wav
+- soft-error: Soft error, 0.65 s. Two notes falling a tritone. Part of the soft set. Tags: soft, minimal, gentle, calm, sine, subtle, error, fail, wrong, set. https://sfx.video2ctx.dev/sounds/soft-error.wav
+- soft-open: Soft open, 0.49 s. A rising pair with a lift of air. Part of the soft set. Tags: soft, minimal, gentle, calm, sine, subtle, open, modal, appear, set. https://sfx.video2ctx.dev/sounds/soft-open.wav
+- soft-close: Soft close, 0.54 s. A falling pair with air going down. Part of the soft set. Tags: soft, minimal, gentle, calm, sine, subtle, close, dismiss, disappear, set. https://sfx.video2ctx.dev/sounds/soft-close.wav
+- soft-send: Soft send, 0.14 s. A quick rush up that ends in a tap. Part of the soft set. Tags: soft, minimal, gentle, calm, sine, subtle, send, sent, message, outgoing, set. https://sfx.video2ctx.dev/sounds/soft-send.wav
+- soft-delete: Soft delete, 0.53 s. A tap that drops into two low notes. Part of the soft set. Tags: soft, minimal, gentle, calm, sine, subtle, delete, remove, trash, set. https://sfx.video2ctx.dev/sounds/soft-delete.wav
+
+## Retro 8-bit UI sound set
+
+- retro-click: Retro click, 0.02 s. A button press. Part of the retro set. Tags: retro, 8-bit, chiptune, game, square, pixel, click, button, press, set. https://sfx.video2ctx.dev/sounds/retro-click.wav
+- retro-hover: Retro hover, 0.02 s. A faint hover or focus cue. Part of the retro set. Tags: retro, 8-bit, chiptune, game, square, pixel, hover, focus, faint, set. https://sfx.video2ctx.dev/sounds/retro-hover.wav
+- retro-toggle: Retro toggle, 0.21 s. Two rising notes for a switch. Part of the retro set. Tags: retro, 8-bit, chiptune, game, square, pixel, toggle, switch, on, set. https://sfx.video2ctx.dev/sounds/retro-toggle.wav
+- retro-notify: Retro notify, 0.76 s. A two-note notification. Part of the retro set. Tags: retro, 8-bit, chiptune, game, square, pixel, notification, alert, chime, set. https://sfx.video2ctx.dev/sounds/retro-notify.wav
+- retro-success: Retro success, 0.77 s. A major arpeggio up to the octave. Part of the retro set. Tags: retro, 8-bit, chiptune, game, square, pixel, success, done, complete, set. https://sfx.video2ctx.dev/sounds/retro-success.wav
+- retro-error: Retro error, 0.43 s. Two notes falling a tritone. Part of the retro set. Tags: retro, 8-bit, chiptune, game, square, pixel, error, fail, wrong, set. https://sfx.video2ctx.dev/sounds/retro-error.wav
+- retro-open: Retro open, 0.31 s. A rising pair with a lift of air. Part of the retro set. Tags: retro, 8-bit, chiptune, game, square, pixel, open, modal, appear, set. https://sfx.video2ctx.dev/sounds/retro-open.wav
+- retro-close: Retro close, 0.31 s. A falling pair with air going down. Part of the retro set. Tags: retro, 8-bit, chiptune, game, square, pixel, close, dismiss, disappear, set. https://sfx.video2ctx.dev/sounds/retro-close.wav
+- retro-send: Retro send, 0.12 s. A quick rush up that ends in a tap. Part of the retro set. Tags: retro, 8-bit, chiptune, game, square, pixel, send, sent, message, outgoing, set. https://sfx.video2ctx.dev/sounds/retro-send.wav
+- retro-delete: Retro delete, 0.32 s. A tap that drops into two low notes. Part of the retro set. Tags: retro, 8-bit, chiptune, game, square, pixel, delete, remove, trash, set. https://sfx.video2ctx.dev/sounds/retro-delete.wav
+
+## Mechanical UI sound set
+
+- mechanical-click: Mechanical click, 0.03 s. A button press. Part of the mechanical set. Tags: mechanical, metallic, industrial, switch, hardware, click, button, press, set. https://sfx.video2ctx.dev/sounds/mechanical-click.wav
+- mechanical-hover: Mechanical hover, 0.03 s. A faint hover or focus cue. Part of the mechanical set. Tags: mechanical, metallic, industrial, switch, hardware, hover, focus, faint, set. https://sfx.video2ctx.dev/sounds/mechanical-hover.wav
+- mechanical-toggle: Mechanical toggle, 0.18 s. Two rising notes for a switch. Part of the mechanical set. Tags: mechanical, metallic, industrial, switch, hardware, toggle, on, set. https://sfx.video2ctx.dev/sounds/mechanical-toggle.wav
+- mechanical-notify: Mechanical notify, 0.69 s. A two-note notification. Part of the mechanical set. Tags: mechanical, metallic, industrial, switch, hardware, notification, alert, chime, set. https://sfx.video2ctx.dev/sounds/mechanical-notify.wav
+- mechanical-success: Mechanical success, 0.71 s. A major arpeggio up to the octave. Part of the mechanical set. Tags: mechanical, metallic, industrial, switch, hardware, success, done, complete, set. https://sfx.video2ctx.dev/sounds/mechanical-success.wav
+- mechanical-error: Mechanical error, 0.38 s. Two notes falling a tritone. Part of the mechanical set. Tags: mechanical, metallic, industrial, switch, hardware, error, fail, wrong, set. https://sfx.video2ctx.dev/sounds/mechanical-error.wav
+- mechanical-open: Mechanical open, 0.29 s. A rising pair with a lift of air. Part of the mechanical set. Tags: mechanical, metallic, industrial, switch, hardware, open, modal, appear, set. https://sfx.video2ctx.dev/sounds/mechanical-open.wav
+- mechanical-close: Mechanical close, 0.29 s. A falling pair with air going down. Part of the mechanical set. Tags: mechanical, metallic, industrial, switch, hardware, close, dismiss, disappear, set. https://sfx.video2ctx.dev/sounds/mechanical-close.wav
+- mechanical-send: Mechanical send, 0.13 s. A quick rush up that ends in a tap. Part of the mechanical set. Tags: mechanical, metallic, industrial, switch, hardware, send, sent, message, outgoing, set. https://sfx.video2ctx.dev/sounds/mechanical-send.wav
+- mechanical-delete: Mechanical delete, 0.26 s. A tap that drops into two low notes. Part of the mechanical set. Tags: mechanical, metallic, industrial, switch, hardware, delete, remove, trash, set. https://sfx.video2ctx.dev/sounds/mechanical-delete.wav
+
+## Keyboard and desk sounds
+
+- key-mechanical: Mechanical key, 0.33 s. One press on a mechanical keyboard. Tags: key, keyboard, mechanical, thock, press, typing. https://sfx.video2ctx.dev/sounds/key-mechanical.wav
+- key-laptop: Laptop key, 0.32 s. One soft press on a laptop keyboard. Tags: key, keyboard, laptop, scissor, quiet, press. https://sfx.video2ctx.dev/sounds/key-laptop.wav
+- typing-mechanical: Mechanical typing, 1.28 s. A short burst of fast mechanical typing. Tags: typing, keyboard, mechanical, burst, writing. https://sfx.video2ctx.dev/sounds/typing-mechanical.wav
+- typing-laptop: Laptop typing, 0.81 s. A short burst of soft laptop typing. Tags: typing, keyboard, laptop, soft, burst. https://sfx.video2ctx.dev/sounds/typing-laptop.wav
+- spacebar: Spacebar, 0.45 s. A spacebar press with its stabilizer rattle. Tags: spacebar, key, keyboard, thump, press. https://sfx.video2ctx.dev/sounds/spacebar.wav
+- mouse-click: Mouse click, 0.05 s. A real computer mouse button click. Tags: mouse, click, computer, button, press. https://sfx.video2ctx.dev/sounds/mouse-click.wav
+- pen-click: Pen click, 0.09 s. A ballpoint pen clicking. Tags: pen, click, ballpoint, retract, desk. https://sfx.video2ctx.dev/sounds/pen-click.wav
+- stapler: Stapler, 0.25 s. A desk stapler punching through paper. Tags: stapler, staple, office, punch, desk. https://sfx.video2ctx.dev/sounds/stapler.wav
+
+## Paper sounds
+
+- paper-crumple: Paper crumple, 1.15 s. A sheet of paper crumpled into a ball. Tags: paper, crumple, discard, trash, delete. https://sfx.video2ctx.dev/sounds/paper-crumple.wav
+- page-turn: Page turn, 1.77 s. A single book page turning. Tags: page, turn, book, paper, flip, next. https://sfx.video2ctx.dev/sounds/page-turn.wav
+- paper-tear: Paper tear, 0.34 s. A quick tear of a paper strip. Tags: paper, tear, rip, remove, cut. https://sfx.video2ctx.dev/sounds/paper-tear.wav
+- trash-bin: Into the bin, 1.44 s. A paper ball dropped into a metal bin. Tags: trash, bin, delete, discard, empty, paper. https://sfx.video2ctx.dev/sounds/trash-bin.wav
+- envelope-open: Envelope open, 0.99 s. A paper envelope being torn open. Tags: envelope, open, mail, letter, inbox, tear. https://sfx.video2ctx.dev/sounds/envelope-open.wav
+- card-flip: Card flip, 0.20 s. A playing card flipped onto a table. Tags: card, flip, playing card, reveal, deal. https://sfx.video2ctx.dev/sounds/card-flip.wav
+- rubber-stamp: Stamp, 0.48 s. A rubber stamp pressed onto paper. Tags: stamp, approve, rubber, thud, confirm. https://sfx.video2ctx.dev/sounds/rubber-stamp.wav
+
+## Object foley sounds
+
+- camera-shutter: Camera shutter, 0.23 s. A single camera shutter. Tags: camera, shutter, photo, screenshot, capture. https://sfx.video2ctx.dev/sounds/camera-shutter.wav
+- film-wind: Film advance, 0.32 s. A film camera advance lever winding. Tags: camera, film, wind, advance, ratchet, retro. https://sfx.video2ctx.dev/sounds/film-wind.wav
+- light-switch: Light switch, 0.16 s. A wall light switch flipped. Tags: switch, light, toggle, wall, click. https://sfx.video2ctx.dev/sounds/light-switch.wav
+- door-knock-a: Door knock A, 0.48 s. Three quick knuckle raps on a wooden door. Tags: knock, door, wood, visitor, attention. https://sfx.video2ctx.dev/sounds/door-knock-a.wav
+- door-knock-b: Door knock B, 0.84 s. Three raps on a hollow interior door, with more boom. Tags: knock, door, wood, hollow, visitor. https://sfx.video2ctx.dev/sounds/door-knock-b.wav
+- glass-tap: Wine glass tap, 0.69 s. A spoon tapping a wine glass. Tags: glass, wine glass, tap, ring, ting, toast. https://sfx.video2ctx.dev/sounds/glass-tap.wav
+- mug-tap: Mug tap, 0.42 s. A spoon tapping a ceramic mug. Tags: ceramic, mug, cup, tap, clink, coffee. https://sfx.video2ctx.dev/sounds/mug-tap.wav
+- coin-drop: Coin drop, 1.37 s. A coin dropped on a table, bouncing to rest. Tags: coin, drop, money, bounce, metal. https://sfx.video2ctx.dev/sounds/coin-drop.wav
+- coins-jingle: Coins, 0.69 s. A handful of coins jingling. Tags: coins, money, jingle, payment, pocket. https://sfx.video2ctx.dev/sounds/coins-jingle.wav
+- cash-register: Cash register, 1.58 s. A vintage cash register ringing up a sale. Tags: cash register, money, sale, payment, ding, vintage. https://sfx.video2ctx.dev/sounds/cash-register.wav
+- keys-jingle: Keys, 2.00 s. A ring of keys jingling. Tags: keys, keyring, jingle, metal, access. https://sfx.video2ctx.dev/sounds/keys-jingle.wav
+- zipper: Zipper, 0.37 s. A short zipper pull. Tags: zipper, zip, close, bag, pack. https://sfx.video2ctx.dev/sounds/zipper.wav
+- bubble-wrap: Bubble wrap, 0.11 s. One bubble-wrap bubble popping. Tags: bubble wrap, pop, snap, satisfying, plastic. https://sfx.video2ctx.dev/sounds/bubble-wrap.wav
+- cork-pop: Cork pop, 0.29 s. A cork pulled from a bottle. Tags: cork, pop, champagne, celebrate, bottle. https://sfx.video2ctx.dev/sounds/cork-pop.wav
+- water-drop: Water drop, 0.11 s. A single water drop into a basin. Tags: water, drop, drip, liquid, plink. https://sfx.video2ctx.dev/sounds/water-drop.wav
+- door-knock-c: Door knock C, 0.45 s. Three knuckle raps on a door, made in Web Audio. Tags: knock, door, wood, visitor, attention, code. https://sfx.video2ctx.dev/sounds/door-knock-c.wav
+
+## App action sounds
+
+- scissors-snip: Scissors snip, 0.17 s. One snip of scissors, for cut. Tags: cut, scissors, snip, trim, crop. https://sfx.video2ctx.dev/sounds/scissors-snip.wav
+- book-close: Book close, 0.24 s. A hardcover book shutting, for archive. Tags: archive, book, close, done, thump. https://sfx.video2ctx.dev/sounds/book-close.wav
+- drawer-shut: Drawer shut, 0.62 s. A wooden drawer sliding shut, for file away. Tags: archive, drawer, file away, close, wood. https://sfx.video2ctx.dev/sounds/drawer-shut.wav
+- thumbtack-push: Thumbtack, 0.18 s. A thumbtack pressed into cork, for pin. Tags: pin, thumbtack, corkboard, push, save. https://sfx.video2ctx.dev/sounds/thumbtack-push.wav
+- marker-squeak: Marker, 1.35 s. A marker drawing one short stroke, for highlight. Tags: highlight, marker, squeak, draw, mark. https://sfx.video2ctx.dev/sounds/marker-squeak.wav
+- eraser-rub: Eraser, 1.00 s. A pencil eraser rubbing, for clear. Tags: erase, clear, eraser, rub, undo. https://sfx.video2ctx.dev/sounds/eraser-rub.wav
+- pencil-scribble: Pencil scribble, 1.16 s. A quick pencil scribble, for draw. Tags: draw, pencil, scribble, sketch, write. https://sfx.video2ctx.dev/sounds/pencil-scribble.wav
+- sticky-note-peel: Sticky note, 0.26 s. A sticky note peeled off a pad, for new note. Tags: note, sticky note, peel, new, post-it. https://sfx.video2ctx.dev/sounds/sticky-note-peel.wav
+- tape-pull: Tape pull, 0.65 s. A strip of tape pulled off a roll, for attach. Tags: attach, tape, stick, pull, clip. https://sfx.video2ctx.dev/sounds/tape-pull.wav
+- folder-drop: Folder drop, 0.52 s. A paper folder dropped on a stack, for file. Tags: file, folder, drop, save, organize. https://sfx.video2ctx.dev/sounds/folder-drop.wav

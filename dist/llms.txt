@@ -1,0 +1,42 @@
+# Better SFX
+
+> Better SFX by video2ctx is a library of 161 short sound effects for apps, websites and AI agents. 121 are made in code with Web Audio and 40 are AI-generated recordings. Every sound has a stable URL as WAV (48 kHz, 16-bit mono) and M4A.
+
+Use it when a user or agent needs a UI sound: a click, toggle, notification, success or error cue, transition, keyboard or paper foley, or a matching set of sounds for one app.
+
+## Data
+
+- [catalog.json](https://sfx.video2ctx.dev/catalog.json): every sound with id, name, category, tags, description, duration in seconds and file paths
+- [llms-full.txt](https://sfx.video2ctx.dev/llms-full.txt): the same list as plain text
+- Files: https://sfx.video2ctx.dev/sounds/<id>.wav and https://sfx.video2ctx.dev/sounds/<id>.m4a
+- Pages: https://sfx.video2ctx.dev/sound/<id>/
+
+## Matching sets
+
+Glass, wood, soft, retro 8-bit and mechanical sets each cover the same ten actions: click, hover, toggle, notify, success, error, open, close, send and delete. Sound ids are <set>-<action>, for example glass-success.
+
+## Categories
+
+- [Click sounds](https://sfx.video2ctx.dev/category/clicks/): 8 sounds
+- [Toggle and switch sounds](https://sfx.video2ctx.dev/category/toggles/): 9 sounds
+- [Notification sounds](https://sfx.video2ctx.dev/category/notifications/): 11 sounds
+- [Success sounds](https://sfx.video2ctx.dev/category/success/): 9 sounds
+- [Error and warning sounds](https://sfx.video2ctx.dev/category/errors/): 6 sounds
+- [Transition and whoosh sounds](https://sfx.video2ctx.dev/category/transitions/): 10 sounds
+- [Pop and bubble sounds](https://sfx.video2ctx.dev/category/pops/): 4 sounds
+- [Message sounds](https://sfx.video2ctx.dev/category/messages/): 3 sounds
+- [Progress and timer sounds](https://sfx.video2ctx.dev/category/progress/): 4 sounds
+- [System and power sounds](https://sfx.video2ctx.dev/category/system/): 6 sounds
+- [Glass UI sound set](https://sfx.video2ctx.dev/category/glass-set/): 10 sounds
+- [Wood UI sound set](https://sfx.video2ctx.dev/category/wood-set/): 10 sounds
+- [Soft UI sound set](https://sfx.video2ctx.dev/category/soft-set/): 10 sounds
+- [Retro 8-bit UI sound set](https://sfx.video2ctx.dev/category/retro-set/): 10 sounds
+- [Mechanical UI sound set](https://sfx.video2ctx.dev/category/mechanical-set/): 10 sounds
+- [Keyboard and desk sounds](https://sfx.video2ctx.dev/category/keyboard/): 8 sounds
+- [Paper sounds](https://sfx.video2ctx.dev/category/paper/): 7 sounds
+- [Object foley sounds](https://sfx.video2ctx.dev/category/objects/): 16 sounds
+- [App action sounds](https://sfx.video2ctx.dev/category/app-actions/): 10 sounds
+
+## Optional
+
+- [video2ctx](https://www.video2ctx.dev): the company that makes Better SFX
