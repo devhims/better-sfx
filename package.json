@@ -19,6 +19,7 @@
   "scripts": {
     "build": "node src/build.mjs",
     "site": "node src/site.mjs",
+    "dev": "node src/site.mjs && node src/serve.mjs",
     "check": "tsc -p .",
     "audit": "node src/audit-gaps.mjs",
     "generate": "node src/generate-seed.mjs"

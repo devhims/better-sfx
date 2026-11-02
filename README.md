@@ -36,6 +36,7 @@ Requires Node.js 22+ and ffmpeg.
 ```bash
 npm install
 npm run build    # renders every sound, writes dist/ and the website
+npm run dev      # regenerates the site and serves it at http://127.0.0.1:4321
 npm run check    # type check
 npm run audit    # lead-in, tail and silent gaps for each recording
 ```
