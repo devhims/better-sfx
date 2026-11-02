@@ -724,6 +724,25 @@ footer p { margin: 0; }
   .hm-q summary { font-size: 16px; padding: 16px; }
   .hm-q p { padding: 0 16px 16px; }
 }
+
+/* ---------- phones: compact header, one swipeable row of filters, two cards a row ---------- */
+@media (max-width: 640px) {
+  header { position: static; padding: 16px 16px 12px; }
+  .brand { font-size: 17px; }
+  .lede { font-size: 14px; line-height: 1.45; margin: 4px 0 12px; }
+  .tools { gap: 10px; }
+  .tools input { flex: 1; max-width: none; padding: 10px 12px; font-size: 16px; }
+  #count { white-space: nowrap; }
+  #cats { flex-wrap: nowrap; gap: 6px; overflow-x: auto; margin: 12px -16px 0; padding: 0 16px 2px; scroll-snap-type: x proximity; scroll-padding-inline: 16px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  #cats::-webkit-scrollbar { display: none; }
+  #cats button { flex: none; padding: 7px 13px; font-size: 13px; scroll-snap-align: start; }
+  main.grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; padding: 14px 16px; }
+  main.grid .card { padding: 10px 10px 8px; }
+  main.grid .play { margin-bottom: 8px; }
+  main.grid .wave { height: 34px; }
+  main.grid .name { font-size: 14px; }
+  main.grid .meta { font-size: 11px; gap: 4px; }
+}
 `;
 
 // ---------- use-case pages ----------
