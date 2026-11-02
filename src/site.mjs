@@ -23,6 +23,7 @@ const today = new Date().toISOString().slice(0, 10);
  * @property {string} title
  * @property {string} description
  * @property {string} intro
+ * @property {string} blurb one line for the home page
  * @property {string[]} tips
  * @property {Array<[string, string[]]>} groups heading and the sound ids under it
  */
@@ -179,6 +180,7 @@ const byCat = (...cats) => catalog.filter((s) => cats.includes(s.category)).map(
 const USES = [
   {
     slug: 'video', title: 'Free sound effects for video',
+    blurb: 'Whooshes for cuts, clicks and typing for screen recordings, pops for titles, and real-world foley.',
     description: `Free sound effects for YouTube videos, Reels, TikToks, tutorials and screen recordings: whooshes, clicks, typing, pops and foley. Download WAV.`,
     intro: 'Short, clean sound effects for video edits: whooshes for cuts, clicks and typing for screen recordings, pops for titles and real-world foley. Every file is trimmed to start on the sound and matched in loudness, so it drops onto the timeline without cleanup. They are free for monetized videos, and nobody may register them with YouTube Content ID.',
     tips: [
@@ -195,6 +197,7 @@ const USES = [
   },
   {
     slug: 'apps', title: 'Free UI sound effects for apps and websites',
+    blurb: 'Clicks, toggles, notifications, success and error sounds, plus five matching sets for one app.',
     description: 'Free UI sound effects for apps and websites: clicks, toggles, notifications, success and error sounds, plus 5 matching UI sound sets. Download WAV or M4A.',
     intro: 'Interface sounds for buttons, switches, notifications and status changes. The five matching sets cover the same ten actions in one voice each, so a whole app can sound consistent.',
     tips: [
@@ -211,6 +214,7 @@ const USES = [
   },
   {
     slug: 'ai-agents', title: 'Sound effects for AI agents',
+    blurb: 'A skill that lets your agent find, download and wire up the right sound for the job.',
     description: `Give your AI agent a free sound effects library. Install the Better SFX skill in Claude Code or Codex to search, download and add UI sounds and video SFX.`,
     intro: `Better SFX has an agent skill. With it, your agent can search the library by what a sound should feel like, download the right files into your project and wire them up in code or a video edit. Install it with one command in Claude Code, Codex or any agent that supports skills: ${INSTALL}. Agents can also read catalog.json and llms.txt without the skill.`,
     tips: [
@@ -225,6 +229,14 @@ const USES = [
     ],
   },
 ];
+
+const SETS = ['glass', 'wood', 'soft', 'retro', 'mechanical'];
+/** @param {string} id @param {string} category @returns {CatalogEntry} the sound, or the category's first one */
+function byIdOrFirst(id, category) {
+  const found = catalog.find((x) => x.id === id) ?? catalog.find((x) => x.category === category);
+  if (!found) throw new Error(`site: no sound for ${id}`);
+  return found;
+}
 
 /** @param {string} root */
 function footer(root) {
@@ -255,21 +267,61 @@ function home() {
 <main class="grid">
 ${catalog.map((s) => card(s, '')).join('\n')}
 </main>
-<section class="info">
-  <h2>Browse by category</h2>
-  <ul class="cats">${categories.map((c) => `<li><a href="category/${slug(c)}/">${esc(catTitle(c))}</a> (${catalog.filter((s) => s.category === c).length})</li>`).join('')}</ul>
-  <h2>Made for</h2>
-  <ul class="cats">${USES.map((u) => `<li><a href="${u.slug}/">${esc(u.title)}</a></li>`).join('')}</ul>
-  <h2>Use it from an AI agent</h2>
-  <p>Install the Better SFX skill in Claude Code, Codex or any agent that supports skills. Your agent can then search the library, download the right sounds into your project and wire them up.</p>
-  <pre><code>${INSTALL}</code></pre>
-  <p>Agents without the skill can read <a href="catalog.json">catalog.json</a> or <a href="llms.txt">llms.txt</a>. Every sound has a stable file URL.</p>
-  <h2>Free for any project</h2>
-  <p>${esc(LICENSE_SUMMARY)} <a href="license/">Read the license</a>.</p>
-  <h2>Questions</h2>
-  ${FAQ.map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join('\n  ')}
-</section>
+<div class="hm">
+  <section class="hm-section" aria-labelledby="hm-sets">
+    <div class="hm-head"><h2 id="hm-sets" class="sp-h2">Matching UI sound sets</h2><p>Five voices, each covering the same ten app actions: click, hover, toggle, notify, success, error, open, close, send and delete.</p></div>
+    <div class="hm-sets">${SETS.map((set) => `<a class="hm-tile" href="category/${slug(set + ' set')}/">
+      ${wave(byIdOrFirst(`${set}-success`, set + ' set').peaks)}
+      <span class="hm-tile-name">${esc(set[0].toUpperCase() + set.slice(1))}</span>
+      <span class="hm-tile-meta">${catalog.filter((x) => x.set === set).length} sounds</span>
+    </a>`).join('\n    ')}</div>
+  </section>
+  <section class="hm-section" aria-labelledby="hm-cats">
+    <div class="hm-head"><h2 id="hm-cats" class="sp-h2">Browse by category</h2><p>Interface sounds made in code, and real-world foley recorded with Seed Audio.</p></div>
+    <div class="hm-cats">${categories.filter((c) => !c.endsWith(' set')).map((c) => {
+      const list = catalog.filter((x) => x.category === c);
+      return `<a class="hm-tile" href="category/${slug(c)}/">
+      ${wave(list[0].peaks)}
+      <span class="hm-tile-name">${esc(catTitle(c).replace(/ sounds$/, ''))}</span>
+      <span class="hm-tile-meta">${list.length} sounds</span>
+    </a>`;
+    }).join('\n    ')}</div>
+  </section>
+  <section class="hm-section" aria-labelledby="hm-uses">
+    <div class="hm-head"><h2 id="hm-uses" class="sp-h2">Made for</h2></div>
+    <div class="hm-uses">${USES.map((u) => `<a class="hm-use" href="${u.slug}/">
+      <span class="hm-use-title">${esc(u.title)}</span>
+      <span class="hm-use-text">${esc(u.blurb)}</span>
+      <span class="hm-use-go">Open <span aria-hidden="true">&rarr;</span></span>
+    </a>`).join('\n    ')}</div>
+  </section>
+  <section class="hm-section hm-pair">
+    <div class="hm-panel" aria-labelledby="hm-agent">
+      <h2 id="hm-agent" class="sp-h2">Use it from an AI agent</h2>
+      <p>Install the Better SFX skill in Claude Code, Codex or any agent that supports skills. Your agent can then search the library, download the right sounds into your project and wire them up.</p>
+      ${snippet('Install the skill', INSTALL)}
+      <p class="hm-note">Agents without the skill can read <a href="catalog.json">catalog.json</a> or <a href="llms.txt">llms.txt</a>. Every sound has a stable file URL.</p>
+    </div>
+    <div class="hm-panel hm-license" aria-labelledby="hm-free">
+      <h2 id="hm-free" class="sp-h2">Free for any project</h2>
+      <ul class="hm-points">
+        <li>Use the sounds in apps, websites, games, videos and client work, including commercial projects.</li>
+        <li>No account, no credit required, no fees per use.</li>
+        <li>Do not resell or redistribute the sounds on their own, or register them with Content ID.</li>
+      </ul>
+      <a class="sp-btn" href="license/">Read the license</a>
+    </div>
+  </section>
+  <section class="hm-section hm-faq" aria-labelledby="hm-faq">
+    <div class="hm-head"><h2 id="hm-faq" class="sp-h2">Questions</h2><p>What Better SFX is, what you can do with the sounds, and how agents use them.</p></div>
+    <div class="hm-qs">${FAQ.map(([q, a]) => `<details class="hm-q">
+      <summary><span>${esc(q)}</span><svg class="hm-plus" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary>
+      <p>${esc(a)}</p>
+    </details>`).join('\n    ')}</div>
+  </section>
+</div>
 ${footer(root)}
+${SOUND_SCRIPT}
 ${PLAYER}
 ${FILTER}
 </body>
@@ -603,6 +655,73 @@ footer p { margin: 0; }
 }
 @media (max-width: 560px) {
   .sp-actions .sp-btn { flex: 1 1 auto; justify-content: center; }
+}
+
+/* ---------- home page sections below the grid ---------- */
+.hm { padding: 24px 24px 24px; }
+.hm-section { margin-top: 96px; }
+.hm-section:first-child { margin-top: 48px; }
+.hm-head { margin-bottom: 20px; }
+.hm-head .sp-h2 { margin: 0; }
+.hm-head p { margin: 6px 0 0; max-width: 64ch; color: var(--muted); font-size: 15px; }
+.hm-sets { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.hm-cats { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 12px; }
+.hm-tile { display: grid; gap: 2px; padding: 16px 18px 18px; border-radius: 14px; background: var(--card); color: var(--ink); text-decoration: none; transition: background-color 200ms, transform 140ms var(--out); }
+.hm-tile .wave { height: 36px; margin-bottom: 14px; color: var(--muted); }
+.hm-tile:hover, .hm-tile:focus-visible { background: var(--raise); }
+.hm-tile:hover .wave { color: var(--accent); }
+.hm-tile:active { transform: scale(.98); }
+.hm-sets .hm-tile .wave { height: 56px; }
+.hm-sets .hm-tile-name { font-size: 20px; letter-spacing: -.015em; }
+.hm-tile-name { font-weight: 600; font-size: 16px; }
+.hm-tile-meta { color: var(--muted); font-size: 14px; }
+.hm-uses { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.hm-use { display: flex; flex-direction: column; gap: 10px; min-height: 196px; padding: 24px 24px 22px; border-radius: 16px; background: var(--card); color: var(--ink); text-decoration: none; transition: background-color 200ms, transform 140ms var(--out); }
+.hm-use:hover, .hm-use:focus-visible { background: var(--raise); }
+.hm-use:active { transform: scale(.99); }
+.hm-use-title { font-size: 22px; line-height: 1.2; font-weight: 650; letter-spacing: -.02em; text-wrap: balance; }
+.hm-use-text { color: var(--muted); font-size: 15px; line-height: 1.5; max-width: 36ch; }
+.hm-use-go { margin-top: auto; font-size: 15px; font-weight: 600; color: var(--accent); }
+.hm-use-go span { display: inline-block; transition: transform 200ms var(--out); }
+.hm-use:hover .hm-use-go span { transform: translateX(4px); }
+.hm-pair { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 12px; }
+.hm-panel { padding: 28px; border-radius: 16px; background: var(--card); }
+.hm-panel > p { margin: 0 0 18px; max-width: 60ch; font-size: 16px; line-height: 1.55; }
+.hm-panel .sp-snip { background: var(--bg); }
+.hm-panel .sp-copy { background: var(--card); }
+.hm-panel .hm-note { margin: 16px 0 0; color: var(--muted); font-size: 14px; }
+.hm-points { margin: 0 0 22px; padding-left: 18px; font-size: 16px; line-height: 1.55; }
+.hm-points li { margin: 0 0 8px; }
+.hm-points li::marker { color: var(--accent); }
+.hm-license .sp-btn { background: var(--bg); }
+.hm-faq { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 12px 56px; align-items: start; }
+.hm-faq .hm-head p { max-width: 34ch; }
+.hm-qs { display: grid; gap: 8px; }
+.hm-q { border-radius: 14px; background: var(--card); transition: background-color 200ms; }
+.hm-q[open] { background: var(--raise); }
+.hm-q summary { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 18px 20px; font-size: 17px; font-weight: 600; cursor: pointer; list-style: none; border-radius: 14px; }
+.hm-q summary::-webkit-details-marker { display: none; }
+.hm-q summary:hover .hm-plus { color: var(--ink); }
+.hm-plus { flex: none; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; color: var(--muted); transition: transform 240ms var(--out), color 200ms; }
+.hm-q[open] .hm-plus { transform: rotate(45deg); color: var(--accent); }
+.hm-q p { margin: 0; padding: 0 20px 20px; max-width: 70ch; font-size: 16px; line-height: 1.6; }
+@media (prefers-reduced-motion: reduce) { .hm-tile, .hm-use, .hm-plus, .hm-use-go span { transition: none; } }
+@media (max-width: 1240px) {
+  .hm-cats { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+}
+@media (max-width: 1000px) {
+  .hm-sets { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .hm-uses, .hm-pair, .hm-faq { grid-template-columns: minmax(0, 1fr); }
+  .hm-use { min-height: 0; }
+}
+@media (max-width: 560px) {
+  .hm { padding: 16px; }
+  .hm-section { margin-top: 72px; }
+  .hm-sets { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hm-cats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hm-panel { padding: 20px; }
+  .hm-q summary { font-size: 16px; padding: 16px; }
+  .hm-q p { padding: 0 16px 16px; }
 }
 `;
 

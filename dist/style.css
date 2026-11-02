@@ -131,3 +131,70 @@ footer p { margin: 0; }
 @media (max-width: 560px) {
   .sp-actions .sp-btn { flex: 1 1 auto; justify-content: center; }
 }
+
+/* ---------- home page sections below the grid ---------- */
+.hm { padding: 24px 24px 24px; }
+.hm-section { margin-top: 96px; }
+.hm-section:first-child { margin-top: 48px; }
+.hm-head { margin-bottom: 20px; }
+.hm-head .sp-h2 { margin: 0; }
+.hm-head p { margin: 6px 0 0; max-width: 64ch; color: var(--muted); font-size: 15px; }
+.hm-sets { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.hm-cats { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 12px; }
+.hm-tile { display: grid; gap: 2px; padding: 16px 18px 18px; border-radius: 14px; background: var(--card); color: var(--ink); text-decoration: none; transition: background-color 200ms, transform 140ms var(--out); }
+.hm-tile .wave { height: 36px; margin-bottom: 14px; color: var(--muted); }
+.hm-tile:hover, .hm-tile:focus-visible { background: var(--raise); }
+.hm-tile:hover .wave { color: var(--accent); }
+.hm-tile:active { transform: scale(.98); }
+.hm-sets .hm-tile .wave { height: 56px; }
+.hm-sets .hm-tile-name { font-size: 20px; letter-spacing: -.015em; }
+.hm-tile-name { font-weight: 600; font-size: 16px; }
+.hm-tile-meta { color: var(--muted); font-size: 14px; }
+.hm-uses { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.hm-use { display: flex; flex-direction: column; gap: 10px; min-height: 196px; padding: 24px 24px 22px; border-radius: 16px; background: var(--card); color: var(--ink); text-decoration: none; transition: background-color 200ms, transform 140ms var(--out); }
+.hm-use:hover, .hm-use:focus-visible { background: var(--raise); }
+.hm-use:active { transform: scale(.99); }
+.hm-use-title { font-size: 22px; line-height: 1.2; font-weight: 650; letter-spacing: -.02em; text-wrap: balance; }
+.hm-use-text { color: var(--muted); font-size: 15px; line-height: 1.5; max-width: 36ch; }
+.hm-use-go { margin-top: auto; font-size: 15px; font-weight: 600; color: var(--accent); }
+.hm-use-go span { display: inline-block; transition: transform 200ms var(--out); }
+.hm-use:hover .hm-use-go span { transform: translateX(4px); }
+.hm-pair { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 12px; }
+.hm-panel { padding: 28px; border-radius: 16px; background: var(--card); }
+.hm-panel > p { margin: 0 0 18px; max-width: 60ch; font-size: 16px; line-height: 1.55; }
+.hm-panel .sp-snip { background: var(--bg); }
+.hm-panel .sp-copy { background: var(--card); }
+.hm-panel .hm-note { margin: 16px 0 0; color: var(--muted); font-size: 14px; }
+.hm-points { margin: 0 0 22px; padding-left: 18px; font-size: 16px; line-height: 1.55; }
+.hm-points li { margin: 0 0 8px; }
+.hm-points li::marker { color: var(--accent); }
+.hm-license .sp-btn { background: var(--bg); }
+.hm-faq { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 12px 56px; align-items: start; }
+.hm-faq .hm-head p { max-width: 34ch; }
+.hm-qs { display: grid; gap: 8px; }
+.hm-q { border-radius: 14px; background: var(--card); transition: background-color 200ms; }
+.hm-q[open] { background: var(--raise); }
+.hm-q summary { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 18px 20px; font-size: 17px; font-weight: 600; cursor: pointer; list-style: none; border-radius: 14px; }
+.hm-q summary::-webkit-details-marker { display: none; }
+.hm-q summary:hover .hm-plus { color: var(--ink); }
+.hm-plus { flex: none; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; color: var(--muted); transition: transform 240ms var(--out), color 200ms; }
+.hm-q[open] .hm-plus { transform: rotate(45deg); color: var(--accent); }
+.hm-q p { margin: 0; padding: 0 20px 20px; max-width: 70ch; font-size: 16px; line-height: 1.6; }
+@media (prefers-reduced-motion: reduce) { .hm-tile, .hm-use, .hm-plus, .hm-use-go span { transition: none; } }
+@media (max-width: 1240px) {
+  .hm-cats { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+}
+@media (max-width: 1000px) {
+  .hm-sets { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .hm-uses, .hm-pair, .hm-faq { grid-template-columns: minmax(0, 1fr); }
+  .hm-use { min-height: 0; }
+}
+@media (max-width: 560px) {
+  .hm { padding: 16px; }
+  .hm-section { margin-top: 72px; }
+  .hm-sets { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hm-cats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hm-panel { padding: 20px; }
+  .hm-q summary { font-size: 16px; padding: 16px; }
+  .hm-q p { padding: 0 16px 16px; }
+}
