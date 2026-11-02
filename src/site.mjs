@@ -441,6 +441,8 @@ ${footer(root)}
 // ---------- write everything ----------
 writeFileSync(`${DIST}/style.css`, CSS);
 writeFileSync(`${DIST}/license.txt`, licenseText(counts));
+// Same text at the repo root, next to the MIT LICENSE for the code.
+writeFileSync('LICENSE-SOUNDS.txt', licenseText(counts));
 mkdirSync(`${DIST}/license`, { recursive: true });
 writeFileSync(`${DIST}/license/index.html`, licensePage());
 for (const u of USES) {

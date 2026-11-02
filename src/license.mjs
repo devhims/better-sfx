@@ -24,6 +24,7 @@ export function licenseSections({ total, codeCount, recCount }) {
       'The sounds are provided as they are, with no warranty. video2ctx is not liable for how you use them.',
       `${codeCount} of the ${total} sounds are made in code by video2ctx. ${recCount} are recordings generated with Higgsfield Seed Audio 1.0. Higgsfield does not claim ownership of generated output and does not restrict its commercial use (Higgsfield Terms of Use, section 4.4).`,
       'video2ctx may publish a new version of this license. A sound you downloaded under this version stays usable under this version.',
+      'This license covers the sounds. The Better SFX website code and agent skill are separate and use the MIT License.',
     ]],
   ];
 }

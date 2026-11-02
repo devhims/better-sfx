@@ -1,7 +1,7 @@
 ---
 name: better-sfx
 description: Sound effects for apps, websites, games and videos from Better SFX, a free, royalty-free library by video2ctx. Use when the user wants to add, find or swap a sound effect, including UI sounds (click, hover, toggle, notification, message, success, error), a matching sound set for a whole app, or SFX for a video edit (whoosh, transition, typing, pop, paper and object foley). Also use when they ask to make an interaction feel more satisfying with sound, even if they never name Better SFX.
-license: Skill MIT. Sounds under the Better SFX License, https://sfx.video2ctx.dev/license/
+license: MIT for the skill (see LICENSE). Downloaded sounds use the Better SFX License, https://sfx.video2ctx.dev/license/
 compatibility: Node.js 18+ and network access to sfx.video2ctx.dev.
 metadata:
   author: video2ctx
