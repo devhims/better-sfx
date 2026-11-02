@@ -3,8 +3,8 @@ This repository contains two kinds of material under two licenses.
 1. Code: everything in src/ and skills/, and the HTML, CSS and JavaScript
    that src/site.mjs generates in dist/. Licensed under the MIT License below.
 
-2. Sounds: every audio file (.wav, .m4a, .ogg) in dist/sounds/ and samples/,
-   and the sound data in dist/catalog.json. Licensed under the Better SFX
+2. Sounds: every audio file (.wav, .m4a, .flac) in dist/sounds/ and
+   recordings/, and the sound data in dist/catalog.json. Licensed under the Better SFX
    License in LICENSE-SOUNDS.txt and at https://sfx.video2ctx.dev/license/.
    The MIT License does not apply to the sounds.
 

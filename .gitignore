@@ -1,4 +1,5 @@
 node_modules/
+# Local working files: raw downloads and Higgsfield job records (they hold
+# account-specific URLs), rejected takes, review reels and build logs.
 out/
-samples/seed-raw/
 .DS_Store

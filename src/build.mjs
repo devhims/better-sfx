@@ -16,6 +16,10 @@ import { SR, trim, trimEvent, closeGaps, level, wav16 } from './finish.mjs';
 const DIST = 'dist';
 mkdirSync(`${DIST}/sounds`, { recursive: true });
 
+// macOS ffmpeg builds have Apple's AAC encoder, which sounds better at low
+// bitrates. Other platforms use ffmpeg's own AAC encoder.
+const AAC = execFileSync('ffmpeg', ['-hide_banner', '-encoders'], { encoding: 'utf8' }).includes(' aac_at ') ? 'aac_at' : 'aac';
+
 /** @param {SynthRecipe} r @returns {Promise<Float32Array>} */
 async function renderSynth(r) {
   const ctx = new OfflineAudioContext(1, SR * 4, SR);
@@ -27,7 +31,7 @@ async function renderSynth(r) {
 
 /** @param {SeedPrompt} p @returns {Float32Array} */
 function finishSeed(p) {
-  const raw = execFileSync('ffmpeg', ['-v', 'error', '-i', `out/seed-raw/${p.id}.wav`, '-ac', '1', '-ar', String(SR), '-f', 'f32le', '-'], { maxBuffer: 1 << 28 });
+  const raw = execFileSync('ffmpeg', ['-v', 'error', '-i', `recordings/${p.id}.flac`, '-ac', '1', '-ar', String(SR), '-f', 'f32le', '-'], { maxBuffer: 1 << 28 });
   const y = new Float32Array(raw.buffer, raw.byteOffset, raw.length / 4).slice();
   const maxS = p.maxS ?? (p.mode === 'single' ? 0.6 : 2);
   // Single hits keep one event. Gestures keep every part less than 600 ms
@@ -87,7 +91,7 @@ for (const job of all) {
   const y = job.kind === 'synth' ? await renderSynth(job.item) : finishSeed(job.item);
   const wav = `${DIST}/sounds/${item.id}.wav`;
   writeFileSync(wav, wav16(y));
-  execFileSync('ffmpeg', ['-v', 'error', '-y', '-i', wav, '-c:a', 'aac_at', '-b:a', '128k', `${DIST}/sounds/${item.id}.m4a`]);
+  execFileSync('ffmpeg', ['-v', 'error', '-y', '-i', wav, '-c:a', AAC, '-b:a', '128k', `${DIST}/sounds/${item.id}.m4a`]);
   // Every published field is named here, so the type check can hold
   // catalog.json to the CatalogEntry format in the skill's catalog.d.ts.
   catalog.push({
@@ -110,7 +114,5 @@ for (const job of all) {
 }
 
 writeFileSync(`${DIST}/catalog.json`, JSON.stringify(catalog, null, 1));
-// Same data as a script, so dist/index.html works when opened straight from disk.
-writeFileSync(`${DIST}/catalog.js`, `const CATALOG = ${JSON.stringify(catalog)};\n`);
 console.log(`\n${catalog.length} sounds`);
 await import('./site.mjs');

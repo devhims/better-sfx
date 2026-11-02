@@ -1,7 +1,0 @@
-  0.0s  door-knock: before, then after at 1.1s
-  4.0s  drawer-shut: before, then after at 6.0s
-  8.1s  card-flip: before, then after at 9.2s
- 10.9s  paper-slide: before, then after at 13.4s
- 16.3s  trash-bin: before, then after at 18.2s
- 21.2s  key-laptop: before, then after at 22.3s
- 24.1s  tape-pull: before, then after at 25.7s

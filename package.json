@@ -1,8 +1,21 @@
 {
-  "name": "sound-library",
+  "name": "better-sfx",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Free, royalty-free sound effects for apps, videos and AI agents, with an agent skill. By video2ctx.",
+  "homepage": "https://sfx.video2ctx.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devhims/better-sfx.git"
+  },
+  "bugs": "https://github.com/devhims/better-sfx/issues",
+  "author": "video2ctx",
+  "license": "SEE LICENSE IN LICENSE",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": ["sound effects", "sfx", "ui sounds", "web audio", "agent skill", "royalty-free"],
   "scripts": {
     "build": "node src/build.mjs",
     "site": "node src/site.mjs",
@@ -10,11 +23,6 @@
     "audit": "node src/audit-gaps.mjs",
     "generate": "node src/generate-seed.mjs"
   },
-  "keywords": [],
-  "author": "",
-  "license": "SEE LICENSE IN LICENSE",
-  "private": true,
-  "type": "commonjs",
   "dependencies": {
     "node-web-audio-api": "^2.2.0"
   },
