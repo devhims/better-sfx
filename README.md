@@ -1,6 +1,6 @@
 # Better SFX
 
-Free, royalty-free sound effects for apps, videos and AI agents. By [video2ctx](https://www.video2ctx.dev).
+Free sound effects for apps, videos and AI agents. By [video2ctx](https://www.video2ctx.dev).
 
 **[sfx.video2ctx.dev](https://sfx.video2ctx.dev)** has 161 short sounds: clicks, toggles, notifications, success and error cues, whooshes and transitions, keyboard, paper and object foley, and five matching UI sound sets. Every sound starts right on its first moment, is matched in loudness to the rest, and comes as a WAV (48 kHz, 16-bit mono) and an M4A.
 
@@ -18,7 +18,7 @@ Agents without the skill can read [catalog.json](https://sfx.video2ctx.dev/catal
 
 ## License
 
-The sounds are free and royalty-free for personal and commercial use, with no credit required. You cannot resell or redistribute them on their own, as a sound pack or on another sound-effects site, and nobody may register them with YouTube Content ID. The full terms are in [LICENSE-SOUNDS.txt](LICENSE-SOUNDS.txt) and on [the license page](https://sfx.video2ctx.dev/license/).
+The sounds are free for personal and commercial use, with no credit required. You cannot resell or redistribute them on their own, as a sound pack or on another sound-effects site, and nobody may register them with YouTube Content ID. The full terms are in [LICENSE-SOUNDS.txt](LICENSE-SOUNDS.txt) and on [the license page](https://sfx.video2ctx.dev/license/).
 
 The code in `src/` and `skills/` is under the [MIT License](LICENSE).
 

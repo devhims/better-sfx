@@ -2,7 +2,7 @@
 // dist/license.txt, llms.txt and the agent skill's summary.
 export const LICENSE_VERSION = '1.0';
 export const LICENSE_DATE = '2026-11-02';
-export const LICENSE_SUMMARY = 'Free and royalty-free for personal and commercial use. No credit required. Do not resell or redistribute the sounds on their own.';
+export const LICENSE_SUMMARY = 'Free for personal and commercial use. No credit required. Do not resell or redistribute the sounds on their own.';
 
 /** @typedef {{ total: number, codeCount: number, recCount: number }} Counts */
 

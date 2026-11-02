@@ -1,6 +1,6 @@
 Better SFX License 1.0 (2026-11-02)
 
-Free and royalty-free for personal and commercial use. No credit required. Do not resell or redistribute the sounds on their own.
+Free for personal and commercial use. No credit required. Do not resell or redistribute the sounds on their own.
 
 Pricing
 - Better SFX is free. There is no price, no account, no subscription and no API key.

@@ -1,16 +1,16 @@
 ---
 name: better-sfx
-description: Sound effects for apps, websites, games and videos from Better SFX, a free, royalty-free library by video2ctx. Use when the user wants to add, find or swap a sound effect, including UI sounds (click, hover, toggle, notification, message, success, error), a matching sound set for a whole app, or SFX for a video edit (whoosh, transition, typing, pop, paper and object foley). Also use when they ask to make an interaction feel more satisfying with sound, even if they never name Better SFX.
+description: Sound effects for apps, websites, games and videos from Better SFX, a free library by video2ctx. Use when the user wants to add, find or swap a sound effect, including UI sounds (click, hover, toggle, notification, message, success, error), a matching sound set for a whole app, or SFX for a video edit (whoosh, transition, typing, pop, paper and object foley). Also use when they ask to make an interaction feel more satisfying with sound, even if they never name Better SFX.
 license: MIT for the skill (see LICENSE). Downloaded sounds use the Better SFX License, https://sfx.video2ctx.dev/license/
 compatibility: Node.js 18+ and network access to sfx.video2ctx.dev.
 metadata:
   author: video2ctx
-  version: "1.0.0"
+  version: '1.0.0'
 ---
 
 # Better SFX
 
-Better SFX is a library of short, trimmed, loudness-matched sound effects. Every sound is free and royalty-free for personal and commercial use with no credit required. The one rule: the sounds ship inside something the user made, never on their own as a sound pack.
+Better SFX is a library of short, trimmed, loudness-matched sound effects. Every sound is free for personal and commercial use with no credit required. The one rule: the sounds ship inside something the user made, never on their own as a sound pack.
 
 `scripts/sfx.mjs` searches the catalog and downloads files. Run it from this skill's folder; it prints JSON to stdout.
 
@@ -24,12 +24,12 @@ Better SFX is a library of short, trimmed, loudness-matched sound effects. Every
 
 ## Script reference
 
-| Command | Use |
-|---|---|
+| Command             | Use                                                                                                                         |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | `search <words...>` | Ranked matches. Filters: `--category`, `--set`, `--source code\|recording`, `--max-duration <s>`, `--limit <n>` (default 8) |
-| `sets` | The five matching sets and the id for each action |
-| `categories` | Every category with its count |
-| `get <id...>` | Downloads into `--dir` (default `sounds`). `--format m4a\|wav\|both`, `--force` replaces existing files |
+| `sets`              | The five matching sets and the id for each action                                                                           |
+| `categories`        | Every category with its count                                                                                               |
+| `get <id...>`       | Downloads into `--dir` (default `sounds`). `--format m4a\|wav\|both`, `--force` replaces existing files                     |
 
 Each result carries `id`, `name`, `category`, `duration` in seconds, `description`, `tags`, `page`, `wav` and `m4a`. Set sounds also carry `set` and `action`; their ids read `<set>-<action>`, such as `wood-success`.
 

@@ -15,7 +15,7 @@ import { dirname, join, resolve } from 'node:path';
 
 const DEFAULT_CATALOG = 'https://sfx.video2ctx.dev/catalog.json';
 const SITE = 'https://sfx.video2ctx.dev';
-const LICENSE = 'Free and royalty-free for personal and commercial use. No credit required. Do not resell or redistribute the sounds on their own. https://sfx.video2ctx.dev/license/';
+const LICENSE = 'Free for personal and commercial use. No credit required. Do not resell or redistribute the sounds on their own. https://sfx.video2ctx.dev/license/';
 
 /** @param {...unknown} a */
 const log = (...a) => console.error('[better-sfx]', ...a);
