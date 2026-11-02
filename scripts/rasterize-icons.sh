@@ -23,5 +23,7 @@ shot out/og.svg 1200 630 dist/og.png
 # scaled down from the 512 px render.
 ffmpeg -v error -y -i out/icon-512.png -vf scale=180:180:flags=lanczos dist/apple-touch-icon.png
 ffmpeg -v error -y -i out/icon-512.png -vf scale=32:32:flags=lanczos dist/favicon-32.png
+# favicon.ico for browsers and crawlers that ask for it by name.
+ffmpeg -v error -y -i out/icon-512.png -vf scale=32:32:flags=lanczos dist/favicon.ico
 cp out/icon-512.png dist/icon-512.png
-echo >&2 "icons: dist/apple-touch-icon.png, dist/favicon-32.png, dist/icon-512.png, dist/og.png"
+echo >&2 "icons: dist/apple-touch-icon.png, dist/favicon-32.png, dist/favicon.ico, dist/icon-512.png, dist/og.png"
