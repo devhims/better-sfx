@@ -278,6 +278,76 @@ ${FILTER}
 }
 
 // ---------- one page per sound ----------
+// Icons: Phosphor (MIT). Fill play and pause, regular copy, bold check.
+const ICON = {
+  play: '<svg class="i-play" viewBox="0 0 256 256" aria-hidden="true"><path d="M240,128a15.74,15.74,0,0,1-7.6,13.51L88.32,229.65a16,16,0,0,1-16.2.3A15.86,15.86,0,0,1,64,216.13V39.87a15.86,15.86,0,0,1,8.12-13.82,16,16,0,0,1,16.2.3L232.4,114.49A15.74,15.74,0,0,1,240,128Z"/></svg>',
+  pause: '<svg class="i-pause" viewBox="0 0 256 256" aria-hidden="true"><path d="M216,48V208a16,16,0,0,1-16,16H160a16,16,0,0,1-16-16V48a16,16,0,0,1,16-16h40A16,16,0,0,1,216,48ZM96,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V48A16,16,0,0,0,96,32Z"/></svg>',
+  copy: '<svg class="i-copy" viewBox="0 0 256 256" aria-hidden="true"><path d="M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32Zm-8,128H176V88a8,8,0,0,0-8-8H96V48H208Z"/></svg>',
+  check: '<svg class="i-check" viewBox="0 0 256 256" aria-hidden="true"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></svg>',
+};
+
+// The hero waveform: 48 rounded bars, drawn twice. The second copy is the
+// accent colour and is revealed left to right as the sound plays.
+/** @param {number[]} peaks */
+function bigWave(peaks) {
+  const bars = peaks.map((p, i) => {
+    const h = Math.max(6, p * 148);
+    return `<rect x="${i * 10 + 2}" y="${(80 - h / 2).toFixed(1)}" width="6" height="${h.toFixed(1)}" rx="3"/>`;
+  }).join('');
+  return `<svg class="sp-wave" viewBox="0 0 480 160" preserveAspectRatio="none" aria-hidden="true">
+<defs><clipPath id="sp-clip"><rect class="sp-clip" width="0" height="160"/></clipPath></defs>
+<g class="sp-base">${bars}</g><g class="sp-hot" clip-path="url(#sp-clip)">${bars}</g></svg>`;
+}
+
+/** @param {string} label @param {string} text */
+const snippet = (label, text) => `<div class="sp-snip">
+  <div class="sp-snip-head"><span>${esc(label)}</span><button class="sp-copy" type="button" data-copy="${esc(text)}" aria-label="Copy ${esc(label.toLowerCase())}">${ICON.copy}${ICON.check}<span>Copy</span></button></div>
+  <pre><code>${esc(text)}</code></pre>
+</div>`;
+
+// Plays the hero sound: the button toggles, a click on the waveform restarts,
+// Space toggles when focus is not in a control.
+const SOUND_SCRIPT = `<script>
+(() => {
+  const box = document.querySelector('[data-player]');
+  if (!box) return;
+  const audio = box.querySelector('audio');
+  const btn = box.querySelector('.sp-play');
+  const clip = box.querySelector('.sp-clip');
+  const now = box.querySelector('.sp-now');
+  const name = btn.dataset.name;
+  let raf = 0, reset = 0;
+  function frame() {
+    const d = audio.duration || Number(box.dataset.duration);
+    const t = Math.min(audio.currentTime, d);
+    clip.setAttribute('width', String(480 * (t / d)));
+    now.textContent = t.toFixed(2);
+    if (!audio.paused) raf = requestAnimationFrame(frame);
+  }
+  function play() { clearTimeout(reset); audio.currentTime = 0; audio.play().catch(() => {}); }
+  function toggle() { audio.paused ? play() : audio.pause(); }
+  audio.addEventListener('play', () => { box.classList.add('is-playing'); btn.setAttribute('aria-label', 'Pause ' + name); raf = requestAnimationFrame(frame); });
+  audio.addEventListener('pause', () => { box.classList.remove('is-playing'); btn.setAttribute('aria-label', 'Play ' + name); cancelAnimationFrame(raf); frame(); });
+  audio.addEventListener('ended', () => { reset = setTimeout(() => { clip.setAttribute('width', '0'); now.textContent = '0.00'; }, 900); });
+  btn.addEventListener('click', toggle);
+  box.querySelector('.sp-wave').addEventListener('click', play);
+  document.addEventListener('keydown', (e) => {
+    if (e.code !== 'Space' || e.target.closest('input, textarea, button, a, [contenteditable]')) return;
+    e.preventDefault();
+    toggle();
+  });
+})();
+document.addEventListener('click', async (e) => {
+  const b = e.target.closest('[data-copy]');
+  if (!b) return;
+  try { await navigator.clipboard.writeText(b.dataset.copy); } catch { return; }
+  const label = b.querySelector('span');
+  b.classList.add('done');
+  label.textContent = 'Copied';
+  setTimeout(() => { b.classList.remove('done'); label.textContent = 'Copy'; }, 1600);
+});
+</script>`;
+
 /** @param {CatalogEntry} s */
 function soundPage(s) {
   const root = '../../';
@@ -287,7 +357,14 @@ function soundPage(s) {
   const lower = s.name[0].toLowerCase() + s.name.slice(1);
   const title = s.set ? `Free ${lower} sound effect (${s.set} set) | Better SFX` : `Free ${lower} sound effect | Better SFX`;
   const description = `${s.description} Free and royalty-free, ${secs(s)}, ${made(s).toLowerCase()}. Download it as WAV or M4A.`;
-  const related = catalog.filter((x) => x.category === s.category && x.id !== s.id).slice(0, 8);
+  const siblings = catalog.filter((x) => x.category === s.category);
+  const at = siblings.findIndex((x) => x.id === s.id);
+  const prev = siblings[(at - 1 + siblings.length) % siblings.length];
+  const next = siblings[(at + 1) % siblings.length];
+  // Six fill one row on desktop, two on a tablet and three on a phone.
+  const related = siblings.filter((x) => x.id !== s.id).slice(0, 6);
+  const catUrl = `${root}category/${slug(s.category)}/`;
+  const relatedTitle = s.set ? `More from the ${s.set} set` : `More ${catTitle(s.category).toLowerCase()}`;
   const jsonld = [
     { '@context': 'https://schema.org', '@type': 'AudioObject', name: `${s.name} sound effect`, description: s.description, url,
       contentUrl: `${BASE}/${s.files.wav}`, encodingFormat: 'audio/wav', duration: `PT${s.duration.toFixed(2)}S`,
@@ -302,27 +379,59 @@ function soundPage(s) {
   return `${head({ title, description, path: `/sound/${s.id}/`, root, jsonld })}
 <body>
 <header>${brand(root)}</header>
-<main class="page">
-  <nav class="crumbs"><a href="${root}">All sounds</a> / <a href="${root}category/${slug(s.category)}/">${esc(catTitle(s.category))}</a></nav>
-  <h1>${esc(s.name)} sound effect</h1>
-  <p class="lede">${esc(s.description)}</p>
-  <div class="hero card"><button class="play" data-src="${root}${s.files.m4a}" aria-label="Play ${esc(s.name)}">${wave(s.peaks)}</button></div>
-  <audio controls preload="none"><source src="${root}${s.files.m4a}" type="audio/mp4"><source src="${root}${s.files.wav}" type="audio/wav"></audio>
-  <p class="actions"><a class="btn" href="${root}${s.files.wav}" download="${fileName(s, 'wav')}">Download WAV</a> <a class="btn" href="${root}${s.files.m4a}" download="${fileName(s, 'm4a')}">Download M4A</a></p>
-  <dl class="facts">
-    <dt>Length</dt><dd>${secs(s)}</dd>
-    <dt>Category</dt><dd><a href="${root}category/${slug(s.category)}/">${esc(catTitle(s.category))}</a></dd>
-    <dt>Made with</dt><dd>${made(s)}</dd>
-    <dt>Format</dt><dd>WAV 48 kHz 16-bit mono, M4A 128 kbps</dd>
-    <dt>Tags</dt><dd>${s.tags.map(esc).join(', ')}</dd>
-    <dt>License</dt><dd>Free and royalty-free, no credit required. <a href="${root}license/">Better SFX License</a></dd>
-  </dl>
-  <h2>For your agent</h2>
-  <pre><code>[${esc(s.name)}](${BASE}/${s.files.wav})</code></pre>
-  ${related.length ? `<h2>More ${esc(catTitle(s.category).toLowerCase())}</h2>
-  <div class="grid">${related.map((x) => card(x, root)).join('\n')}</div>` : ''}
+<main class="sp">
+  <div class="sp-top rise" style="--d:0">
+    <nav class="sp-crumbs" aria-label="Breadcrumb"><a href="${root}">All sounds</a><span aria-hidden="true">/</span><a href="${catUrl}">${esc(catTitle(s.category))}</a></nav>
+    ${siblings.length > 1 ? `<nav class="sp-steps" aria-label="Neighbouring sounds"><a href="${root}sound/${prev.id}/" rel="prev">&larr; ${esc(prev.name)}</a><a href="${root}sound/${next.id}/" rel="next">${esc(next.name)} &rarr;</a></nav>` : ''}
+  </div>
+  <section class="sp-hero" aria-labelledby="sp-title">
+    <div class="sp-intro">
+      <h1 id="sp-title" class="sp-title rise" style="--d:1">${esc(s.name)}</h1>
+      <p class="sp-meta rise" style="--d:2">Free sound effect · ${secs(s)} · ${s.source === 'synth' ? 'made in code' : 'recording'}</p>
+      <p class="sp-lede rise" style="--d:3">${esc(s.description)}</p>
+      <div class="sp-actions rise" style="--d:4">
+        <a class="sp-btn sp-primary" href="${root}${s.files.wav}" download="${fileName(s, 'wav')}">${DL_ICON}Download WAV</a>
+        <a class="sp-btn" href="${root}${s.files.m4a}" download="${fileName(s, 'm4a')}">M4A</a>
+      </div>
+    </div>
+    <div class="sp-player rise" style="--d:2" data-player data-duration="${s.duration}">
+      ${bigWave(s.peaks)}
+      <div class="sp-controls">
+        <button class="sp-play" type="button" data-name="${esc(s.name)}" aria-label="Play ${esc(s.name)}" aria-keyshortcuts="Space">${ICON.play}${ICON.pause}</button>
+        <p class="sp-time"><span class="sp-now">0.00</span><span class="sp-total"> / ${s.duration.toFixed(2)} s</span></p>
+      </div>
+      <audio preload="auto"><source src="${root}${s.files.m4a}" type="audio/mp4"><source src="${root}${s.files.wav}" type="audio/wav"></audio>
+      <noscript><audio controls src="${root}${s.files.wav}"></audio></noscript>
+    </div>
+  </section>
+  <section class="sp-info">
+    <div>
+      <h2 class="sp-h2">About this sound</h2>
+      <dl class="sp-facts">
+        <dt>Length</dt><dd>${secs(s)}</dd>
+        <dt>Category</dt><dd><a href="${catUrl}">${esc(catTitle(s.category))}</a></dd>
+        <dt>Made with</dt><dd>${made(s)}</dd>
+        <dt>Format</dt><dd>WAV, 48 kHz 16-bit mono<br>M4A, 128 kbps</dd>
+        <dt>Tags</dt><dd>${s.tags.map(esc).join(', ')}</dd>
+        <dt>License</dt><dd>Free and royalty-free, no credit required. <a href="${root}license/">Read the license</a></dd>
+      </dl>
+    </div>
+    <div>
+      <h2 class="sp-h2">Use it</h2>
+      <div class="sp-snips">
+        ${snippet('Play it in a web page', `new Audio('${BASE}/${s.files.m4a}').play();`)}
+        ${snippet('Link for your agent', `[${s.name}](${BASE}/${s.files.wav})`)}
+        ${snippet('Give your agent the whole library', INSTALL)}
+      </div>
+    </div>
+  </section>
+  ${related.length ? `<section class="sp-related">
+    <div class="sp-related-head"><h2 class="sp-h2">${esc(relatedTitle)}</h2><a href="${catUrl}">See all ${siblings.length}</a></div>
+    <div class="grid">${related.map((x) => card(x, root)).join('\n')}</div>
+  </section>` : ''}
 </main>
 ${footer(root)}
+${SOUND_SCRIPT}
 ${PLAYER}
 </body>
 </html>
@@ -419,6 +528,82 @@ pre { background: var(--card); border: 1px solid var(--line); border-radius: 8px
 footer { padding: 20px 24px 40px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--line); }
 footer nav { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-bottom: 8px; }
 footer p { margin: 0; }
+
+/* ---------- sound page ---------- */
+:root { --on-accent: #1c1917; --raise: #f0eeec; --out: cubic-bezier(0.23, 1, 0.32, 1); }
+@media (prefers-color-scheme: dark) { :root { --on-accent: #0c0a09; --raise: #292524; } }
+.sp { padding: 0 24px 40px; }
+.sp a { text-underline-offset: 3px; }
+.sp-top { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-top: 22px; font-size: 14px; color: var(--muted); }
+.sp-top nav { display: flex; gap: 10px 20px; flex-wrap: wrap; }
+.sp-top a { text-decoration: none; transition: color 200ms; }
+.sp-top a:hover, .sp-top a:focus-visible { color: var(--ink); }
+.sp-hero { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 56px; align-items: center; padding-top: 48px; }
+.sp-title { font-size: clamp(52px, 7vw, 112px); line-height: .92; letter-spacing: -.045em; font-weight: 650; margin: 0 0 22px; text-wrap: balance; }
+.sp-meta { font-size: 17px; color: var(--muted); margin: 0 0 14px; }
+.sp-lede { font-size: 21px; line-height: 1.45; margin: 0 0 32px; max-width: 30ch; }
+.sp-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.sp-btn { display: inline-flex; align-items: center; gap: 10px; height: 52px; padding: 0 24px; border-radius: 999px; background: var(--raise); color: var(--ink); font-weight: 600; font-size: 16px; text-decoration: none; transition: transform 140ms var(--out), background-color 200ms; }
+.sp-btn svg { width: 18px; height: 18px; fill: currentColor; }
+.sp-btn:hover { background: color-mix(in oklab, var(--raise), var(--ink) 7%); }
+.sp-btn.sp-primary { background: var(--accent); color: var(--on-accent); }
+.sp-btn.sp-primary:hover { background: color-mix(in oklab, var(--accent), #fff 12%); }
+.sp-btn:active { transform: scale(.97); }
+.sp-player { background: var(--card); border-radius: 18px; padding: 32px 32px 26px; }
+.sp-wave { display: block; width: 100%; height: clamp(200px, 22vw, 300px); cursor: pointer; }
+.sp-base rect { fill: var(--ink); opacity: .2; transition: opacity 300ms; }
+.sp-player:hover .sp-base rect { opacity: .3; }
+.sp-hot rect { fill: var(--accent); }
+.sp-controls { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 22px; }
+.sp-play { display: grid; place-items: center; width: 76px; height: 76px; border: 0; border-radius: 50%; background: var(--accent); color: var(--on-accent); cursor: pointer; transition: transform 160ms var(--out), background-color 200ms; }
+.sp-play:hover { background: color-mix(in oklab, var(--accent), #fff 12%); transform: scale(1.04); }
+.sp-play:active { transform: scale(.94); }
+.sp-play svg { width: 28px; height: 28px; fill: currentColor; }
+.sp-play .i-play { margin-left: 4px; }
+.sp-play .i-pause, .is-playing .sp-play .i-play { display: none; }
+.is-playing .sp-play .i-pause { display: block; }
+.sp-time { margin: 0; font-size: 30px; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.sp-total { color: var(--muted); }
+.sp-info { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 56px; margin-top: 150px; }
+.sp-h2 { font-size: 30px; line-height: 1.1; letter-spacing: -.025em; font-weight: 650; margin: 0 0 24px; }
+.sp-facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 16px 32px; margin: 0; font-size: 16px; }
+.sp-facts dt { color: var(--muted); }
+.sp-facts dd { margin: 0; }
+.sp-snips { display: grid; gap: 12px; }
+.sp-snip { background: var(--card); border-radius: 18px; padding: 16px 18px 20px 22px; }
+.sp-snip-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 10px; font-size: 15px; color: var(--muted); }
+.sp-snip pre { margin: 0; padding: 0; border: 0; background: none; font-size: 14px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--ink); }
+.sp-copy { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 14px; border: 0; border-radius: 999px; background: var(--raise); color: var(--ink); font: inherit; font-size: 13px; cursor: pointer; transition: transform 140ms var(--out), color 200ms; }
+.sp-copy svg { width: 14px; height: 14px; fill: currentColor; }
+.sp-copy .i-check, .sp-copy.done .i-copy { display: none; }
+.sp-copy.done .i-check { display: block; }
+.sp-copy.done { color: var(--accent); }
+.sp-copy:active { transform: scale(.95); }
+.sp-related { margin-top: 150px; }
+.sp-related-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.sp-related-head a { color: var(--muted); font-size: 15px; white-space: nowrap; }
+.sp-related-head a:hover { color: var(--ink); }
+.sp-related .grid { margin-top: 4px; }
+@keyframes sp-rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+.rise { animation: sp-rise 560ms var(--out) both; animation-delay: calc(var(--d, 0) * 70ms); }
+@media (prefers-reduced-motion: reduce) { .rise { animation: none; } .sp-btn, .sp-play, .sp-copy { transition: none; } }
+@media (max-width: 880px) {
+  .sp { padding: 0 16px 32px; }
+  .sp-hero { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .sp-info { grid-template-columns: minmax(0, 1fr); gap: 72px; }
+  .sp-facts { gap: 12px 20px; }
+  .sp-hero { padding-top: 28px; }
+  .sp-title { font-size: clamp(48px, 13vw, 72px); }
+  .sp-lede { font-size: 19px; }
+  .sp-player { padding: 22px 20px 18px; border-radius: 16px; }
+  .sp-wave { height: 180px; }
+  .sp-play { width: 64px; height: 64px; }
+  .sp-time { font-size: 24px; }
+  .sp-info, .sp-related { margin-top: 96px; }
+}
+@media (max-width: 560px) {
+  .sp-actions .sp-btn { flex: 1 1 auto; justify-content: center; }
+}
 `;
 
 // ---------- use-case pages ----------
