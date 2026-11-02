@@ -1,0 +1,4 @@
+interface:
+  display_name: "Better SFX"
+  short_description: "Free sound effects for apps, websites and videos"
+  default_prompt: "Use $better-sfx to find free, royalty-free sound effects that fit this project, download them and wire them up."
