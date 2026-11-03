@@ -5,6 +5,7 @@
 //   node scripts/sfx.mjs search <words...> [--category c] [--set s] [--source code|recording] [--max-duration s] [--limit n]
 //   node scripts/sfx.mjs sets
 //   node scripts/sfx.mjs categories
+//   node scripts/sfx.mjs check-words   (maintenance: WORD_MAP translations are all catalog tags)
 //   node scripts/sfx.mjs get <id...> [--dir sounds] [--format m4a|wav|both] [--force]
 //
 // Every command accepts --catalog <url|path>, also read from BETTER_SFX_CATALOG.
@@ -33,7 +34,7 @@ if (!command || command === '--help' || command === 'help' || argv.includes('--h
   console.log(JSON.stringify({ ok: true, usage }, null, 2));
   process.exit(0);
 }
-if (!['search', 'sets', 'categories', 'get'].includes(command)) fail(`Unknown command "${command}".`, { usage });
+if (!['search', 'sets', 'categories', 'get', 'check-words'].includes(command)) fail(`Unknown command "${command}".`, { usage });
 const allowed = new Set(['catalog', ...(command === 'search'
   ? ['category', 'set', 'source', 'max-duration', 'limit']
   : command === 'get' ? ['dir', 'format'] : [])]);
@@ -120,25 +121,39 @@ function view(s) {
 // Results that match every word rank above results that match some.
 /** @param {CatalogEntry} s @param {string[]} terms @returns {number} */
 function score(s, terms) {
-  const name = s.name.toLowerCase();
-  const tags = s.tags.map((t) => t.toLowerCase());
-  const cat = s.category.toLowerCase();
-  const desc = s.description.toLowerCase();
   let total = 0;
   let hits = 0;
   for (const w of terms) {
-    const stem = w.replace(/(es|s|y)$/, '');
-    let best = 0;
-    if (tags.includes(w)) best = Math.max(best, 4);
-    if (name.split(/\s+/).includes(w)) best = Math.max(best, 4);
-    if (tags.some((t) => t.startsWith(stem) && stem.length >= 3)) best = Math.max(best, 3);
-    if (name.includes(stem) && stem.length >= 3) best = Math.max(best, 3);
-    if (cat.includes(stem) && stem.length >= 3) best = Math.max(best, 2);
-    if (desc.includes(stem) && stem.length >= 3) best = Math.max(best, 1);
+    // A word the catalog uses scores in full. A feeling word from WORD_MAP
+    // scores through its best translation, at three quarters weight, so a
+    // literal match still ranks first.
+    // Each further translation the sound also matches adds a little, so a
+    // sound that is airy and shimmering outranks one that is only soft.
+    // The cap keeps it below a literal tag match (4).
+    let best = wordScore(s, w);
+    const alts = (WORD_MAP[w] ?? []).map((alt) => wordScore(s, alt)).filter(Boolean);
+    if (alts.length) best = Math.max(best, Math.min(3.5, Math.max(...alts) * 0.75 + 0.25 * (alts.length - 1)));
     if (best) hits++;
     total += best;
   }
   return hits === terms.length ? total + 10 : total;
+}
+
+/** @param {CatalogEntry} s @param {string} w one lower-case word @returns {number} */
+function wordScore(s, w) {
+  const name = s.name.toLowerCase();
+  const tags = s.tags.map((t) => t.toLowerCase());
+  const cat = s.category.toLowerCase();
+  const desc = s.description.toLowerCase();
+  const stem = w.replace(/(es|s|y)$/, '');
+  let best = 0;
+  if (tags.includes(w)) best = Math.max(best, 4);
+  if (name.split(/\s+/).includes(w)) best = Math.max(best, 4);
+  if (tags.some((t) => t.startsWith(stem) && stem.length >= 3)) best = Math.max(best, 3);
+  if (name.includes(stem) && stem.length >= 3) best = Math.max(best, 3);
+  if (cat.includes(stem) && stem.length >= 3) best = Math.max(best, 2);
+  if (desc.includes(stem) && stem.length >= 3) best = Math.max(best, 1);
+  return best;
 }
 
 /** @param {CatalogEntry[]} catalog */
@@ -149,6 +164,82 @@ function filtered(catalog) {
     (!flags.source || (flags.source === 'code') === (s.source === 'synth')) &&
     (!flags['max-duration'] || s.duration <= Number(flags['max-duration'])));
 }
+
+// ---------- word map ----------
+// Words people use for how a sound should feel, translated into the words
+// the catalog's tags use. Every word on the right must be a catalog tag;
+// `node scripts/sfx.mjs check-words` lists any that are not.
+/** @type {Record<string, string[]>} */
+const WORD_MAP = {
+  // light and airy
+  dreamy: ['airy', 'shimmer', 'sparkle', 'twinkle', 'glass', 'soft'],
+  ethereal: ['airy', 'shimmer', 'glass', 'sparkle'],
+  magical: ['magic', 'sparkle', 'twinkle', 'shimmer', 'fairy'],
+  sparkly: ['sparkle', 'shimmer', 'twinkle'],
+  glittery: ['sparkle', 'shimmer', 'twinkle'],
+  // crisp and tactile
+  punchy: ['crisp', 'sharp', 'thock', 'snap', 'deep', 'heavy'],
+  snappy: ['snap', 'crisp', 'quick', 'sharp'],
+  clicky: ['click', 'tick', 'crisp', 'tap'],
+  thocky: ['thock', 'deep', 'mechanical'],
+  tactile: ['tactile', 'press', 'physical', 'mechanical'],
+  analog: ['mechanical', 'physical', 'tactile'],
+  // soft and calm
+  cozy: ['warm', 'soft', 'wood', 'mellow', 'gentle'],
+  relaxing: ['calm', 'soft', 'gentle', 'mellow'],
+  chill: ['calm', 'soft', 'mellow', 'gentle'],
+  smooth: ['soft', 'gentle', 'airy', 'sweep'],
+  unobtrusive: ['subtle', 'faint', 'minimal', 'soft'],
+  tiny: ['tiny', 'micro', 'subtle', 'faint'],
+  // bright and happy
+  happy: ['cheerful', 'positive', 'playful', 'bright', 'rising'],
+  joyful: ['cheerful', 'positive', 'bright', 'rising'],
+  fun: ['playful', 'cartoon', 'bubbly', 'game'],
+  cute: ['playful', 'bubbly', 'cartoon', 'pop'],
+  silly: ['cartoon', 'wobble', 'playful'],
+  bouncy: ['bounce', 'bubbly', 'playful', 'pop'],
+  // big moments
+  celebratory: ['celebrate', 'fanfare', 'achievement', 'reward', 'sparkle'],
+  triumphant: ['fanfare', 'achievement', 'brass', 'reward'],
+  win: ['success', 'reward', 'achievement', 'coin'],
+  epic: ['cinematic', 'big', 'riser', 'tension', 'fanfare'],
+  dramatic: ['cinematic', 'big', 'riser', 'tension'],
+  loud: ['big', 'alarm', 'urgent', 'cinematic'],
+  // dark and tense
+  dark: ['low', 'deep', 'tension', 'dull', 'falling'],
+  eerie: ['low', 'tension', 'falling', 'deep'],
+  ominous: ['low', 'deep', 'tension'],
+  tense: ['tension', 'riser', 'urgent'],
+  sad: ['falling', 'low', 'calm'],
+  aggressive: ['harsh', 'buzz', 'alarm', 'urgent', 'heavy'],
+  negative: ['error', 'fail', 'denied', 'wrong', 'falling'],
+  oops: ['error', 'wrong', 'invalid'],
+  // polished
+  premium: ['glass', 'crystal', 'bell', 'chime', 'clean'],
+  elegant: ['glass', 'crystal', 'bell', 'chime', 'clean'],
+  modern: ['minimal', 'clean', 'soft', 'glass'],
+  sleek: ['minimal', 'clean', 'glass'],
+  // tech and retro
+  futuristic: ['digital', 'computing', 'sweep', 'metallic'],
+  techy: ['digital', 'computing', 'blips', 'metallic'],
+  robotic: ['digital', 'metallic', 'blips', 'computing'],
+  nostalgic: ['retro', '8-bit', 'chiptune', 'vintage'],
+  arcade: ['game', '8-bit', 'chiptune', 'retro'],
+  // real-world
+  natural: ['organic', 'wood', 'physical'],
+  realistic: ['organic', 'physical', 'wood', 'paper'],
+  wet: ['water', 'liquid', 'drip', 'droplet', 'bubble'],
+  watery: ['water', 'liquid', 'drip', 'droplet'],
+  weighty: ['heavy', 'deep', 'thud', 'thunk'],
+  impact: ['thud', 'thump', 'knock', 'heavy'],
+  typewriter: ['typing', 'keyboard', 'key', 'mechanical'],
+  // sound words
+  swish: ['swoosh', 'whoosh', 'swipe', 'air'],
+  woosh: ['whoosh', 'swoosh'],
+  boop: ['blip', 'pop', 'beep'],
+  buzzer: ['buzz', 'error', 'alarm'],
+  finish: ['complete', 'done'],
+};
 
 // ---------- download ----------
 /** @param {string} from URL or local path @param {string} to */
@@ -170,8 +261,19 @@ if (command === 'search') {
     list = list.map((s) => ({ s, n: score(s, terms) })).filter((r) => r.n > 0).sort((a, b) => b.n - a.n).map((r) => r.s);
   }
   const results = list.slice(0, limit).map(view);
+  // Show which feeling words were translated, so the agent can see why a
+  // result matched.
+  /** @type {Record<string, string[]>} */
+  const expanded = {};
+  for (const w of terms) if (WORD_MAP[w]) expanded[w] = WORD_MAP[w];
   log(`${results.length} of ${list.length} matching sounds`);
-  console.log(JSON.stringify({ ok: true, query: terms.join(' '), count: list.length, results }, null, 2));
+  console.log(JSON.stringify({ ok: true, query: terms.join(' '), ...(Object.keys(expanded).length ? { expanded } : {}), count: list.length, results }, null, 2));
+} else if (command === 'check-words') {
+  // Maintenance: every translation in WORD_MAP should be a catalog tag.
+  const tags = new Set(catalog.flatMap((s) => s.tags.map((t) => t.toLowerCase())));
+  const missing = Object.entries(WORD_MAP).flatMap(([k, v]) => v.filter((t) => !tags.has(t)).map((t) => `${k} -> ${t}`));
+  console.log(JSON.stringify({ ok: missing.length === 0, words: Object.keys(WORD_MAP).length, missing }, null, 2));
+  if (missing.length) process.exit(1);
 } else if (command === 'sets') {
   /** @type {Record<string, { action?: string, id: string, duration: number }[]>} */
   const sets = {};
