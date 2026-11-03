@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://sfx.video2ctx.dev/</loc><lastmod>2026-11-02</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/</loc><lastmod>2026-11-03</lastmod></url>
   <url><loc>https://sfx.video2ctx.dev/video/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/apps/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/ai-agents/</loc><lastmod>2026-11-02</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/apps/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/ai-agents/</loc><lastmod>2026-11-03</lastmod></url>
   <url><loc>https://sfx.video2ctx.dev/license/</loc><lastmod>2026-11-02</lastmod></url>
   <url><loc>https://sfx.video2ctx.dev/category/clicks/</loc><lastmod>2026-11-02</lastmod></url>
   <url><loc>https://sfx.video2ctx.dev/category/toggles/</loc><lastmod>2026-11-02</lastmod></url>
@@ -15,11 +15,11 @@
   <url><loc>https://sfx.video2ctx.dev/category/messages/</loc><lastmod>2026-11-02</lastmod></url>
   <url><loc>https://sfx.video2ctx.dev/category/progress/</loc><lastmod>2026-11-02</lastmod></url>
   <url><loc>https://sfx.video2ctx.dev/category/system/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/category/glass-set/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/category/wood-set/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/category/soft-set/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/category/retro-set/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/category/mechanical-set/</loc><lastmod>2026-11-02</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/category/glass-set/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/category/wood-set/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/category/soft-set/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/category/retro-set/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/category/mechanical-set/</loc><lastmod>2026-11-03</lastmod></url>
   <url><loc>https://sfx.video2ctx.dev/category/keyboard/</loc><lastmod>2026-11-02</lastmod></url>
   <url><loc>https://sfx.video2ctx.dev/category/paper/</loc><lastmod>2026-11-02</lastmod></url>
   <url><loc>https://sfx.video2ctx.dev/category/objects/</loc><lastmod>2026-11-02</lastmod></url>
@@ -94,56 +94,56 @@
   <url><loc>https://sfx.video2ctx.dev/sound/connect/</loc><lastmod>2026-11-02</lastmod></url>
   <url><loc>https://sfx.video2ctx.dev/sound/disconnect/</loc><lastmod>2026-11-02</lastmod></url>
   <url><loc>https://sfx.video2ctx.dev/sound/magic-sparkle/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/glass-click/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/glass-hover/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/glass-toggle/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/glass-notify/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/glass-success/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/glass-error/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/glass-open/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/glass-close/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/glass-send/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/glass-delete/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/wood-click/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/wood-hover/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/wood-toggle/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/wood-notify/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/wood-success/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/wood-error/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/wood-open/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/wood-close/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/wood-send/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/wood-delete/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/soft-click/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/soft-hover/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/soft-toggle/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/soft-notify/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/soft-success/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/soft-error/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/soft-open/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/soft-close/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/soft-send/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/soft-delete/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/retro-click/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/retro-hover/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/retro-toggle/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/retro-notify/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/retro-success/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/retro-error/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/retro-open/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/retro-close/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/retro-send/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/retro-delete/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/mechanical-click/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/mechanical-hover/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/mechanical-toggle/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/mechanical-notify/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/mechanical-success/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/mechanical-error/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/mechanical-open/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/mechanical-close/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/mechanical-send/</loc><lastmod>2026-11-02</lastmod></url>
-  <url><loc>https://sfx.video2ctx.dev/sound/mechanical-delete/</loc><lastmod>2026-11-02</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/glass-click/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/glass-hover/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/glass-toggle/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/glass-notify/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/glass-success/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/glass-error/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/glass-open/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/glass-close/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/glass-send/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/glass-delete/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/wood-click/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/wood-hover/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/wood-toggle/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/wood-notify/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/wood-success/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/wood-error/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/wood-open/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/wood-close/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/wood-send/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/wood-delete/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/soft-click/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/soft-hover/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/soft-toggle/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/soft-notify/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/soft-success/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/soft-error/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/soft-open/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/soft-close/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/soft-send/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/soft-delete/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/retro-click/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/retro-hover/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/retro-toggle/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/retro-notify/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/retro-success/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/retro-error/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/retro-open/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/retro-close/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/retro-send/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/retro-delete/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/mechanical-click/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/mechanical-hover/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/mechanical-toggle/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/mechanical-notify/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/mechanical-success/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/mechanical-error/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/mechanical-open/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/mechanical-close/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/mechanical-send/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://sfx.video2ctx.dev/sound/mechanical-delete/</loc><lastmod>2026-11-03</lastmod></url>
   <url><loc>https://sfx.video2ctx.dev/sound/key-mechanical/</loc><lastmod>2026-11-02</lastmod></url>
   <url><loc>https://sfx.video2ctx.dev/sound/key-laptop/</loc><lastmod>2026-11-02</lastmod></url>
   <url><loc>https://sfx.video2ctx.dev/sound/typing-mechanical/</loc><lastmod>2026-11-02</lastmod></url>

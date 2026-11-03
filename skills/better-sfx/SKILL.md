@@ -11,7 +11,7 @@ metadata:
 
 Start with the event the listener should recognize. If no category plausibly covers it, stop at the index and report that Better SFX has no known match.
 
-Open the most relevant guide. Among sounds that fit the event, choose by mood and duration. If none fits, check another guide only if its category also covers the event. Otherwise report the missing sound and stop before downloading. For several UI cues in one app, start with one matching set.
+Open the most relevant guide. Among sounds that fit the event, choose by mood and duration. For a brief or frequently repeated cue, prefer a shorter sound that still conveys the event. If the options run too long or none fits, check another guide only if its category also covers the event. Otherwise report the missing sound and stop before downloading. For several UI cues in one app, start with one matching set.
 
 ## Categories
 

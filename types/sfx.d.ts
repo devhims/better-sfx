@@ -121,6 +121,7 @@ export interface SeedPrompt {
 /** A style in the matching sets: how a note, a tap and a rush of air sound. */
 export interface SetStyle {
   label: string;
+  voice: string;
   root: string;
   tags: string[];
   setup: (k: Kit) => void;

@@ -9,8 +9,8 @@
 - `level-up` (0.575s). A fast square-wave run up two octaves.
 - `achievement` (1.245s). A short brassy chord with a bell on top.
 - `coin` (0.395s). A classic two-note pickup sound.
-- `glass-success` (0.835s). A major arpeggio up to the octave. Part of the glass set.
-- `wood-success` (0.88s). A major arpeggio up to the octave. Part of the wood set.
-- `soft-success` (0.9s). A major arpeggio up to the octave. Part of the soft set.
-- `retro-success` (0.77s). A major arpeggio up to the octave. Part of the retro set.
-- `mechanical-success` (0.71s). A major arpeggio up to the octave. Part of the mechanical set.
+- `glass-success` (0.835s). A major arpeggio up to the octave with bright, airy glass.
+- `wood-success` (0.88s). A major arpeggio up to the octave with warm, dry wood.
+- `soft-success` (0.9s). A major arpeggio up to the octave with soft, rounded tones.
+- `retro-success` (0.77s). A major arpeggio up to the octave with a buzzy 8-bit tone.
+- `mechanical-success` (0.71s). A major arpeggio up to the octave with a sharp metallic edge.

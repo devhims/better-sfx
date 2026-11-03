@@ -1,10 +1,10 @@
 # App actions
 
-- `glass-delete` (0.545s). A tap that drops into two low notes. Part of the glass set.
-- `wood-delete` (0.34s). A tap that drops into two low notes. Part of the wood set.
-- `soft-delete` (0.53s). A tap that drops into two low notes. Part of the soft set.
-- `retro-delete` (0.32s). A tap that drops into two low notes. Part of the retro set.
-- `mechanical-delete` (0.26s). A tap that drops into two low notes. Part of the mechanical set.
+- `glass-delete` (0.545s). A tap that drops into two low notes with bright, airy glass.
+- `wood-delete` (0.34s). A tap that drops into two low notes with warm, dry wood.
+- `soft-delete` (0.53s). A tap that drops into two low notes with soft, rounded tones.
+- `retro-delete` (0.32s). A tap that drops into two low notes with a buzzy 8-bit tone.
+- `mechanical-delete` (0.26s). A tap that drops into two low notes with a sharp metallic edge.
 - `scissors-snip` (0.168s). One snip of scissors, for cut.
 - `book-close` (0.238s). A hardcover book shutting, for archive.
 - `drawer-shut` (0.624s). A wooden drawer sliding shut, for file away.

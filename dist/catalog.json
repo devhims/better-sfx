@@ -4930,7 +4930,7 @@
    "press",
    "set"
   ],
-  "description": "A button press. Part of the glass set.",
+  "description": "A button press with bright, airy glass.",
   "source": "synth",
   "duration": 0.06,
   "peaks": [
@@ -5005,7 +5005,7 @@
    "faint",
    "set"
   ],
-  "description": "A faint hover or focus cue. Part of the glass set.",
+  "description": "A faint hover or focus cue with bright, airy glass.",
   "source": "synth",
   "duration": 0.065,
   "peaks": [
@@ -5080,7 +5080,7 @@
    "on",
    "set"
   ],
-  "description": "Two rising notes for a switch. Part of the glass set.",
+  "description": "Two rising notes for a switch with bright, airy glass.",
   "source": "synth",
   "duration": 0.48,
   "peaks": [
@@ -5155,7 +5155,7 @@
    "chime",
    "set"
   ],
-  "description": "A two-note notification. Part of the glass set.",
+  "description": "A two-note notification with bright, airy glass.",
   "source": "synth",
   "duration": 0.86,
   "peaks": [
@@ -5230,7 +5230,7 @@
    "complete",
    "set"
   ],
-  "description": "A major arpeggio up to the octave. Part of the glass set.",
+  "description": "A major arpeggio up to the octave with bright, airy glass.",
   "source": "synth",
   "duration": 0.835,
   "peaks": [
@@ -5305,7 +5305,7 @@
    "wrong",
    "set"
   ],
-  "description": "Two notes falling a tritone. Part of the glass set.",
+  "description": "Two notes falling a tritone with bright, airy glass.",
   "source": "synth",
   "duration": 0.595,
   "peaks": [
@@ -5380,7 +5380,7 @@
    "appear",
    "set"
   ],
-  "description": "A rising pair with a lift of air. Part of the glass set.",
+  "description": "An airy upward sweep and two rising notes with bright, airy glass.",
   "source": "synth",
   "duration": 0.575,
   "peaks": [
@@ -5455,7 +5455,7 @@
    "disappear",
    "set"
   ],
-  "description": "A falling pair with air going down. Part of the glass set.",
+  "description": "An airy downward sweep and two falling notes with bright, airy glass.",
   "source": "synth",
   "duration": 0.605,
   "peaks": [
@@ -5531,7 +5531,7 @@
    "outgoing",
    "set"
   ],
-  "description": "A quick rush up that ends in a tap. Part of the glass set.",
+  "description": "A quick rush up that ends in a tap with bright, airy glass.",
   "source": "synth",
   "duration": 0.36,
   "peaks": [
@@ -5606,7 +5606,7 @@
    "trash",
    "set"
   ],
-  "description": "A tap that drops into two low notes. Part of the glass set.",
+  "description": "A tap that drops into two low notes with bright, airy glass.",
   "source": "synth",
   "duration": 0.545,
   "peaks": [
@@ -5682,7 +5682,7 @@
    "press",
    "set"
   ],
-  "description": "A button press. Part of the wood set.",
+  "description": "A button press with warm, dry wood.",
   "source": "synth",
   "duration": 0.045,
   "peaks": [
@@ -5758,7 +5758,7 @@
    "faint",
    "set"
   ],
-  "description": "A faint hover or focus cue. Part of the wood set.",
+  "description": "A faint hover or focus cue with warm, dry wood.",
   "source": "synth",
   "duration": 0.045,
   "peaks": [
@@ -5834,7 +5834,7 @@
    "on",
    "set"
   ],
-  "description": "Two rising notes for a switch. Part of the wood set.",
+  "description": "Two rising notes for a switch with warm, dry wood.",
   "source": "synth",
   "duration": 0.23,
   "peaks": [
@@ -5910,7 +5910,7 @@
    "chime",
    "set"
   ],
-  "description": "A two-note notification. Part of the wood set.",
+  "description": "A two-note notification with warm, dry wood.",
   "source": "synth",
   "duration": 0.87,
   "peaks": [
@@ -5986,7 +5986,7 @@
    "complete",
    "set"
   ],
-  "description": "A major arpeggio up to the octave. Part of the wood set.",
+  "description": "A major arpeggio up to the octave with warm, dry wood.",
   "source": "synth",
   "duration": 0.88,
   "peaks": [
@@ -6062,7 +6062,7 @@
    "wrong",
    "set"
   ],
-  "description": "Two notes falling a tritone. Part of the wood set.",
+  "description": "Two notes falling a tritone with warm, dry wood.",
   "source": "synth",
   "duration": 0.47,
   "peaks": [
@@ -6138,7 +6138,7 @@
    "appear",
    "set"
   ],
-  "description": "A rising pair with a lift of air. Part of the wood set.",
+  "description": "An airy upward sweep and two rising notes with warm, dry wood.",
   "source": "synth",
   "duration": 0.365,
   "peaks": [
@@ -6214,7 +6214,7 @@
    "disappear",
    "set"
   ],
-  "description": "A falling pair with air going down. Part of the wood set.",
+  "description": "An airy downward sweep and two falling notes with warm, dry wood.",
   "source": "synth",
   "duration": 0.36,
   "peaks": [
@@ -6291,7 +6291,7 @@
    "outgoing",
    "set"
   ],
-  "description": "A quick rush up that ends in a tap. Part of the wood set.",
+  "description": "A quick rush up that ends in a tap with warm, dry wood.",
   "source": "synth",
   "duration": 0.145,
   "peaks": [
@@ -6367,7 +6367,7 @@
    "trash",
    "set"
   ],
-  "description": "A tap that drops into two low notes. Part of the wood set.",
+  "description": "A tap that drops into two low notes with warm, dry wood.",
   "source": "synth",
   "duration": 0.34,
   "peaks": [
@@ -6443,7 +6443,7 @@
    "press",
    "set"
   ],
-  "description": "A button press. Part of the soft set.",
+  "description": "A button press with soft, rounded tones.",
   "source": "synth",
   "duration": 0.035,
   "peaks": [
@@ -6519,7 +6519,7 @@
    "faint",
    "set"
   ],
-  "description": "A faint hover or focus cue. Part of the soft set.",
+  "description": "A faint hover or focus cue with soft, rounded tones.",
   "source": "synth",
   "duration": 0.035,
   "peaks": [
@@ -6595,7 +6595,7 @@
    "on",
    "set"
   ],
-  "description": "Two rising notes for a switch. Part of the soft set.",
+  "description": "Two rising notes for a switch with soft, rounded tones.",
   "source": "synth",
   "duration": 0.57,
   "peaks": [
@@ -6671,7 +6671,7 @@
    "chime",
    "set"
   ],
-  "description": "A two-note notification. Part of the soft set.",
+  "description": "A two-note notification with soft, rounded tones.",
   "source": "synth",
   "duration": 0.93,
   "peaks": [
@@ -6747,7 +6747,7 @@
    "complete",
    "set"
   ],
-  "description": "A major arpeggio up to the octave. Part of the soft set.",
+  "description": "A major arpeggio up to the octave with soft, rounded tones.",
   "source": "synth",
   "duration": 0.9,
   "peaks": [
@@ -6823,7 +6823,7 @@
    "wrong",
    "set"
   ],
-  "description": "Two notes falling a tritone. Part of the soft set.",
+  "description": "Two notes falling a tritone with soft, rounded tones.",
   "source": "synth",
   "duration": 0.645,
   "peaks": [
@@ -6899,7 +6899,7 @@
    "appear",
    "set"
   ],
-  "description": "A rising pair with a lift of air. Part of the soft set.",
+  "description": "An airy upward sweep and two rising notes with soft, rounded tones.",
   "source": "synth",
   "duration": 0.495,
   "peaks": [
@@ -6975,7 +6975,7 @@
    "disappear",
    "set"
   ],
-  "description": "A falling pair with air going down. Part of the soft set.",
+  "description": "An airy downward sweep and two falling notes with soft, rounded tones.",
   "source": "synth",
   "duration": 0.54,
   "peaks": [
@@ -7052,7 +7052,7 @@
    "outgoing",
    "set"
   ],
-  "description": "A quick rush up that ends in a tap. Part of the soft set.",
+  "description": "A quick rush up that ends in a tap with soft, rounded tones.",
   "source": "synth",
   "duration": 0.135,
   "peaks": [
@@ -7128,7 +7128,7 @@
    "trash",
    "set"
   ],
-  "description": "A tap that drops into two low notes. Part of the soft set.",
+  "description": "A tap that drops into two low notes with soft, rounded tones.",
   "source": "synth",
   "duration": 0.53,
   "peaks": [
@@ -7204,7 +7204,7 @@
    "press",
    "set"
   ],
-  "description": "A button press. Part of the retro set.",
+  "description": "A button press with a buzzy 8-bit tone.",
   "source": "synth",
   "duration": 0.02,
   "peaks": [
@@ -7280,7 +7280,7 @@
    "faint",
    "set"
   ],
-  "description": "A faint hover or focus cue. Part of the retro set.",
+  "description": "A faint hover or focus cue with a buzzy 8-bit tone.",
   "source": "synth",
   "duration": 0.02,
   "peaks": [
@@ -7356,7 +7356,7 @@
    "on",
    "set"
   ],
-  "description": "Two rising notes for a switch. Part of the retro set.",
+  "description": "Two rising notes for a switch with a buzzy 8-bit tone.",
   "source": "synth",
   "duration": 0.215,
   "peaks": [
@@ -7432,7 +7432,7 @@
    "chime",
    "set"
   ],
-  "description": "A two-note notification. Part of the retro set.",
+  "description": "A two-note notification with a buzzy 8-bit tone.",
   "source": "synth",
   "duration": 0.76,
   "peaks": [
@@ -7508,7 +7508,7 @@
    "complete",
    "set"
   ],
-  "description": "A major arpeggio up to the octave. Part of the retro set.",
+  "description": "A major arpeggio up to the octave with a buzzy 8-bit tone.",
   "source": "synth",
   "duration": 0.77,
   "peaks": [
@@ -7584,7 +7584,7 @@
    "wrong",
    "set"
   ],
-  "description": "Two notes falling a tritone. Part of the retro set.",
+  "description": "Two notes falling a tritone with a buzzy 8-bit tone.",
   "source": "synth",
   "duration": 0.435,
   "peaks": [
@@ -7660,7 +7660,7 @@
    "appear",
    "set"
   ],
-  "description": "A rising pair with a lift of air. Part of the retro set.",
+  "description": "An airy upward sweep and two rising notes with a buzzy 8-bit tone.",
   "source": "synth",
   "duration": 0.31,
   "peaks": [
@@ -7736,7 +7736,7 @@
    "disappear",
    "set"
   ],
-  "description": "A falling pair with air going down. Part of the retro set.",
+  "description": "An airy downward sweep and two falling notes with a buzzy 8-bit tone.",
   "source": "synth",
   "duration": 0.31,
   "peaks": [
@@ -7813,7 +7813,7 @@
    "outgoing",
    "set"
   ],
-  "description": "A quick rush up that ends in a tap. Part of the retro set.",
+  "description": "A quick rush up that ends in a tap with a buzzy 8-bit tone.",
   "source": "synth",
   "duration": 0.12,
   "peaks": [
@@ -7889,7 +7889,7 @@
    "trash",
    "set"
   ],
-  "description": "A tap that drops into two low notes. Part of the retro set.",
+  "description": "A tap that drops into two low notes with a buzzy 8-bit tone.",
   "source": "synth",
   "duration": 0.32,
   "peaks": [
@@ -7964,7 +7964,7 @@
    "press",
    "set"
   ],
-  "description": "A button press. Part of the mechanical set.",
+  "description": "A button press with a sharp metallic edge.",
   "source": "synth",
   "duration": 0.025,
   "peaks": [
@@ -8039,7 +8039,7 @@
    "faint",
    "set"
   ],
-  "description": "A faint hover or focus cue. Part of the mechanical set.",
+  "description": "A faint hover or focus cue with a sharp metallic edge.",
   "source": "synth",
   "duration": 0.03,
   "peaks": [
@@ -8113,7 +8113,7 @@
    "on",
    "set"
   ],
-  "description": "Two rising notes for a switch. Part of the mechanical set.",
+  "description": "Two rising notes for a switch with a sharp metallic edge.",
   "source": "synth",
   "duration": 0.185,
   "peaks": [
@@ -8188,7 +8188,7 @@
    "chime",
    "set"
   ],
-  "description": "A two-note notification. Part of the mechanical set.",
+  "description": "A two-note notification with a sharp metallic edge.",
   "source": "synth",
   "duration": 0.685,
   "peaks": [
@@ -8263,7 +8263,7 @@
    "complete",
    "set"
   ],
-  "description": "A major arpeggio up to the octave. Part of the mechanical set.",
+  "description": "A major arpeggio up to the octave with a sharp metallic edge.",
   "source": "synth",
   "duration": 0.71,
   "peaks": [
@@ -8338,7 +8338,7 @@
    "wrong",
    "set"
   ],
-  "description": "Two notes falling a tritone. Part of the mechanical set.",
+  "description": "Two notes falling a tritone with a sharp metallic edge.",
   "source": "synth",
   "duration": 0.38,
   "peaks": [
@@ -8413,7 +8413,7 @@
    "appear",
    "set"
   ],
-  "description": "A rising pair with a lift of air. Part of the mechanical set.",
+  "description": "An airy upward sweep and two rising notes with a sharp metallic edge.",
   "source": "synth",
   "duration": 0.295,
   "peaks": [
@@ -8488,7 +8488,7 @@
    "disappear",
    "set"
   ],
-  "description": "A falling pair with air going down. Part of the mechanical set.",
+  "description": "An airy downward sweep and two falling notes with a sharp metallic edge.",
   "source": "synth",
   "duration": 0.29,
   "peaks": [
@@ -8564,7 +8564,7 @@
    "outgoing",
    "set"
   ],
-  "description": "A quick rush up that ends in a tap. Part of the mechanical set.",
+  "description": "A quick rush up that ends in a tap with a sharp metallic edge.",
   "source": "synth",
   "duration": 0.125,
   "peaks": [
@@ -8639,7 +8639,7 @@
    "trash",
    "set"
   ],
-  "description": "A tap that drops into two low notes. Part of the mechanical set.",
+  "description": "A tap that drops into two low notes with a sharp metallic edge.",
   "source": "synth",
   "duration": 0.26,
   "peaks": [

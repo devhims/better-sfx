@@ -9,8 +9,8 @@
 - `slider-detents` (0.25s). A run of small ticks, like dragging a stepped slider.
 - `lock` (0.115s). A two-part latch closing.
 - `unlock` (0.14s). A latch springing open.
-- `glass-toggle` (0.48s). Two rising notes for a switch. Part of the glass set.
-- `wood-toggle` (0.23s). Two rising notes for a switch. Part of the wood set.
-- `soft-toggle` (0.57s). Two rising notes for a switch. Part of the soft set.
-- `retro-toggle` (0.215s). Two rising notes for a switch. Part of the retro set.
-- `mechanical-toggle` (0.185s). Two rising notes for a switch. Part of the mechanical set.
+- `glass-toggle` (0.48s). Two rising notes for a switch with bright, airy glass.
+- `wood-toggle` (0.23s). Two rising notes for a switch with warm, dry wood.
+- `soft-toggle` (0.57s). Two rising notes for a switch with soft, rounded tones.
+- `retro-toggle` (0.215s). Two rising notes for a switch with a buzzy 8-bit tone.
+- `mechanical-toggle` (0.185s). Two rising notes for a switch with a sharp metallic edge.

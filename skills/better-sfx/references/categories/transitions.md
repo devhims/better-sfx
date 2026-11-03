@@ -10,13 +10,13 @@
 - `zoom-in` (0.285s). A rising sweep for zooming in.
 - `riser` (0.615s). A half-second build that opens up.
 - `tab-switch` (0.085s). A quick sideways step between tabs.
-- `glass-open` (0.575s). A rising pair with a lift of air. Part of the glass set.
-- `glass-close` (0.605s). A falling pair with air going down. Part of the glass set.
-- `wood-open` (0.365s). A rising pair with a lift of air. Part of the wood set.
-- `wood-close` (0.36s). A falling pair with air going down. Part of the wood set.
-- `soft-open` (0.495s). A rising pair with a lift of air. Part of the soft set.
-- `soft-close` (0.54s). A falling pair with air going down. Part of the soft set.
-- `retro-open` (0.31s). A rising pair with a lift of air. Part of the retro set.
-- `retro-close` (0.31s). A falling pair with air going down. Part of the retro set.
-- `mechanical-open` (0.295s). A rising pair with a lift of air. Part of the mechanical set.
-- `mechanical-close` (0.29s). A falling pair with air going down. Part of the mechanical set.
+- `glass-open` (0.575s). An airy upward sweep and two rising notes with bright, airy glass.
+- `glass-close` (0.605s). An airy downward sweep and two falling notes with bright, airy glass.
+- `wood-open` (0.365s). An airy upward sweep and two rising notes with warm, dry wood.
+- `wood-close` (0.36s). An airy downward sweep and two falling notes with warm, dry wood.
+- `soft-open` (0.495s). An airy upward sweep and two rising notes with soft, rounded tones.
+- `soft-close` (0.54s). An airy downward sweep and two falling notes with soft, rounded tones.
+- `retro-open` (0.31s). An airy upward sweep and two rising notes with a buzzy 8-bit tone.
+- `retro-close` (0.31s). An airy downward sweep and two falling notes with a buzzy 8-bit tone.
+- `mechanical-open` (0.295s). An airy upward sweep and two rising notes with a sharp metallic edge.
+- `mechanical-close` (0.29s). An airy downward sweep and two falling notes with a sharp metallic edge.

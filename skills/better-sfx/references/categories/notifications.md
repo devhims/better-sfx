@@ -11,8 +11,8 @@
 - `reminder-tingle` (1.135s). A quick high glass run upward.
 - `alert-gentle` (0.725s). Two soft sine notes with slight vibrato.
 - `alert-urgent` (0.425s). Three firm square-wave beeps.
-- `glass-notify` (0.86s). A two-note notification. Part of the glass set.
-- `wood-notify` (0.87s). A two-note notification. Part of the wood set.
-- `soft-notify` (0.93s). A two-note notification. Part of the soft set.
-- `retro-notify` (0.76s). A two-note notification. Part of the retro set.
-- `mechanical-notify` (0.685s). A two-note notification. Part of the mechanical set.
+- `glass-notify` (0.86s). A two-note notification with bright, airy glass.
+- `wood-notify` (0.87s). A two-note notification with warm, dry wood.
+- `soft-notify` (0.93s). A two-note notification with soft, rounded tones.
+- `retro-notify` (0.76s). A two-note notification with a buzzy 8-bit tone.
+- `mechanical-notify` (0.685s). A two-note notification with a sharp metallic edge.
