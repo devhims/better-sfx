@@ -131,7 +131,7 @@ function score(s, terms) {
     // sound that is airy and shimmering outranks one that is only soft.
     // The cap keeps it below a literal tag match (4).
     let best = wordScore(s, w);
-    const alts = (WORD_MAP[w] ?? []).map((alt) => wordScore(s, alt)).filter(Boolean);
+    const alts = translations(w).map((alt) => wordScore(s, alt)).filter(Boolean);
     if (alts.length) best = Math.max(best, Math.min(3.5, Math.max(...alts) * 0.75 + 0.25 * (alts.length - 1)));
     if (best) hits++;
     total += best;
@@ -241,6 +241,11 @@ const WORD_MAP = {
   finish: ['complete', 'done'],
 };
 
+/** @param {string} word */
+function translations(word) {
+  return Object.hasOwn(WORD_MAP, word) ? WORD_MAP[word] : [];
+}
+
 // ---------- download ----------
 /** @param {string} from URL or local path @param {string} to */
 async function fetchTo(from, to) {
@@ -265,7 +270,10 @@ if (command === 'search') {
   // result matched.
   /** @type {Record<string, string[]>} */
   const expanded = {};
-  for (const w of terms) if (WORD_MAP[w]) expanded[w] = WORD_MAP[w];
+  for (const w of terms) {
+    const alternatives = translations(w);
+    if (alternatives.length) expanded[w] = alternatives;
+  }
   log(`${results.length} of ${list.length} matching sounds`);
   console.log(JSON.stringify({ ok: true, query: terms.join(' '), ...(Object.keys(expanded).length ? { expanded } : {}), count: list.length, results }, null, 2));
 } else if (command === 'check-words') {

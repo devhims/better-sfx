@@ -17,7 +17,8 @@
   },
   "keywords": ["sound effects", "sfx", "ui sounds", "web audio", "agent skill", "royalty-free"],
   "scripts": {
-    "build": "node src/build.mjs",
+    "build": "node src/build.mjs && npm run skill:catalog",
+    "skill:catalog": "node src/skill-categories.mjs",
     "site": "node src/site.mjs",
     "dev": "node src/site.mjs && node src/serve.mjs",
     "check": "tsc -p .",

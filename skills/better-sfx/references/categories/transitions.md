@@ -1,0 +1,22 @@
+# Transitions
+
+- `swoosh-fast` (0.16s). A quick rush of air.
+- `swoosh-slow` (0.49s). A slow, soft sweep of air.
+- `swipe` (0.115s). A downward swipe for dismissing a card.
+- `whoosh-deep` (0.46s). A big, low pass-by.
+- `modal-open` (0.135s). A soft rising tone for something appearing.
+- `modal-close` (0.135s). A soft falling tone for something leaving.
+- `drawer-slide` (0.225s). A short slide that clicks into place.
+- `zoom-in` (0.285s). A rising sweep for zooming in.
+- `riser` (0.615s). A half-second build that opens up.
+- `tab-switch` (0.085s). A quick sideways step between tabs.
+- `glass-open` (0.575s). A rising pair with a lift of air. Part of the glass set.
+- `glass-close` (0.605s). A falling pair with air going down. Part of the glass set.
+- `wood-open` (0.365s). A rising pair with a lift of air. Part of the wood set.
+- `wood-close` (0.36s). A falling pair with air going down. Part of the wood set.
+- `soft-open` (0.495s). A rising pair with a lift of air. Part of the soft set.
+- `soft-close` (0.54s). A falling pair with air going down. Part of the soft set.
+- `retro-open` (0.31s). A rising pair with a lift of air. Part of the retro set.
+- `retro-close` (0.31s). A falling pair with air going down. Part of the retro set.
+- `mechanical-open` (0.295s). A rising pair with a lift of air. Part of the mechanical set.
+- `mechanical-close` (0.29s). A falling pair with air going down. Part of the mechanical set.

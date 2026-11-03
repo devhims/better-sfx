@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, writeFileSync, rmSync, existsSync } from 'node:fs';
+import { mkdtempSync, readFileSync, writeFileSync, rmSync, readdirSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import test from 'node:test';
@@ -29,6 +29,37 @@ test('search finds the documented example and combines filters', () => {
   assert.ok(filtered.data.results.length > 0);
   assert.ok(filtered.data.results.every(s => s.set === 'wood' && s.source === 'code' && s.duration <= 0.5));
   assert.equal(run(['search', 'zzznomatchzzz']).data.count, 0);
+  const literal = run(['search', 'constructor']);
+  assert.equal(literal.status, 0);
+  assert.equal(literal.data.expanded, undefined);
+});
+
+test('the skill index leads to scoped guides that agree with the catalog', () => {
+  const skill = resolve('skills/better-sfx');
+  const index = readFileSync(join(skill, 'SKILL.md'), 'utf8');
+  const guides = [...index.matchAll(/\]\(references\/categories\/([^()]+\.md)\)/g)].map(match => match[1]);
+  const directory = join(skill, 'references/categories');
+  const categories = [...new Set(entries.map(s => s.category))];
+  assert.deepEqual(guides.sort(), categories.map(c => c.replaceAll(' ', '-') + '.md').sort());
+  assert.deepEqual(readdirSync(directory).sort(), guides);
+  const byId = new Map(entries.map(s => [s.id, s]));
+  for (const category of categories) {
+    const guide = readFileSync(join(directory, category.replaceAll(' ', '-') + '.md'), 'utf8');
+    const rows = [...guide.matchAll(/^- `([^`]+)` \(([^)]+)s\)\. (.+)$/gm)];
+    const ids = rows.map(row => row[1]);
+    assert.equal(new Set(ids).size, ids.length);
+    assert.deepEqual(ids.filter(id => byId.get(id)?.category === category),
+      entries.filter(s => s.category === category).map(s => s.id));
+    for (const [, id, seconds, description] of rows) {
+      const sound = byId.get(id);
+      assert.equal(sound.duration, Number(seconds));
+      assert.equal(sound.description, description);
+      assert.ok(!index.includes(description));
+    }
+    if (category === 'toggles') {
+      assert.deepEqual(ids, entries.filter(s => s.category === 'toggles' || s.action === 'toggle').map(s => s.id));
+    }
+  }
 });
 
 test('all five sets contain the same ten actions and categories cover the library', () => {

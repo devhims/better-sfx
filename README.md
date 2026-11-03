@@ -69,7 +69,7 @@ Use the wood set for every button sound in this app.
 Put a whoosh on each cut in this video.
 ```
 
-The skill searches the library, shows you a few candidates when the choice is a matter of taste, downloads the files into your project and wires them up. In a web app it adds a small player with a mute setting. In a video edit it places each sound on its cue, either with ffmpeg or as a cue list for your editor.
+The skill starts with a category index. Your agent opens the relevant guide, compares sound descriptions and durations, then downloads the chosen files into your project and wires them up. In a web app it adds a small player with a mute setting. In a video edit it places each sound on its cue, either with ffmpeg or as a cue list for your editor.
 
 ## Use it in code
 
